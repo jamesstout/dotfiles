@@ -39,6 +39,7 @@ alias get='git '
 alias bit='git '
 alias vit='git '
 
+alias spwr="/Applications/MAMP/bin/php/php5.3.14/bin/php retrieve.php"
 
 # Detect which `ls` flavor is in use
 if ls --color > /dev/null 2>&1; then # GNU `ls`
@@ -122,6 +123,8 @@ alias hide="defaults write com.apple.finder AppleShowAllFiles -bool false && kil
 
 # URL-encode strings
 alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
+
+alias urlencode2='python -c "import sys, urllib as ul; print ul.urlencode(sys.argv[1]);"'
 
 # Merge PDF files
 # Usage: `mergepdf -o output.pdf input{1,2,3}.pdf`
