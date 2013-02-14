@@ -35,6 +35,20 @@ function fs() {
 	fi
 }
 
+# Sort the "du" output and use human-readable units.
+function duh {
+	du -sk "$@" | sort -n | while read size fname; do
+		for unit in KiB MiB GiB TiB PiB EiB ZiB YiB; do
+			if [ "$size" -lt 1024 ]; then
+				echo -e "${size} ${unit}\t${fname}";
+				break;
+			fi;
+			size=$((size/1024));
+		done;
+	done;
+}
+
+
 # Use Git’s colored diff when available
 hash git &>/dev/null
 if [ $? -eq 0 ]; then
@@ -190,6 +204,17 @@ function hge()
 	    fi
 	fi
 }
+
+
+# Edit and reload the profile.
+function pro {
+
+	cd ~/dotfiles
+	go working # should always be on working branch
+	subl -n -w .{bash_profile,path,exports,aliases,functions,extra};
+	source bootstrap.sh
+}
+
 
 function ku()
 {

@@ -1,12 +1,30 @@
 # Make vim the default editor
-# export EDITOR="vim"
+export EDITOR="vim"
 
-# Larger bash history (allow 32³ entries; default is 500)
-export HISTSIZE=32768
-export HISTFILESIZE=$HISTSIZE
-export HISTCONTROL=ignoredups
+# shamelessly copied from https://github.com/janmoesen/tilde
+# History
+# -----------------------------------------------------------------------------
+# When the command contains an invalid history operation (for instance when
+# using an unescaped "!" (I get that a lot in quick e-mails and commit
+# messages) or a failed substitution (e.g. "^foo^bar" when there was no "foo"
+# in the previous command line), do not throw away the command line, but let me
+# correct it.
+shopt -s histreedit;
+
+# Keep a reasonably long history.
+export HISTSIZE=4096;
+
+# Keep even more history lines inside the file, so we can still look up
+# previous commands without needlessly cluttering the current shell's history.
+export HISTFILESIZE=32768;
+
+# When executing the same command twice or more in a row, only store it once.
+export HISTCONTROL=ignoredups;
+
 # Make some commands not show up in history
-#export HISTIGNORE="ls:cd:cd -:pwd:exit:date:* --help"
+export HISTIGNORE="ls:cd:cd -:pwd:exit:date:ll:lst:hg:s:o:oo:gs:gr:"
+
+#export HISTTIMEFORMAT=%Y/%m/%d %H:%M:%S
 
 # Prefer US English and use UTF-8
 export LANG="en_US"
@@ -16,4 +34,47 @@ export LC_ALL="en_US.UTF-8"
 export LESS_TERMCAP_md="$ORANGE"
 
 # Don’t clear the screen after quitting a manual page
-export MANPAGER="less -X"
+#export MANPAGER="less -X"
+
+# shamelessly copied from https://github.com/janmoesen/tilde
+# Make less the default pager, and specify some useful defaults.
+less_options=(
+	# If the entire text fits on one screen, just show it and quit. (Be more
+	# like "cat" and less like "more".)
+	--quit-if-one-screen
+
+	# Do not clear the screen first.
+	--no-init
+
+	# Like "smartcase" in Vim: ignore case unless the search pattern is mixed.
+	--ignore-case
+
+	# Do not automatically wrap long lines.
+	--chop-long-lines
+
+	# Allow ANSI colour escapes, but no other escapes.
+	--RAW-CONTROL-CHARS
+
+	# Do not ring the bell when trying to scroll past the end of the buffer.
+	--quiet
+
+	# Do not complain when we are on a dumb terminal.
+	--dumb
+);
+export LESS="${less_options[*]}";
+unset less_options;
+export PAGER='less';
+
+# Make "less" transparently unpack archives etc.
+if [ -x /usr/bin/lesspipe ]; then
+	eval $(/usr/bin/lesspipe);
+elif command -v lesspipe.sh > /dev/null; then
+	# MacPorts recommended "/opt/local/bin/lesspipe.sh", but this is more
+	# portable for people that have it in another directory in their $PATH.
+	eval $(lesspipe.sh);
+fi;
+
+
+
+
+
