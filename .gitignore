@@ -12,3 +12,17 @@ Thumbs.db
 # Files that might appear on external disks
 .Spotlight-V100
 .Trashes
+
+# folders
+.hg
+.svn
+.CVS
+
+# never ignore a .gitignore
+# (prevents Git ignoring empty directories by placing
+# an empty .gitignore file in them)
+#
+!.gitignore
+
+
+.extra
