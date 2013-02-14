@@ -9,6 +9,19 @@ for file in ~/.{path,exports,aliases,functions,extra}; do
 done
 unset file
 
+. ~/bin/z.sh
+
+# shamelessly copied from https://github.com/janmoesen/tilde/blob/master/.bash/shell
+# Shell options, environment variables and readline settings
+# =============================================================================
+
+# Globbing and completion
+# -----------------------------------------------------------------------------
+
+# Do not autocomplete when accidentally pressing Tab on an empty line. (It takes
+# forever and yields "Display all 15 gazillion possibilites?")
+shopt -s no_empty_cmd_completion;
+
 # Case-insensitive globbing (used in pathname expansion)
 shopt -s nocaseglob
 
@@ -33,7 +46,22 @@ done
 complete -W "NSGlobalDomain" defaults
 
 # Add `killall` tab completion for common apps
-complete -o "nospace" -W "Contacts Calendar Dock Finder Mail Safari iTunes SystemUIServer Terminal Twitter" killall
+complete -o "nospace" -W "Calendar Dock Dashboard Finder Mail Safari iTunes SystemUIServer, Crashlytics, Cloud, Dropbox, Fantastical, Growl, HazelHelper, ChronoSyncBackgrounder, GeekTool\ Helper" killall
 
 # If possible, add tab completion for many more commands
 [ -f /etc/bash_completion ] && source /etc/bash_completion
+
+# Bash completion
+if [ -f $(brew --prefix)/etc/bash_completion ]; then
+    . $(brew --prefix)/etc/bash_completion
+fi
+
+# Brew completion
+if [ -f $(brew --prefix)/Library/Contributions/brew_bash_completion.sh ]; then
+    . $(brew --prefix)/Library/Contributions/brew_bash_completion.sh
+fi
+
+# Generic Colouriser
+if [ -f $(brew --prefix)/etc/grc.bashrc ]; then
+    . $(brew --prefix)/etc/grc.bashrc
+fi
