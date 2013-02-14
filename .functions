@@ -164,6 +164,43 @@ function unquarantine() {
 	done
 }
 
+# mine
+
+function hge()
+{
+	file="${HOME}/.bash_eternal_history"
+	
+	if [ $# -eq 0 -o "$1" = '--help' ] || [ $# -eq 1 -a "$1" = '--' ] || [ $# -gt 3 ] || [ $# -eq 2 ]
+	then
+		echo 'Usage: hge SEARCH [-t num_lines]'
+		return 255
+	fi
+
+	if [ $# -eq 1 ]
+	then
+		cat $file | grep $1 | uniq
+		return 0
+	fi
+
+	if [ $# -gt 1 ]
+	then
+	    if [ "$2" = "-t"  ]
+	    then
+	    	cat $file | grep $1 | uniq | tail -$3
+	    fi
+	fi
+}
+
+function ku()
+{
+	for app in "Crashlytics" "Calendar" "Contacts" "Dashboard"  \
+		"Mail" "Safari" "SizeUp" "SystemUIServer" "Terminal" "Transmission" \
+		"Twitter" "iCal" "iTunes" "Cloud" "Dropbox" "Fantastical" "Growl" \
+		"HazelHelper" "ChronoSyncBackgrounder" "GeekTool Helper"; do
+		killall "$app" > /dev/null 2>&1
+	done
+}
+
 function kpy() 
 {
   PY=`ps | grep pyth | grep -v grep | awk '{ print $1 }'`
@@ -174,39 +211,81 @@ function kpy()
 
 function last() 
 {
-
-   LAST=`ls -lrt | tail -1 |  awk ' { print $9 }'`
-
-   TYPE=`file -b $LAST`
-
-   if [ $# -eq 0 ]; 
-   	then
-   		if [ "$TYPE" = "directory" ];
-    	then
-    		ls -ld $LAST
-    	
-    	else
-			ls -l $LAST
-		fi
+	if [ "$1" = '--help' ] || [ $# -eq 1 -a "$1" = '--' ] || [ $# -gt 1 ]
+	then
+		echo 'Usage: last [-t | -c | -tf]'
+		echo
+		echo 'List the last modified file in a directory and store the filename in an env var: $LAST'
+		echo 'Options:'
+		echo -e '\t-t  - tail the file'
+		echo -e '\t-tf - tail -f the file'
+		echo -e '\t-c  - cat the file'
+		echo -e '\t-l  - less the file'
+		echo -e '\t-v  - vi the file'
+		echo -e '\t-cd  - cd into the last item if a directory'
+		echo -e '\t-s  - open file with Sublime Text 2'
+		return 255
 	fi
 
-    if [ "$1" = "c" ];
-    then
-    	cat $LAST
-    fi
+	shopt -s dotglob #skip . and ..
+	LAST=`ls -lrtd * | grep -v DS_Store | tail -1 |  awk ' { print $9 }'`
+	shopt -u dotglob #unset it
 
-    if [ "$1" = "t" ];
-    then
-    	tail $LAST
-    fi
-    if [ "$1" = "tf" ];
-    then
-    	tail -f $LAST
-    fi
-  
-  return 0
+	TYPE=`file -b $LAST`
 
+	if [ $# -eq 0 ]; 
+		then
+		if [ "$TYPE" = "directory" ]
+			then
+			ls -ld $LAST
+		else
+			ls -l $LAST
+		fi
+	
+	elif [ "$1" = "-cd" ] && [ "$TYPE" = "directory" ]
+		then
+			cd $LAST
+			pwd
+
+	elif [ "$1" = "-cd" ] && [ "$TYPE" != "directory" ]
+		then
+			echo "Last item in the directory is a FILE - you can't cd into it"
+			ls -l $LAST
+
+	elif [ "$1" = "-s" ] #you can open a dir with subl
+		then
+			subl -w $LAST &
+
+	elif [ "$TYPE" = "directory" ]	
+		then
+			echo "Last item in the directory IS a directory - you can't tail/cat/less/vi"
+			ls -ld $LAST
+	
+	elif [ "$1" = "-c" ]
+		then
+			cat $LAST
+
+	elif [ "$1" = "-t" ]
+		then
+			tail $LAST
+
+	elif [ "$1" = "-l" ]
+		then
+			less $LAST
+
+	elif [ "$1" = "-v" ]
+		then
+			vi $LAST			
+
+	elif [ "$1" = "-tf" ]
+		then
+			tail -f $LAST
+	fi
+	
+	return 0
 }
+
+
 
 function wch() 
 {
