@@ -38,3 +38,19 @@ set convert-meta off
 
 # Use Alt/Meta + Delete to delete the preceding word
 "\e[3;3~": kill-word
+
+# When autocompleting symlinks to directories, immediately add a trailing "/".
+set mark-symlinked-directories on
+
+# Do not expand "~" to the home directory when completing. (The actual value
+# passed on to the command still is expanded, though. Which is good.) "Off" is
+# the default value, but some servers override this, so I override the override.
+set expand-tilde off
+
+# Flip through autocompletion matches with Shift-Tab.
+"\e[Z": menu-complete
+
+# Miscellaneous
+# -----------------------------------------------------------------------------
+# Neither sound a beep nor flash the screen when trying to ring the bell.
+set bell-style none
