@@ -180,7 +180,7 @@ function unquarantine() {
 
 # mine
 
-function hge()
+function hgu()
 {
 	file="${HOME}/.bash_eternal_history"
 	
