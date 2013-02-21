@@ -24,19 +24,35 @@ alias oo="open ."
 alias h=history
 alias hg="history | grep"
 alias hgi="history | grep -i"
-
-# commands
 alias he="cat ${HOME}/.bash_eternal_history"
 alias hge="cat ${HOME}/.bash_eternal_history | grep "
 alias hgei="cat ${HOME}/.bash_eternal_history | grep -i "
-alias spwr="/Applications/MAMP/bin/php/php5.3.14/bin/php retrieve.php"
 
+# commands
+alias spwr="/Applications/MAMP/bin/php/php5.3.14/bin/php retrieve.php"
 alias py="python"
+
+# chmod commands
 alias cx="chmod +x"
+alias cw="chmod +w"
+alias cr="chmod +r"
+
+# file counts
 alias llc="ls -l | wc -l"
 alias findc="find . -type f -print | perl -lne 'print quotemeta' | xargs ls -l | wc -l"
 
-alias psg="ps -aef | grep "
+# pyc count and remove
+alias lpyc="find . -type f | egrep -i '.pyc' | perl -lne 'print quotemeta' | xargs ls -l"
+alias rmpyc="find . -type f | egrep -i '.pyc' | perl -lne 'print quotemeta' | xargs rm -f"
+
+# process grep
+alias psg="ps -aef | grep -v grep | grep -i "
+
+# Troubleshooting
+# AESendMessage bug - http://www.openradar.me/12424662
+alias kae='sudo killall -KILL appleeventsd'
+alias kf='killall Finder'
+alias kcp="sudo launchctl unload /Library/LaunchDaemons/com.crashplan.engine.plist"
 
 # git
 alias g="git"
@@ -54,11 +70,6 @@ alias got='git '
 alias get='git '
 alias bit='git '
 alias vit='git '
-
-
-# Troubleshooting
-alias kae='sudo killall -KILL appleeventsd'
-alias kcp="sudo launchctl unload /Library/LaunchDaemons/com.crashplan.engine.plist"
 
 # Detect which `ls` flavor is in use
 if ls --color > /dev/null 2>&1; then # GNU `ls`
