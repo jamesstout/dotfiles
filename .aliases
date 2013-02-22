@@ -168,6 +168,7 @@ alias hide="defaults write com.apple.finder AppleShowAllFiles -bool false && kil
 # URL-encode strings
 alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
 alias urlencode2='python -c "import sys, urllib as ul; print ul.urlencode(sys.argv[1]);"'
+alias urlencode3='python -c "import sys, xml.sax.saxutils as sa; print sa.escape(sys.argv[1]);"'
 
 # URL-decode strings
 alias urldecode='python -c "import sys, urllib as ul; print ul.unquote(sys.argv[1]);"'
