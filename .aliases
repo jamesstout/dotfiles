@@ -29,7 +29,7 @@ alias hge="cat ${HOME}/.bash_eternal_history | grep "
 alias hgei="cat ${HOME}/.bash_eternal_history | grep -i "
 
 # commands
-alias spwr="/Applications/MAMP/bin/php/php5.4.4/bin/php retrieve.php"
+alias spwr="/Applications/MAMP/bin/php/php5.4.10/bin/php retrieve.php"
 alias py="python"
 
 # chmod commands
