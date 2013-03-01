@@ -340,6 +340,74 @@ sudoKillPIDS() {
 }
 
 
+function kpu() 
+{
+	if [ $# -eq 0 -o "$1" = '--help' ] || [ $# -eq 1 -a "$1" = '--' ] || [ $# -gt 1 ] 
+	then
+		e_warning 'Usage: kp SEARCH_STRING'
+		return 255
+	fi
+
+	if grep -v '^[-0-9a-zA-Z]*$' <<<$1 ;
+	then     
+		e_warning 'No regexes! Usage: kp SEARCH_STRING'
+		return 255;
+	fi
+
+	e_header "Searching for commands matching '$1' ..."
+
+	userID=`id -u`
+
+	psCmd=""
+
+	if [[ "$OSTYPE" =~ ^darwin ]]; 
+	then
+		psCmd="ps -u $userID"
+	else
+		psCmd="ps -u $userID -o uid,pid,args"
+	fi
+
+	#echo "psCmd = $psCmd"
+
+	# e.g if $1 is 'lib' the grep regex here expands to
+	# grep "[l]ib" meaning it won't match *this* grep command
+	# it's looking for a command with 'l' followed by 'ib' not grep [l]ib
+	# so we don't need to add the usual grep -v grep
+	declare -a PID=(`$psCmd | grep "[${1:0:1}]${1:1}" | awk '{ print $2 }'`)
+
+	pidCount=${#PID[@]} 
+
+	if [ $pidCount -gt 0 ]; then
+   		echo "$pidCount processes match:"
+
+	   	# list out the processes
+	    pidStr=`printf "%s," "${PID[@]}"`
+	    ps -f -p $pidStr
+	    
+	    # check they are really sure
+	    seek_confirmation "Are you sure you want to kill all $pidCount processes?"
+
+	    if is_confirmed; then
+	      # reformat pidStr without commas - could also do
+	      # pidStr=`echo "$pidStr" | rev | cut -c 2- | rev`
+	      pidStr=`printf "%s " "${PID[@]}"`
+
+	      killPIDS $pidStr
+	      
+	    else
+	      printf "Aborting...\n"
+	      return 0
+	    fi   
+	  else
+	    e_header "No matching processes."
+	fi
+
+  return 0
+
+
+}
+
+
 function kp() 
 {
   if [ $# -eq 0 -o "$1" = '--help' ] || [ $# -eq 1 -a "$1" = '--' ] || [ $# -gt 1 ] 
