@@ -350,7 +350,7 @@ function kp()
 
   if grep -v '^[-0-9a-zA-Z]*$' <<<$1 ;
   then     
-      e_warning 'No regexes! Usage: kp SEARCH_STRING - '
+      e_warning 'No regexes! Usage: kp SEARCH_STRING'
       return 255;
   fi
 
@@ -385,16 +385,20 @@ function kp()
       # remove the current user from the list
       declare -a PID_REMOVEUSER=( ${PID_UID[@]/${userID}/} )
 
+      pidCountAfterRemovingUser=0
+      pidCountAfterRemovingUser=${#PID_REMOVEUSER[@]}
 
       #echo "before = ${PID_UID[@]}"
       #echo "after = ${PID_REMOVEUSER[@]}"
+      #echo $pidCountAfterRemovingUser
 
       # remove root as well - could all be root processes
       declare -a PID_REMOVEROOT=( ${PID_UID[@]/0/} )
 
       #echo "before = ${PID_UID[@]}"
-      #echo "after = ${PID_REMOVEROOT[@]}"
+      #echo "after = ${PID_REMOVEROOT[@]}"  
 
+      pidCountAfterRemovingRoot=0
       pidCountAfterRemovingRoot=${#PID_REMOVEROOT[@]}
 
       #echo $pidCountAfterRemovingRoot
@@ -402,20 +406,26 @@ function kp()
       # if after removing current user the userId list is different
       # or if all processes belong to root
       # or is after that we still have remaining userIds..
-      if [ $PID_UID -ne $PID_REMOVEUSER -o $pidCountAfterRemovingRoot -eq 0 -o $pidCountAfterRemovingRoot -gt 0 ]
+      if [ $pidCountAfterRemovingUser -eq 0 ]
       then
-        e_warning 'Some matched processes do not belong to you.'
-
-        seek_confirmation "Are you sure you want to continue?"
-
-        if is_confirmed; then
-          usePFEXEC=1
-        else
-          printf "Aborting...\n"
-          return 0
-        fi   
+         e_header "All your processes are belong to you..."
       else
-        e_header "All processes are belong to you..."
+
+        if [ $pidCount -ne $pidCountAfterRemovingUser -o $pidCountAfterRemovingRoot -eq 0 -o $pidCountAfterRemovingRoot -gt 0 ]
+        then
+          e_warning 'Some matched processes do not belong to you.'
+
+          seek_confirmation "Are you sure you want to continue?"
+
+          if is_confirmed; then
+            usePFEXEC=1
+          else
+            printf "Aborting...\n"
+            return 0
+          fi   
+        else
+          e_header "All your processes are belong to you..."
+        fi
       fi 
     fi
 
