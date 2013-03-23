@@ -50,6 +50,12 @@ type_exists() {
     return 1
 }
 
+file_exists() {
+    if [ -e "$1" ]; then
+      return 0
+    fi
+    return 1
+}
 # Test whether a Homebrew formula is already installed
 # $1 - formula name (may include options)
 formula_exists() {
