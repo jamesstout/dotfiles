@@ -14,7 +14,7 @@ alias p="cd ~/Projects"
 alias cdg="cd ~/Projects/Github"
 alias cds="cd ~/Sites"
 alias su="su -"
-alias lr="echo $?"
+alias lr='echo $?'
 
 # apps
 alias m="mate ."
