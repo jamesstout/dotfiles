@@ -20,6 +20,7 @@ export HISTFILESIZE=32768;
 
 # When executing the same command twice or more in a row, only store it once.
 export HISTCONTROL=ignoredups;
+export HISTCONTROL=erasedups
 
 # Make some commands not show up in history
 export HISTIGNORE="ls:cd:cd -:pwd:exit:date:hg:s:o:oo"
