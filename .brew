@@ -34,6 +34,7 @@ if type_exists 'brew'; then
         'subversion'
         'rsync'
         'wget --enable-iri'
+        'webkit2png'
     )
 
     for index in ${!desired_formulae[*]}
