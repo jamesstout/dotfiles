@@ -57,6 +57,23 @@ alias kae='sudo killall -KILL appleeventsd'
 alias kf='killall Finder'
 alias kcp="sudo launchctl unload /Library/LaunchDaemons/com.crashplan.engine.plist"
 
+# copy the working directory path
+alias cpwd='pwd|tr -d "\n"|pbcopy'
+
+# recursively delete Dropbox conflicted files
+alias rmdbc="find . -name *\ \(*conflicted* -exec rm {} \;" 
+
+# top
+alias cpu='top -o cpu'
+alias mem='top -o rsize' # memory
+
+#copy output of last command to clipboard
+alias cl="fc -e -|pbcopy"
+
+# time machine log
+alias tmlog="syslog -F '\$Time \$Message' -k Sender com.apple.backupd-auto -k Time ge -30m | tail -n 1"
+
+
 # git
 alias g="git"
 alias gs='git status '
