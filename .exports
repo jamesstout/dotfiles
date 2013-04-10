@@ -1,5 +1,5 @@
 # Make vim the default editor
-export EDITOR="vim"
+export EDITOR="$HOME/dotfiles/bin/editor.sh"
 
 # shamelessly copied from https://github.com/janmoesen/tilde
 # History
