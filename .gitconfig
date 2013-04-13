@@ -33,9 +33,6 @@
 	
 	# Interactive rebase with the given number of latest commits
 	reb = "!r() { git rebase -i HEAD~$1; }; r"
-	
-	# Undo a `git push`
-	undopush = push -f origin HEAD^:master
 
 	# When doing "git git log" or some such, do not complain about "git" not
 	# being a valid Git command. This happens when copy-pasting examples, for
