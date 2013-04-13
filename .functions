@@ -1,3 +1,87 @@
+
+# Show the top 10 processes.
+function top10 {
+	# Default columns displayed by "top" on Debian Linux and Mac OS X:
+	#         1   2    3  4  5    6   7   8 9    10   11    12
+	# Linux:  PID USER PR NI VIRT RES SHR S %CPU %MEM TIME+ COMMAND
+	# Darwin: PID COMMAND %CPU TIME #TH #WQ #PORTS #MREGS RPRVT RSHRD RSIZE VPRVT VSIZE PGRP PPID STATE UID FAULTS COW MSGSENT MSGRECV SYSBSD SYSMACH CSW PAGEINS USER
+	#         1   2       3    4    5   6   7      8      9     10    11    12    13    14   15   16    17  18     19  20      21      22     23      24  25      26
+	if [[ "$OSTYPE" =~ ^darwin ]]; then
+		# Mac OS X's top does not calculate the CPU usage when sampling only
+		# once. So, sample twice and only keep the output of the second
+		# sample. This makes it seem very slow, but them's the breaks.
+		local output="$(top -l 2 -n 10 -o CPU -stats PID,USER,CPU,VSIZE,RSIZE,RSHRD,STATE,TIME,COMMAND)";
+		output="$(tail -n "$(($(wc -l <<< "$output") / 2))" <<< "$output")";
+	else
+		# Debian's top (and possibly other Linux versions) does not allow
+		# requesting specific fields on the command line, so create a
+		# temporary .toprc somewhere and use that. The "fieldscur" below
+		# correspond to the "-stats" option for OS X's "top". See above.
+		local tmp_dir="$(mktemp -d -t "top10.$$.XXXX")";
+		cat > "$tmp_dir/.toprc" <<-EOD
+			RCfile for "top with windows"		# shameless braggin'
+			Id:a, Mode_altscr=0, Mode_irixps=1, Delay_time=3.000, Curwin=0
+			Def	fieldscur=AEKhiOQTWnMbcdfgjplrsuvyzX
+				winflags=62777, sortindx=10, maxtasks=0
+				summclr=1, msgsclr=1, headclr=3, taskclr=1
+		EOD
+		local output="$(HOME="$tmp_dir"; top -bn 1)";
+		rm -rf "$tmp_dir";
+	fi;
+
+	# Output the result, and use "column" to align the process columns a bit
+	# better than "top" itself does. This does screw up the command names when
+	# they contain a space, e.g. "Chromium Helper" => "Chromium     Helper".
+	local pid_start_line="$(egrep -nm1 '^\s*PID' <<< "$output" || echo 65536)";
+	pid_start_line="${pid_start_line%:*}";
+	head -n $(($pid_start_line - 1)) <<< "$output";
+	tail -n +$pid_start_line <<< "$output" | head -n 11 | column -t;
+}
+
+
+# Show the given file(s) in the Finder.
+function show {
+	# Default to the current directory.
+	[ $# -eq 0 ] && set -- .;
+
+	# Build the array of paths for AppleScript.
+	local path paths=();
+	for path; do
+		# Make sure each path exists.
+		if ! [ -e "$path" ]; then
+			echo "show: $path: No such file or directory";
+			continue;
+		fi;
+
+		# Crappily re-implement "readlink -f" ("realpath") for Darwin.
+		# (The "cd ... > /dev/null" hides CDPATH noise.)
+		[ -d "$path" ] \
+			&& path="$(cd "$path" > /dev/null && pwd)" \
+			|| path="$(cd "$(dirname "$path")" > /dev/null && \
+			           echo "$PWD/$(basename "$path")")";
+
+		# Use the "POSIX file" AppleScript syntax.
+		paths+=("POSIX file \"${path//\"/\"}\"");
+	done;
+	[ "${#paths[@]}" -eq 0 ] && return;
+
+	# Group all output to pipe through osacript.
+	{
+		echo 'tell application "Finder"';
+		echo -n 'select {'; # "reveal" would select only the last file.
+
+		for ((i = 0; i < ${#paths[@]}; i++)); do
+			echo -n "${paths[$i]}";
+			[ $i -lt $(($# - 1)) ] && echo -n ', '; # Ugly array.join()...
+		done;
+
+		echo '}';
+		echo 'activate';
+		echo 'end tell';
+	} | osascript;
+}
+
+
 # Simple calculator
 function calc() {
 	local result=""
