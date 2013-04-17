@@ -30,7 +30,6 @@ if type_exists 'brew'; then
         'optipng'
         'rename'
         'tree'
-        'node'
         'subversion'
         'rsync'
         'wget --enable-iri'
