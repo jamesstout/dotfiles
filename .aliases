@@ -50,6 +50,7 @@ alias rmpyc="find . -type f | egrep -i '.pyc' | perl -lne 'print quotemeta' | xa
 # process grep
 alias psg="ps -aef | grep -v grep | grep -i "
 alias pse="ps -aef"
+alias ts="top -o state"
 
 # Troubleshooting
 # AESendMessage bug - http://www.openradar.me/12424662
