@@ -36,6 +36,14 @@ if type_exists 'brew'; then
         'webkit2png'
         'lua52'
         'virtualhost.sh'
+        'p7zip'
+        'node'
+        'the_silver_searcher'
+        'ngrep'
+        'lesspipe'
+        'tmux'
+        'class-dump'
+        'youtube-dl'
     )
 
     for index in ${!desired_formulae[*]}
