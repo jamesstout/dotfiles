@@ -1,0 +1,3 @@
+[submodule "third-party/z"]
+	path = third-party/z
+	url = git://github.com/rupa/z.git
