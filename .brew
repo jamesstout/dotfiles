@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 source ./.utils
 
@@ -72,7 +72,7 @@ else
     printf "\n"
     e_error "Error: Homebrew not found."
     printf "Aborting...\n"
-    exit
+    return 1
 fi
 
 
