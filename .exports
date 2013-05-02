@@ -12,18 +12,18 @@ export EDITOR="$HOME/dotfiles/bin/editor.sh"
 shopt -s histreedit;
 
 # Keep a reasonably long history.
-export HISTSIZE=4096;
+export HISTSIZE=10000;
 
 # Keep even more history lines inside the file, so we can still look up
 # previous commands without needlessly cluttering the current shell's history.
-export HISTFILESIZE=32768;
+export HISTFILESIZE=10000;
 
 # When executing the same command twice or more in a row, only store it once.
 export HISTCONTROL=ignoredups;
 export HISTCONTROL=erasedups
 
 # Make some commands not show up in history
-export HISTIGNORE="ls:cd:cd -:pwd:exit:hg:s:o:oo"
+export HISTIGNORE="ls:cd:cd -:pwd:exit:hg:s:o:oo:h:* --help:ls *:ll:la:lst"
 
 #export HISTTIMEFORMAT=%Y/%m/%d %H:%M:%S
 
