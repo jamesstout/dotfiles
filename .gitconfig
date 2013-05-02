@@ -2,6 +2,23 @@
 	# View the SHA, description, and history graph of the latest 20 commits
 	l = log --pretty=oneline -n 20 --graph
 	
+	# from https://github.com/necolas/dotfiles
+	logp = log --pretty=nice --date-order
+	# Custom graph log (append any tree-ish)
+    graph = log --pretty=nice --date-order --graph
+    # Custom graph log for all branches
+    grapha = log --pretty=nice --date-order --graph --all
+
+
+	# `git remote prune origin`: remove remote-tracking branches that were deleted from the remote repo
+    # `git gc`: cleanup unnecessary files and optimize the local repository
+    # `git clean -df`: remove untracked files and directories from the working tree
+    # `git stash clear`: remove all stashed states
+    trim = !git remote prune origin && git gc
+    cleanup = !git clean -df && git stash clear
+
+
+
 	# View the current working tree status using the short format
 	s = status -s
 	
@@ -65,7 +82,17 @@
 	trustExitCode = true
 [mergetool]
 	prompt = false
-	
+
+# from https://github.com/necolas/dotfiles
+[pretty]
+    # tut: http://gitimmersion.com/lab_10.html
+    # ref: http://linux.die.net/man/1/git-log
+    # Result: <short-sha> <commit-message> (<pointer-names>) -- <commit-author-name>; <relative-time>
+    nice = "%C(yellow)%h%C(reset) %C(white)%s%C(cyan)%d%C(reset) -- %an; %ar"
+
+[credential]
+    helper = osxkeychain
+
 [core]
 	# Use custom `.gitignore` and `.gitattributes`
 	excludesfile = ~/.gitignore
@@ -98,9 +125,9 @@
 	tool = Kaleidoscope
 
 # Use `origin` as the default remote on the `master` branch in all cases
-[branch "master"]
-	remote = origin
-	merge = refs/heads/master
+#[branch "master"]
+#	remote = origin
+#	merge = refs/heads/master
 
 # URL shorthands
 [url "git@github.com:"]
