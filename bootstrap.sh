@@ -20,6 +20,9 @@ cp .{bash_profile,bash_prompt,path,exports,aliases,functions,extra,gitattributes
 # move down here, depends on .utils
 source ./.brew
 
+# for testing without .brew
+#source ./.utils
+
 # setup vars for dirs and symlinks
 BIN_DIR="$HOME"/bin
 SUBL_SYMLINK="$BIN_DIR"/subl
@@ -43,7 +46,8 @@ if [ ! -d "$BIN_DIR" ]; then
 
 		# update z repo and copy
 		cd "$Z_REPO"
-		git pull
+		git_info=$(get_git_branch)
+		git pull -v origin "$git_info"
 		cp -f z.sh "$BIN_DIR"
 		chmod +x "$BIN_DIR"/z.sh
 		cd -
@@ -61,7 +65,8 @@ else
 
 	# update z repo and copy
 	cd "$Z_REPO"
-	git pull
+	git_info=$(get_git_branch)
+	git pull -v origin "$git_info"
 	cp -f z.sh "$BIN_DIR"
 	chmod +x "$BIN_DIR"/z.sh
 	cd -
