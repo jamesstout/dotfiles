@@ -17,6 +17,11 @@ Thumbs.db
 .hg
 .svn
 .CVS
+*.orig
+*.diff
+*~
+*.vi
+
 
 # never ignore a .gitignore
 # (prevents Git ignoring empty directories by placing
