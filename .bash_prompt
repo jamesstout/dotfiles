@@ -69,7 +69,15 @@ prompt_git() {
         return 1
     fi
 
+    # ensure index is up to date
+    git update-index --really-refresh  -q &>/dev/null
+
     git_info=$(get_git_branch)
+
+    # remember git will ignore empty dirs
+    # unless they contain a .gitignore file
+    # so the prompt should be correct
+    # with the caveat that it ignores any new empty folders
 
     # Check for uncommitted changes in the index
     if ! $(git diff --quiet --ignore-submodules --cached); then
