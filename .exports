@@ -27,6 +27,11 @@ export HISTIGNORE="ls:cd:cd -:pwd:exit:hg:s:o:oo:h:* --help:ls *:ll:la:lst"
 
 #export HISTTIMEFORMAT=%Y/%m/%d %H:%M:%S
 
+# Make new shells get the history lines from all previous
+# shells instead of the default "last window closed" history
+PROMPT_COMMAND='history 1 >> ${HOME}/.bash_eternal_history'
+PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
+
 # Prefer US English and use UTF-8
 export LANG="en_US"
 export LC_ALL="en_US.UTF-8"
