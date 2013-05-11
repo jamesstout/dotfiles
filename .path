@@ -1,4 +1,4 @@
-export PATH=/usr/local/bin:/usr/local/share/npm/bin:$PATH:$HOME/Projects/Scripts:$HOME/Scripts
+export PATH=/usr/local/bin:/usr/local/sbin:/usr/local/share/npm/bin:$PATH:$HOME/Projects/Scripts:$HOME/Scripts
 
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
