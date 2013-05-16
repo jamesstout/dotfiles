@@ -23,7 +23,7 @@ export HISTCONTROL=ignoredups;
 export HISTCONTROL=erasedups
 
 # Make some commands not show up in history
-export HISTIGNORE="ls:cd:cd -:pwd:exit:hg:s:o:oo:h:* --help:ls *:ll:la:lst"
+export HISTIGNORE="ls:cd:cd -:pwd:exit:hg:s:o:oo:h:* --help::ll:la:lst"
 
 #export HISTTIMEFORMAT=%Y/%m/%d %H:%M:%S
 
@@ -33,7 +33,7 @@ PROMPT_COMMAND='history 1 >> ${HOME}/.bash_eternal_history'
 PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
 
 # Prefer US English and use UTF-8
-export LANG="en_US"
+export LANG="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
 
 # Highlight section titles in manual pages
