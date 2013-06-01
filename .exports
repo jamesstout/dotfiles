@@ -23,7 +23,7 @@ export HISTCONTROL=ignoredups;
 export HISTCONTROL=erasedups
 
 # Make some commands not show up in history
-export HISTIGNORE="ls:cd:cd -:pwd:exit:hg:s:o:oo:h:* --help::ll:la:lst"
+export HISTIGNORE="ls:cd:cd -:pwd:exit:hg:s:o:oo:h:ll:la:"
 
 #export HISTTIMEFORMAT=%Y/%m/%d %H:%M:%S
 
