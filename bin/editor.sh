@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 case "$1" in
 	*_EDITMSG|*MERGE_MSG|*_TAGMSG )
