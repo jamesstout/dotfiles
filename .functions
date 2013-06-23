@@ -404,7 +404,55 @@ function last()
 	return 0
 }
 
+#########################
+## Colorized man pages ##
+#########################
+man() {
+   env \
+      LESS_TERMCAP_mb=$(printf "\e[1;31m") \
+      LESS_TERMCAP_md=$(printf "\e[1;31m") \
+      LESS_TERMCAP_me=$(printf "\e[0m") \
+      LESS_TERMCAP_se=$(printf "\e[0m") \
+      LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
+      LESS_TERMCAP_ue=$(printf "\e[0m") \
+      LESS_TERMCAP_us=$(printf "\e[1;32m") \
+      man "$@"
+}
 
+################
+## Smarter CD ##
+################
+function goto() {
+   [[ -d "$1" ]] && { cd "$1"; } || cd "$(dirname "$1")";
+}
+
+####################
+## Copy && Follow ##
+####################
+function cpf() {
+   cp "$@" && goto "$_";
+}
+
+####################
+## Move && Follow ##
+####################
+function mvf() {
+   mv "$@" && goto "$_";
+}
+
+#####################
+## mkdir && follow ##
+#####################
+function mkcdr() {
+   mkdir -vp "$@" && cd "$_";
+}
+
+#####################
+## mkdir && follow ##
+#####################
+function llf() {
+   ll "$@" && goto "$_";
+}
 
 function wch() 
 {
