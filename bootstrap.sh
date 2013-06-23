@@ -63,6 +63,14 @@ else
 		ln -s "$SUBL_APP" "$SUBL_SYMLINK"
 	fi
 
+	# cp extract and editor
+	cp -f bin/editor.sh "$BIN_DIR"
+	cp -f bin/extract "$BIN_DIR"
+	cp -f bin/ixio "$BIN_DIR"
+	chmod +x "$BIN_DIR"/extract
+	chmod +x "$BIN_DIR"/editor.sh
+	chmod +x "$BIN_DIR"/ixio
+
 	# update z repo and copy
 	cd "$Z_REPO"
 	git_info=$(get_git_branch)
