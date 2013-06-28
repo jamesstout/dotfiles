@@ -45,6 +45,8 @@ alias hgei="cat ${HOME}/.bash_eternal_history | grep -i "
 alias spwr="/Applications/MAMP/bin/php/php5.4.10/bin/php retrieve.php"
 alias py="python"
 
+alias gurl='curl --compressed'
+
 # chmod commands
 alias cx="chmod +x"
 alias cw="chmod +w"
