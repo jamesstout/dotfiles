@@ -31,6 +31,23 @@ SUBL3_APP="/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl"
 # default to v2
 SUBL_APP="$SUBL2_APP"
 Z_REPO="third-party/z"
+RBENV_REPO="$HOME/.rbenv"
+
+# update rbenv
+cd "$RBENV_REPO"
+git_info=$(get_git_branch)
+git pull -v origin "$git_info"
+cd -
+
+# update npm
+npm update npm -g
+npm update npm
+npm update -g
+
+# gem update
+gem update
+gem cleanup
+rbenv rehash
 
 if file_exists "$SUBL3_APP"; then
 	SUBL_APP="$SUBL3_APP"
@@ -67,9 +84,11 @@ else
 	cp -f bin/editor.sh "$BIN_DIR"
 	cp -f bin/extract "$BIN_DIR"
 	cp -f bin/ixio "$BIN_DIR"
+	cp -f bin/httpcompression "$BIN_DIR"
 	chmod +x "$BIN_DIR"/extract
 	chmod +x "$BIN_DIR"/editor.sh
 	chmod +x "$BIN_DIR"/ixio
+	chmod +x "$BIN_DIR"/httpcompression
 
 	# update z repo and copy
 	cd "$Z_REPO"
