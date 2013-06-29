@@ -34,17 +34,20 @@ Z_REPO="third-party/z"
 RBENV_REPO="$HOME/.rbenv"
 
 # update rbenv
+e_header "Updating rbenv..."
 cd "$RBENV_REPO"
 git_info=$(get_git_branch)
 git pull -v origin "$git_info"
 cd -
 
 # update npm
+e_header "Updating npm..."
 npm update npm -g
 npm update npm
 npm update -g
 
 # gem update
+e_header "Updating gems..."
 gem update
 gem cleanup
 rbenv rehash
