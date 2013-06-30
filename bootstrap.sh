@@ -32,13 +32,46 @@ SUBL3_APP="/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl"
 SUBL_APP="$SUBL2_APP"
 Z_REPO="third-party/z"
 RBENV_REPO="$HOME/.rbenv"
+ST3_DIR="$HOME/Library/Application Support/Sublime Text 3/Packages"
+ST3_BH_DIR="$ST3_DIR/BracketHighlighter"
+ST3_TS_DIR="$ST3_DIR/Theme - Soda"
+ST3_PC_DIR="$ST3_DIR/Package Control"
+ST3_USER_DIR="$ST3_DIR/User"
+ST3_BH_FILE="$ST3_BH_DIR/bh_core.sublime-settings"
+ST3_BH_USER_FILE="$ST3_USER_DIR/bh_core.sublime-settings"
+ST3_BH_USER_FILE_BAK="$ST3_USER_DIR/bh_core.sublime-settings.bak"
+
+declare -a dirs_to_check=("$ST3_BH_DIR" "$ST3_TS_DIR" "$ST3_PC_DIR" "$RBENV_REPO")
+
+for ((i=0; i<${#dirs_to_check[@]}; ++i));
+do
+	if ! dir_exists "${dirs_to_check[$i]}"; then
+		e_error "${dirs_to_check[$i]} does not exist. Exiting"
+		#return 23
+	fi
+done
+
+#ST3 stuff
+e_header "Updating ST3 packages..."
+
+e_debug "Updating BracketHighlighter"
+# if not already up to date, there could be new settings to copy
+if ! [[ $(cd_and_git_pull "$ST3_BH_DIR" 2> /dev/null | tail -n1) =~ ^Already ]]; then
+	# back up current settings
+	e_debug "Copying BracketHighlighter settings"
+	mv "$ST3_BH_USER_FILE" "$ST3_BH_USER_FILE_BAK"
+	cp "$ST3_BH_FILE" "$ST3_BH_USER_FILE"
+fi
+
+e_debug "Updating Theme Soda"
+cd_and_git_pull "$ST3_TS_DIR"
+
+e_debug "Updating Package Control"
+cd_and_git_pull "$ST3_PC_DIR"
 
 # update rbenv
 e_header "Updating rbenv..."
-cd "$RBENV_REPO"
-git_info=$(get_git_branch)
-git pull -v origin "$git_info"
-cd -
+cd_and_git_pull "$RBENV_REPO"
 
 # update npm
 e_header "Updating npm..."
@@ -47,6 +80,7 @@ npm update npm
 npm update -g
 
 # gem update
+# defaul gems bundler i18n ffi json psych rake rdoc vagrant gzip
 e_header "Updating gems..."
 gem update
 gem cleanup
@@ -73,7 +107,7 @@ if [ ! -d "$BIN_DIR" ]; then
 		cd -
 	else
 		e_error "Could not create $BIN_DIR" ; 
-		e_warning "$(tput setaf 136)! %s$(tput sgr0)\n" "Sublime Text symlink and z will not be installed";
+		e_warning "Sublime Text symlink and z will not be installed";
 	fi
 else
 
