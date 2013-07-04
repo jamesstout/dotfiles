@@ -40,13 +40,23 @@ is_confirmed() {
     return 1
 }
 
+git_pull(){
+
+    git_info=$(get_git_branch)
+    e_debug "exec git pull -v origin $git_info"
+    git pull -v origin "$git_info"
+}
+
 cd_and_git_pull(){
 
     e_debug "cd to $1"
     cd "$1" 
-    git_info=$(get_git_branch)
-    e_debug "exec git pull -v origin $git_info"
-    git pull -v origin "$git_info"
+    
+    if ! is_git_repo ; then
+        e_warning "Not a git repo"
+    else
+        git_pull
+    fi
     cd - 1>/dev/null
 }
 

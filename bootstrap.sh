@@ -47,7 +47,7 @@ for ((i=0; i<${#dirs_to_check[@]}; ++i));
 do
 	if ! dir_exists "${dirs_to_check[$i]}"; then
 		e_error "${dirs_to_check[$i]} does not exist. Exiting"
-		#return 23
+		return 23
 	fi
 done
 
