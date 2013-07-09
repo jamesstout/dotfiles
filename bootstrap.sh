@@ -117,6 +117,8 @@ else
 		ln -s "$SUBL_APP" "$SUBL_SYMLINK"
 	fi
 
+	e_debug "Copying bins"
+
 	# cp extract and editor
 	cp -f bin/editor.sh "$BIN_DIR"
 	cp -f bin/extract "$BIN_DIR"
@@ -130,6 +132,10 @@ else
 	# update z repo and copy
 	cd "$Z_REPO"
 	git_info=$(get_git_branch)
+	e_debug "cd $Z_REPO. Branch is $git_info"
+
+	e_debug "cmd is git pull -v origin $git_info"
+
 	git pull -v origin "$git_info"
 	cp -f z.sh "$BIN_DIR"
 	chmod +x "$BIN_DIR"/z.sh
