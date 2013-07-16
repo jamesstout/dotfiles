@@ -109,8 +109,13 @@ prompt_git() {
     printf "${SOLAR_WHITE} on ${style_branch}${git_info}"
 }
 
+# Make new shells get the history lines from all previous
+# shells instead of the default "last window closed" history
+PROMPT_COMMAND='history 1 >> ${HOME}/.bash_eternal_history'
+PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
 
 # Set the terminal title to the current working directory
+#PS1="\[\033]0;\h: \w\007\]"
 PS1="\[\033]0;\w\007\]"
 # Build the prompt
 PS1+="\n" # Newline
