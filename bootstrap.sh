@@ -10,12 +10,12 @@ fi
 
 # backup
 # backup .z - it contains all the z directory info, just in case
-cp ~/.{bash_profile,bash_prompt,path,exports,aliases,functions,extra,gitattributes,gitconfig,gitignore,inputrc,hgignore,wgetrc,vimrc,utils,bashrc,z,gemrc} "$BACKUPS_DIR"
+cp ~/.{bash_profile,bash_prompt,path,exports,aliases,functions,extra,gitattributes,gitconfig,gitignore,inputrc,hgignore,wgetrc,vimrc,utils,bashrc,z,gemrc,tmux.conf} "$BACKUPS_DIR"
 cp -r ~/.vim "$BACKUPS_DIR"
 
 # update dotfiles
 cp -rf .vim ~
-cp .{bash_profile,bash_prompt,path,exports,aliases,functions,extra,gitattributes,gitconfig,gitignore,inputrc,hgignore,wgetrc,vimrc,utils,bashrc,gemrc} ~
+cp .{bash_profile,bash_prompt,path,exports,aliases,functions,extra,gitattributes,gitconfig,gitignore,inputrc,hgignore,wgetrc,vimrc,utils,bashrc,gemrc,tmux.conf} ~
 
 # move down here, depends on .utils
 source ./.brew
