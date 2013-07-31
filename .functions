@@ -289,6 +289,121 @@ function hgu()
 	fi
 }
 
+function console () {
+  if [[ $# > 0 ]]; then
+    query=$(echo "$*"|tr -s ' ' '|')
+    tail -f /var/log/system.log|grep -i --color=auto -E "$query"
+  else
+    tail -f /var/log/system.log
+  fi
+}
+
+urlenc () { #url encode the passed string
+  echo -n "$1" | perl -pe's/([^-_.~A-Za-z0-9])/sprintf("%%%02X", ord($1))/seg'
+}
+
+fymd () {
+  encurl=$(urlenc $1)
+  curl "http://fuckyeahmarkdown.com/go/?read=1&preview=0&showframe=0&u=$encurl"|pbcopy
+  echo "In your clipboard, man."
+}
+
+pman () { #display man page as a PostScript PDF in Preview.app
+  man -t "$1"|open -f -a "Preview.app"
+}
+
+# gets the current 1m avg CPU load, was part of my prompt,
+# but was too slow for prompt_command
+chkload () {
+  local CURRLOAD=`uptime|awk '{print $(NF-2)}'`
+  if [ "$CURRLOAD" > "1" ]; then
+    local OUTP="HIGH"
+  elif [ "$CURRLOAD" < "1" ]; then
+    local OUTP="NORMAL"
+  else
+    local OUTP="UNKNOWN"
+  fi
+  echo $CURRLOAD
+}
+
+# glorified strip_tags to get plain text from websites
+# no markdownify
+function webtext() {
+  curl -s "$1"|php -r "echo trim(html_entity_decode(preg_replace('/([\n\s])+/misx',' ',strip_tags(preg_replace('/<script.*?\/script>/misx','',file_get_contents('php://stdin')))),ENT_QUOTES));"
+}
+
+# get any apps full-size icon, compression via jpegtran
+function geticon() {
+  # Autocompletes app names with modified .app_completions scripts
+  APP=`echo $1|sed -e 's/\.app$//'`
+  APPDIR=''
+  for dir in "/Applications/" "/Applications/Utilities/" "/Developer/Applications/" "/Developer/Applications/Utilties/"; do
+    if [[ -d ${dir}$APP.app ]]; then
+        APPDIR=$dir
+        break
+    fi
+  done
+  if [[ $APPDIR == '' ]]; then
+    echo "App not found"
+  else
+    ICON=`defaults read "${APPDIR}$APP.app/Contents/Info" CFBundleIconFile|sed -e 's/\.icns$//'`
+    TMPFILE="${TMPDIR}${APP}_icon.jpg"
+    OUTFILE="$HOME/Desktop/${APP}_icon.jpg"
+    MAXAVAIL=`sips -g pixelWidth "${APPDIR}$APP.app/Contents/Resources/$ICON.icns"|tail -1|awk '{print $2}'`
+    echo -n "Enter max pixel width ($MAXAVAIL): "
+    read MAX
+    if [[ $MAX == '' || $MAX -gt $MAXAVAIL ]]; then
+      MAX=$MAXAVAIL
+    fi
+    /usr/bin/sips -s format jpeg --resampleHeightWidthMax $MAX "${APPDIR}$APP.app/Contents/Resources/$ICON.icns" --out "$TMPFILE" > /dev/null 2>&1
+    /usr/local/bin/jpegtran -optimize "$TMPFILE" > "$OUTFILE"
+    echo "Wrote JPG to $OUTFILE."
+    echo -n 'Open in Preview? (y/N): '
+    read ANSWER
+    if [[ $ANSWER == 'y' ]]; then
+      open -a "Preview.app" "$OUTFILE"
+    fi
+  fi
+}
+
+# get any app's full-size icon, PNG version
+function geticonpng() {
+  # Autocompletes app names with modified .app_completions scripts
+  APP=`echo $1|sed -e 's/\.app$//'`
+  APPDIR=''
+  for dir in "/Applications/" "/Applications/Utilities/" "/Developer/Applications/" "/Developer/Applications/Utilties/"; do
+    if [[ -d ${dir}$APP.app ]]; then
+        APPDIR=$dir
+        break
+    fi
+  done
+  if [[ $APPDIR == '' ]]; then
+    echo "App not found"
+  else
+    ICON=`defaults read "${APPDIR}$APP.app/Contents/Info" CFBundleIconFile|sed -e 's/\.icns$//'`
+    TMPFILE="${TMPDIR}${APP}_icon.png"
+    OUTFILE="$HOME/Desktop/${APP}_icon.png"
+    MAXAVAIL=`sips -g pixelWidth "${APPDIR}$APP.app/Contents/Resources/$ICON.icns"|tail -1|awk '{print $2}'`
+    echo -n "Enter max pixel width ($MAXAVAIL): "
+    read MAX
+    if [[ $MAX == '' || $MAX -gt $MAXAVAIL ]]; then
+      MAX=$MAXAVAIL
+    fi
+    /usr/bin/sips -s format png --resampleHeightWidthMax $MAX "${APPDIR}$APP.app/Contents/Resources/$ICON.icns" --out "$OUTFILE" > /dev/null 2>&1
+    # /usr/local/bin/jpegtran -optimize "$TMPFILE" > "$OUTFILE"
+    echo "Wrote PNG to $OUTFILE."
+    echo -n 'Open in Preview? (y/N): '
+    read ANSWER
+    if [[ $ANSWER == 'y' ]]; then
+      open -a "Preview.app" "$OUTFILE"
+    fi
+  fi
+}
+
+# instant web server for current dir
+function serve() {
+  python -m SimpleHTTPServer ${1:-8080}
+}
 
 # Edit and reload the profile.
 function pro {
