@@ -124,10 +124,12 @@ else
 	cp -f bin/extract "$BIN_DIR"
 	cp -f bin/ixio "$BIN_DIR"
 	cp -f bin/httpcompression "$BIN_DIR"
+	cp -f bin/parallel "$BIN_DIR"
 	chmod +x "$BIN_DIR"/extract
 	chmod +x "$BIN_DIR"/editor.sh
 	chmod +x "$BIN_DIR"/ixio
 	chmod +x "$BIN_DIR"/httpcompression
+	chmod +x "$BIN_DIR"/parallel
 
 	# update z repo and copy
 	cd "$Z_REPO"
