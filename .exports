@@ -40,6 +40,9 @@ export LESS_TERMCAP_md="$ORANGE"
 
 export GREP_OPTIONS="--color=auto"
 
+# No ._ files in archives please
+export COPYFILE_DISABLE=true
+
 # shamelessly copied from https://github.com/janmoesen/tilde
 # Make less the default pager, and specify some useful defaults.
 less_options=(
