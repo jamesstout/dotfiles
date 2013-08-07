@@ -1,3 +1,16 @@
+function show-empty-folders {
+    find . -depth -type d -empty
+}
+
+function kill-empty-folders {
+    find . -depth -type d -empty -exec rmdir "{}" \;
+}
+
+function git-root {
+  root=$(git rev-parse --git-dir 2> /dev/null)
+  [[ -z "$root" ]] && root="."
+  dirname $root
+}
 
 # Show the top 10 processes.
 function top10 {
