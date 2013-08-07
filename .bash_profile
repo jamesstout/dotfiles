@@ -52,20 +52,16 @@ complete -W "NSGlobalDomain" defaults
 # Add `killall` tab completion for common apps
 complete -o "nospace" -W "Calendar Dock Dashboard Finder Mail Safari iTunes SystemUIServer, Crashlytics, Cloud, Dropbox, Fantastical, Growl, HazelHelper, ChronoSyncBackgrounder, GeekTool\ Helper" killall
 
-# If possible, add tab completion for many more commands
-[ -f /etc/bash_completion ] && source /etc/bash_completion
+## Tab Completions
+set completion-ignore-case On
 
-# Bash completion
-if [ -f $(brew --prefix)/etc/bash_completion ]; then
-    . $(brew --prefix)/etc/bash_completion
-fi
-
-# Brew completion
-if [ -f $(brew --prefix)/Library/Contributions/brew_bash_completion.sh ]; then
-    . $(brew --prefix)/Library/Contributions/brew_bash_completion.sh
-fi
-
-# Generic Colouriser
-if [ -f $(brew --prefix)/etc/grc.bashrc ]; then
-    . $(brew --prefix)/etc/grc.bashrc
-fi
+prefix=$(brew --prefix)
+for comp in \
+  /etc/bash_completion \
+  $prefix/etc/bash_completion \
+  $prefix/Library/Contributions/brew_bash_completion.sh \
+  $prefix/etc/grc.bashrc \
+  $prefix/etc/bash_completion.d/git-completion.bash
+do
+    [[ -e $comp ]] && source $comp
+done
