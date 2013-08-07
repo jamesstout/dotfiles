@@ -32,6 +32,8 @@ alias bl="brew list"
 alias bc="brew cleanup"
 alias bd="brew doctor"
 
+alias pigs="du | sort -nr | cut -f2- | xargs du -hs"
+alias pigs1="du -d1 | sort -nr | cut -f2- | xargs du -hs"
 
 # history
 alias h=history
