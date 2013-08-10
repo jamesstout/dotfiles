@@ -10,7 +10,7 @@ done
 unset file
 
 . ~/bin/z.sh
-
+. ~/bin/bashmarks.sh
 # shamelessly copied from https://github.com/janmoesen/tilde/blob/master/.bash/shell
 # Shell options, environment variables and readline settings
 # =============================================================================
