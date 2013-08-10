@@ -11,10 +11,12 @@ fi
 # backup
 # backup .z - it contains all the z directory info, just in case
 cp ~/.{bash_profile,bash_prompt,path,exports,aliases,functions,extra,gitattributes,gitconfig,gitignore,inputrc,hgignore,wgetrc,vimrc,utils,bashrc,z,gemrc,tmux.conf} "$BACKUPS_DIR"
-cp -r ~/.vim "$BACKUPS_DIR"
+cp -R ~/.vim "$BACKUPS_DIR"
+cp -R ~/.git_template "$BACKUPS_DIR"
 
 # update dotfiles
-cp -rf .vim ~
+cp -Rf .vim ~
+cp -Rf .git_template ~
 cp .{bash_profile,bash_prompt,path,exports,aliases,functions,extra,gitattributes,gitconfig,gitignore,inputrc,hgignore,wgetrc,vimrc,utils,bashrc,gemrc,tmux.conf} ~
 
 # move down here, depends on .utils
@@ -125,11 +127,13 @@ else
 	cp -f bin/ixio "$BIN_DIR"
 	cp -f bin/httpcompression "$BIN_DIR"
 	cp -f bin/parallel "$BIN_DIR"
+	cp -f bin/bashmarks.sh "$BIN_DIR"
 	chmod +x "$BIN_DIR"/extract
 	chmod +x "$BIN_DIR"/editor.sh
 	chmod +x "$BIN_DIR"/ixio
 	chmod +x "$BIN_DIR"/httpcompression
 	chmod +x "$BIN_DIR"/parallel
+	chmod +x "$BIN_DIR"/bashmarks.sh
 
 	# update z repo and copy
 	cd "$Z_REPO"
