@@ -27,6 +27,7 @@ source ./.brew
 
 # setup vars for dirs and symlinks
 BIN_DIR="$HOME"/bin
+STATS_DIR="$HOME"/stats
 SUBL_SYMLINK="$BIN_DIR"/subl
 SUBL2_APP="/Applications/Sublime Text 2.app/Contents/SharedSupport/bin/subl"
 SUBL3_APP="/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl"
@@ -90,6 +91,17 @@ rbenv rehash
 
 if file_exists "$SUBL3_APP"; then
 	SUBL_APP="$SUBL3_APP"
+fi
+
+# check stats dir
+if [ ! -d "$STATS_DIR" ]; then
+	e_warning "$STATS_DIR does not exist, creating..."
+	if mkdir "$STATS_DIR"; then
+		e_debug "Done"
+	else
+		e_error "Could not create $STATS_DIR" ; 
+		e_warning "git post-commit hook will not record commits";
+	fi
 fi
 
 # check on bin and links
