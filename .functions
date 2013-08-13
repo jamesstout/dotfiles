@@ -102,7 +102,7 @@ function show {
 # Simple calculator
 function calc() {
 	local result=""
-	result="$(printf "scale=10;$*\n" | bc --mathlib | tr -d '\\\n')"
+	result="$(printf "scale=10;$*\n" |  /usr/bin/bc --mathlib | tr -d '\\\n')"
 	#                       └─ default (when `--mathlib` is used) is 20
 	#
 	if [[ "$result" == *.* ]]; then
@@ -189,7 +189,7 @@ function phpserver() {
 function gz() {
 	local origsize=$(wc -c < "$1")
 	local gzipsize=$(gzip -c "$1" | wc -c)
-	local ratio=$(echo "$gzipsize * 100/ $origsize" | bc -l)
+	local ratio=$(echo "$gzipsize * 100/ $origsize" | /usr/bin/bc -l)
 	printf "orig: %d bytes\n" "$origsize"
 	printf "gzip: %d bytes (%2.2f%%)\n" "$gzipsize" "$ratio"
 }
@@ -323,6 +323,17 @@ fymd () {
 
 pman () { #display man page as a PostScript PDF in Preview.app
   man -t "$1"|open -f -a "Preview.app"
+}
+
+function imgsize() {
+	local width height
+	if [[ -f $1 ]]; then
+		height=$(sips -g pixelHeight "$1"|tail -n 1|awk '{print $2}')
+		width=$(sips -g pixelWidth "$1"|tail -n 1|awk '{print $2}')
+		echo "${width} x ${height}"
+	else
+		echo "File not found"
+	fi
 }
 
 # gets the current 1m avg CPU load, was part of my prompt,
