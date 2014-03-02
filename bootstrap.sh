@@ -89,6 +89,15 @@ gem update
 gem cleanup
 rbenv rehash
 
+# gem update
+# defaul gems bundler i18n ffi json psych rake rdoc vagrant gzip
+# e_header "Updating pip..."
+# for package in $(pip list --outdated | grep -v Could | grep -v Some | grep -v MySQL | awk '{ print $1}')
+# do 
+# 	echo "updating $package"
+# 	pip install $package --upgrade
+# done
+
 if file_exists "$SUBL3_APP"; then
 	SUBL_APP="$SUBL3_APP"
 fi
