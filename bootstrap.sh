@@ -80,7 +80,7 @@ cd_and_git_pull "$RBENV_REPO"
 e_header "Updating npm..."
 npm update npm -g
 npm update npm
-npm update -g
+#npm update -g
 
 # gem update
 # defaul gems bundler i18n ffi json psych rake rdoc vagrant gzip
