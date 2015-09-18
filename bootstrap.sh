@@ -44,7 +44,7 @@ ST3_BH_FILE="$ST3_BH_DIR/bh_core.sublime-settings"
 ST3_BH_USER_FILE="$ST3_USER_DIR/bh_core.sublime-settings"
 ST3_BH_USER_FILE_BAK="$ST3_USER_DIR/bh_core.sublime-settings.bak"
 
-declare -a dirs_to_check=("$ST3_BH_DIR" "$ST3_TS_DIR" "$ST3_PC_DIR" "$RBENV_REPO")
+declare -a dirs_to_check=("$ST3_BH_DIR" "$ST3_TS_DIR" "$RBENV_REPO")
 
 for ((i=0; i<${#dirs_to_check[@]}; ++i));
 do
@@ -68,9 +68,6 @@ fi
 
 e_debug "Updating Theme Soda"
 cd_and_git_pull "$ST3_TS_DIR"
-
-e_debug "Updating Package Control"
-cd_and_git_pull "$ST3_PC_DIR"
 
 # update rbenv
 e_header "Updating rbenv..."
