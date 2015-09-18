@@ -277,6 +277,57 @@ function unquarantine() {
 
 # mine
 
+function tz()
+{
+	TZ_DIR="/usr/share/zoneinfo"
+
+	if [ -n "$OSTYPE" ]; then
+
+		if [[ "$OSTYPE" =~ ^darwin ]] || [[ "$OSTYPE" =~ ^linux ]]; then
+
+			TZ_DIR="/usr/share/zoneinfo"
+
+		elif [[ "$OSTYPE" =~ ^solaris ]]; then
+
+			TZ_DIR="/usr/share/lib/zoneinfo"
+		fi
+	fi
+
+	if [ ! -d "$TZ_DIR" ]; then
+		e_error "$TZ_DIR does not exist"
+		exit 1
+	fi
+
+	cd "$TZ_DIR"
+
+	# get all the timezones, trim off first 2 chars: "./"
+	# store in array for repeat use
+	declare -a all_tz=(`find .  | cut -c 3-`)
+
+	# get max len for output formatting
+	m=-1
+	for x in ${all_tz[@]}
+	do
+	   if [ ${#x} -gt $m ]
+	   then
+	      m=${#x}
+	   fi
+	done
+
+	for index in ${!all_tz[*]}
+	do
+		export TZ=${all_tz[$index]} 
+		xx=`date '+%d %b %I:%M %p'`
+		printf "%-*s %s\n" $m "$TZ" "$xx" 
+	done
+
+}
+
+function tzg()
+{
+	tz | grep -i ${1}
+}
+
 function hgu()
 {
 	file="${HOME}/.bash_eternal_history"
@@ -451,6 +502,11 @@ function ku()
 
 function psg() 
 {
+	# exclude the grep process
+	# so say we execute psg hello
+	# that becomes ps -aef | grep -i [h]ello
+	# it's a character class trick. "[h]" does not match "[h]" only "h"
+	# so the grep -i [h]ello is ignored
 	ps -aef | grep -i "[${1:0:1}]${1:1}"  
 	return 0
 }
