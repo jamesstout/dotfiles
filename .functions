@@ -321,6 +321,7 @@ function tz()
 		printf "%-*s %s\n" $m "$TZ" "$xx" 
 	done
 
+	unset TZ
 }
 
 function tzg()
