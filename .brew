@@ -19,29 +19,56 @@ if type_exists 'brew'; then
     declare list_formulae
     declare -a missing_formulae=()
     declare -a desired_formulae=(
-        'coreutils' # GNU core utilities (those that come with OS X are outdated)
-        'git'
         'ack'
-        'bash-completion'
         'bash'
-        'findutils'
-        'homebrew/dupes/grep'
-        'optipng'
-        'rename'
-        'tree'
-        'subversion'
-        'rsync'
-        'wget --enable-iri'
-        'webkit2png'
-        'virtualhost.sh'
-        'p7zip'
-        'node'
-        'the_silver_searcher'
-        'ngrep'
-        'lesspipe'
-        'tmux'
+        'bash-completion'
         'class-dump'
+        'coreutils' # GNU core utilities (those that come with OS X are outdated)
+        'findutils'
+        'git'
+        'homebrew/dupes/grep'
+        'lesspipe'
+        'md5deep'
+        'md5sha1sum'
+        'ngrep'
+        'node'
+        'openssl'
+        'optipng'
+        'p7zip'
+        'pigz'
+        'pkg-config'
+        'pngquant'
+        'pstree'
+        'python'
+        'python3'
+        'readline'
+        'rename'
+        'rename'
+        'rsync'
+        'ruby-build'
+        'serf'
+        'sip'
+        'sqlite'
+        'subversion'
+        'texi2html'
+        'texinfo'
+        'the_silver_searcher'
+        'tmux'
+        'tree'
+        'unixodbc'
+        'unrar'
+        'virtualhost.sh'
+        'webkit2png'
+        'wget --enable-iri'
+        'x264'
+        'xctool'
+        'xvid'
+        'xz'
+        'yasm'
         'youtube-dl'
+        'youtube-dl'
+        'zlib'
+        'zopfli'
     )
 
     for index in ${!desired_formulae[*]}
@@ -66,6 +93,7 @@ if type_exists 'brew'; then
 
     # Remove outdated versions from the Cellar
     brew cleanup
+    brew cask cleanup
 else
     printf "\n"
     e_error "Error: Homebrew not found."
