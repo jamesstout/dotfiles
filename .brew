@@ -2,7 +2,6 @@
 
 source ./.utils
 
-
 # Check for Homebrew
 if type_exists 'brew'; then
     e_header "Updating Homebrew..."
@@ -12,7 +11,7 @@ if type_exists 'brew'; then
 
     e_header "Updating any existing Homebrew formulae..."
     # Upgrade any already-installed formulae
-    brew upgrade
+    brew upgrade --all
     [[ $? ]] && e_success "Done"
 
     e_header "Checking status of desired Homebrew formulae..."
@@ -20,16 +19,23 @@ if type_exists 'brew'; then
     declare -a missing_formulae=()
     declare -a desired_formulae=(
         'ack'
+        'aircrack-ng'
         'bash'
-        'bash-completion'
+        'bash-completion2'
+        'binutils'
         'class-dump'
         'coreutils' # GNU core utilities (those that come with OS X are outdated)
+        'fcrackzip'
         'findutils'
         'git'
+        'git-lfs'
         'homebrew/dupes/grep'
+        'homebrew/dupes/openssh'
+        'homebrew/php/php56 --with-gmp'
         'lesspipe'
         'md5deep'
         'md5sha1sum'
+        'moreutils'
         'ngrep'
         'node'
         'openssl'
@@ -43,13 +49,13 @@ if type_exists 'brew'; then
         'python3'
         'readline'
         'rename'
-        'rename'
         'rsync'
         'ruby-build'
         'serf'
         'sip'
         'sqlite'
         'subversion'
+        'testssl'
         'texi2html'
         'texinfo'
         'the_silver_searcher'
@@ -59,7 +65,7 @@ if type_exists 'brew'; then
         'unrar'
         'virtualhost.sh'
         'webkit2png'
-        'wget --enable-iri'
+        'wget --with-iri'
         'x264'
         'xctool'
         'xvid'
