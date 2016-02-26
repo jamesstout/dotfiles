@@ -10,7 +10,7 @@ done
 unset file
 
 . ~/bin/z.sh
-. ~/bin/bashmarks.sh
+#. ~/bin/bashmarks.sh
 # shamelessly copied from https://github.com/janmoesen/tilde/blob/master/.bash/shell
 # Shell options, environment variables and readline settings
 # =============================================================================
@@ -28,12 +28,22 @@ shopt -s nocaseglob
 # Append to the Bash history file, rather than overwriting it
 shopt -s histappend
 
+# save multi-line commands as one command
+shopt -s cmdhist
+
+# include .files when globbing.
+shopt -s dotglob 2>/dev/null
+
+# use extra globing features. See man bash, search extglob.
+shopt -s extglob 2>/dev/null
+
 # Autocorrect typos in path names when using `cd`
-shopt -s cdspell
+shopt -s cdspell 2>/dev/null
+shopt -s dirspell 2>/dev/null
 
 # Check the window size after each command and, if necessary, update the values
 # of LINES and COLUMNS.
-shopt -s checkwinsize
+shopt -s checkwinsize 2>/dev/null
 
 # Enable some Bash 4 features when possible:
 # * `autocd`, e.g. `**/qux` will enter `./foo/bar/baz/qux`
@@ -58,7 +68,7 @@ set completion-ignore-case On
 prefix=$(brew --prefix)
 for comp in \
   /etc/bash_completion \
-  $prefix/etc/bash_completion \
+  $prefix/share/bash-completion/bash_completion \
   $prefix/Library/Contributions/brew_bash_completion.sh \
   $prefix/etc/grc.bashrc \
   $prefix/etc/bash_completion.d/git-completion.bash
