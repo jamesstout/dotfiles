@@ -54,6 +54,7 @@ if type_exists 'brew'; then
         'serf'
         'sip'
         'sqlite'
+        'ssh-copy-id'
         'subversion'
         'testssl'
         'texi2html'
