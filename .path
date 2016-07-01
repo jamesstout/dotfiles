@@ -3,4 +3,8 @@ export PATH=/usr/local/bin:/usr/local/sbin:/usr/local/share/npm/bin:$PATH:$HOME/
 export PATH=$PATH:$GOPATH/bin
 
 export PATH="$HOME/.rbenv/bin:$PATH"
+
+export GEM_PATH=$HOME/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0
+export GEM_SPEC_CACHE=$HOME/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/specifications
+
 eval "$(rbenv init -)"
