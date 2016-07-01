@@ -10,6 +10,9 @@ done
 unset file
 
 . ~/bin/z.sh
+
+source ~/.iterm2_shell_integration.bash
+
 #. ~/bin/bashmarks.sh
 # shamelessly copied from https://github.com/janmoesen/tilde/blob/master/.bash/shell
 # Shell options, environment variables and readline settings
