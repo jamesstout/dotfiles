@@ -283,7 +283,7 @@ prompt_git() {
 # Make new shells get the history lines from all previous
 # shells instead of the default "last window closed" history
 PROMPT_COMMAND='history 1 >> ${HOME}/.bash_eternal_history'
-PROMPT_COMMAND="history -a;history -c; history -r; $PROMPT_COMMAND"
+PROMPT_COMMAND="history -a;history -c; history -r; $PROMPT_COMMAND;"
 
 # Set the terminal title to the current working directory
 #PS1="\[\033]0;\h: \w\007\]"
