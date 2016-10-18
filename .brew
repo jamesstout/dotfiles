@@ -150,3 +150,40 @@ fi
 #
 ## Remove outdated versions from the cellar
 #brew cleanup
+
+    # brew tap caskroom/cask
+    # brew install brew-cask
+    # brew tap caskroom/versions
+
+    # # Install packages
+
+    # apps=(
+    #   alfred
+    #   dash
+    #   dropbox
+    #   firefox
+    #   firefox-nightly
+    #   flux
+    #   glimmerblocker
+    #   google-chrome
+    #   google-chrome-canary
+    #   google-drive
+    #   hammerspoon
+    #   kaleidoscope
+    #   macdown
+    #   opera
+    #   screenflow
+    #   slack
+    #   sourcetree
+    #   spotify
+    #   sublime-text3
+    #   transmit
+    #   virtualbox
+    #   vlc
+    #   webstorm
+    # )
+
+    # brew cask install "${apps[@]}"
+
+
+
