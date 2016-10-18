@@ -32,6 +32,9 @@ export LANG="en_US.UTF-8"
 export LC_COLLATE=C
 export LC_CTYPE="en_US.UTF-8"
 
+export CFLAGS="-arch x86_64"
+export ARCHFLAGS="-arch x86_64"
+
 # Highlight section titles in manual pages
 export LESS_TERMCAP_md="$ORANGE"
 
