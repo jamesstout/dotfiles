@@ -25,6 +25,7 @@ if type_exists 'brew'; then
         'binutils'
         'class-dump'
         'coreutils' # GNU core utilities (those that come with OS X are outdated)
+        'doctl'
         'fcrackzip'
         'findutils'
         'git'
