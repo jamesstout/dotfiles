@@ -34,7 +34,7 @@ SUBL3_APP="/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl"
 # default to v2
 SUBL_APP="$SUBL2_APP"
 Z_REPO="third-party/z"
-RBENV_REPO="$HOME/.rbenv"
+#RBENV_REPO="$HOME/.rbenv"
 ST3_DIR="$HOME/Library/Application Support/Sublime Text 3/Packages"
 ST3_BH_DIR="$ST3_DIR/BracketHighlighter"
 ST3_TS_DIR="$ST3_DIR/Theme - Soda"
@@ -44,7 +44,7 @@ ST3_BH_FILE="$ST3_BH_DIR/bh_core.sublime-settings"
 ST3_BH_USER_FILE="$ST3_USER_DIR/bh_core.sublime-settings"
 ST3_BH_USER_FILE_BAK="$ST3_USER_DIR/bh_core.sublime-settings.bak"
 
-declare -a dirs_to_check=("$ST3_BH_DIR" "$ST3_TS_DIR" "$RBENV_REPO")
+declare -a dirs_to_check=("$ST3_BH_DIR" "$ST3_TS_DIR")
 
 for ((i=0; i<${#dirs_to_check[@]}; ++i));
 do
@@ -70,8 +70,8 @@ e_debug "Updating Theme Soda"
 cd_and_git_pull "$ST3_TS_DIR"
 
 # update rbenv
-e_header "Updating rbenv..."
-cd_and_git_pull "$RBENV_REPO"
+#e_header "Updating rbenv..."
+#cd_and_git_pull "$RBENV_REPO"
 
 # update npm
 e_header "Updating npm..."
