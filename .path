@@ -2,7 +2,7 @@ export GOPATH=$HOME/Projects/go
 export PATH=/usr/local/bin:/usr/local/sbin:/usr/local/share/npm/bin:$PATH:$HOME/Projects/Scripts:$HOME/Scripts
 export PATH=$PATH:$GOPATH/bin
 
-export GEM_PATH=$HOME/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0
-export GEM_SPEC_CACHE=$HOME/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/specifications
+export GEM_PATH=$HOME/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0
+export GEM_SPEC_CACHE=$HOME/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/specifications
 
 eval "$(rbenv init -)"

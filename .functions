@@ -136,15 +136,32 @@ function fs() {
 	fi
 }
 
+#using 1000 not 1024 per Apple: https://support.apple.com/en-hk/HT201402
+# converts bytes into something useful
+# e.g. 	human-readable 702404
+#		685 MiB
+function human-readable(){
+
+	local size=$(("$@" + 0));
+	for unit in KiB MiB GiB TiB PiB EiB ZiB YiB; do
+		if [ "$size" -lt 1000 ]; then 
+			echo -e "${size} ${unit}";
+			break;
+		fi;
+		size=$((size/1000));
+	done;
+
+}
+
 # Sort the "du" output and use human-readable units.
 function duh {
 	du -sk "$@" | sort -n | while read size fname; do
 		for unit in KiB MiB GiB TiB PiB EiB ZiB YiB; do
-			if [ "$size" -lt 1024 ]; then
+			if [ "$size" -lt 1000 ]; then
 				echo -e "${size} ${unit}\t${fname}";
 				break;
 			fi;
-			size=$((size/1024));
+			size=$((size/1000));
 		done;
 	done;
 }
@@ -620,9 +637,9 @@ function targz() {
 
 	size=$(
 		stat -f"%z" "${tmpFile}" 2> /dev/null; # OS X `stat`
-		stat -c"%s" "${tmpFile}" 2> /dev/null # GNU `stat`
+		stat -c"%s" "${tmpFile}" 2> /dev/null; # GNU `stat`
 	)
-
+	
 	local cmd=""
 	if (( size < 52428800 )) && hash zopfli 2> /dev/null; then
 		# the .tar file is smaller than 50 MB and Zopfli is available; use it
@@ -635,10 +652,20 @@ function targz() {
 		fi
 	fi
 
-	echo "Compressing .tar using \`${cmd}\`…"
+	sizeStr=$(human-readable $size);
+
+	echo "Compressing .tar ($sizeStr) using \`${cmd}\`…";
 	"${cmd}" -v "${tmpFile}" || return 1
 	[ -f "${tmpFile}" ] && rm "${tmpFile}"
-	echo "${tmpFile}.gz created successfully."
+
+	zippedSize=$(
+		stat -f"%z" "${tmpFile}.gz" 2> /dev/null; # OS X `stat`
+		stat -c"%s" "${tmpFile}.gz" 2> /dev/null; # GNU `stat`
+	);
+
+	zippedSizeStr=$(human-readable $zippedSize);
+
+	echo "${tmpFile}.gz ($zippedSizeStr) created successfully";
 }
 
 ################
