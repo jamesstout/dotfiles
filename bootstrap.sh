@@ -147,6 +147,7 @@ else
 	cp -f bin/parallel "$BIN_DIR"
 	cp -f bin/bashmarks.sh "$BIN_DIR"
 	cp -f bin/transcode-video.sh "$BIN_DIR"
+	cp -f bin/startup-gpg-agent.sh "$BIN_DIR"
 	chmod +x "$BIN_DIR"/extract
 	chmod +x "$BIN_DIR"/editor.sh
 	chmod +x "$BIN_DIR"/ixio
@@ -154,6 +155,7 @@ else
 	chmod +x "$BIN_DIR"/parallel
 	chmod +x "$BIN_DIR"/bashmarks.sh
 	chmod +x "$BIN_DIR"/transcode-video.sh
+	chmod +x "$BIN_DIR"/startup-gpg-agent.sh
 
 	# update z repo and copy
 	cd "$Z_REPO"
