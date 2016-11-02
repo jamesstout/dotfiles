@@ -1,3 +1,4 @@
+# shellcheck shell=bash
 # Make vim the default editor
 export EDITOR="$HOME/dotfiles/bin/editor.sh"
 
