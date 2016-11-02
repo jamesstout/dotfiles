@@ -11,7 +11,7 @@ if type_exists 'brew'; then
 
     e_header "Updating any existing Homebrew formulae..."
     # Upgrade any already-installed formulae
-    brew upgrade --all
+    brew upgrade
     [[ $? ]] && e_success "Done"
 
     e_header "Checking status of desired Homebrew formulae..."
