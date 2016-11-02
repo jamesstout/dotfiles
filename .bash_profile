@@ -1,3 +1,4 @@
+# shellcheck shell=bash
 # Add `~/bin` to the `$PATH`
 export PATH="$HOME/bin:$PATH"
 
@@ -5,22 +6,26 @@ export PATH="$HOME/bin:$PATH"
 # * ~/.path can be used to extend `$PATH`.
 # * ~/.extra can be used for other settings you don’t want to commit.
 for file in ~/.{path,bash_prompt,exports,aliases,utils,functions,extra}; do
+  # shellcheck source=/dev/null
 	[ -r "$file" ] && source "$file"
 done
 unset file
 
+# shellcheck source=/Users/james/bin/z.sh
 . ~/bin/z.sh
 
+# shellcheck source=/Users/james/.iterm2_shell_integration.bash
 source ~/.iterm2_shell_integration.bash
 
 #~/bin/startup-gpg-agent.sh
 
 # GPG
-if [ -f "${HOME}/.gpg-agent-info" ]; then
-    . "${HOME}/.gpg-agent-info"
+if [ -f "${HOME}/.gnupg/.gpg-agent-info" ]; then
+    # shellcheck source=/Users/james/.gnupg/.gpg-agent-info
+    . "${HOME}/.gnupg/.gpg-agent-info"
     export GPG_AGENT_INFO
     export SSH_AUTH_SOCK
-    launchctl setenv GPG_AGENT_INFO $GPG_AGENT_INFO
+    launchctl setenv GPG_AGENT_INFO "$GPG_AGENT_INFO"
 fi
 GPG_TTY=$(tty)
 export GPG_TTY
@@ -88,5 +93,22 @@ for comp in \
   $prefix/etc/grc.bashrc \
   $prefix/etc/bash_completion.d/git-completion.bash
 do
+    # shellcheck source=/dev/null
     [[ -e $comp ]] && source $comp
 done
+
+# these are set in /usr/local/etc/grc.bashrc
+# I don't want them
+unalias make
+unalias gcc
+unalias g++
+unalias as
+unalias gas
+unalias ld
+unalias netstat
+unalias ping
+unalias traceroute
+unalias head
+unalias tail
+unalias dig
+

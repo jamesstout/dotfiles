@@ -190,8 +190,11 @@ RESET=$(tput sgr0)
 SOLAR_YELLOW=$(tput setaf 136)
 SOLAR_ORANGE=$(tput setaf 166)
 SOLAR_RED=$(tput setaf 124)
+# shellcheck disable=SC2034
 SOLAR_MAGENTA=$(tput setaf 125)
+# shellcheck disable=SC2034
 SOLAR_VIOLET=$(tput setaf 61)
+# shellcheck disable=SC2034
 SOLAR_BLUE=$(tput setaf 33)
 SOLAR_CYAN=$(tput setaf 37)
 SOLAR_GREEN=$(tput setaf 64)
@@ -229,7 +232,7 @@ get_git_branch() {
     # Otherwise, just give up
     branch_name="(unknown)"
 
-    printf $branch_name
+    printf "%s" "$branch_name"
 }
 
 # Git status information

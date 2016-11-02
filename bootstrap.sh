@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
-cd "$(dirname "${BASH_SOURCE}")"
+#cd "$(dirname "${BASH_SOURCE}")"
+
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+cd "$SCRIPT_DIR" || exit
 
 BACKUPS_DIR="$HOME"/.backups
 
@@ -38,7 +42,6 @@ Z_REPO="third-party/z"
 ST3_DIR="$HOME/Library/Application Support/Sublime Text 3/Packages"
 ST3_BH_DIR="$ST3_DIR/BracketHighlighter"
 ST3_TS_DIR="$ST3_DIR/Theme - Soda"
-ST3_PC_DIR="$ST3_DIR/Package Control"
 ST3_USER_DIR="$ST3_DIR/User"
 ST3_BH_FILE="$ST3_BH_DIR/bh_core.sublime-settings"
 ST3_BH_USER_FILE="$ST3_USER_DIR/bh_core.sublime-settings"
@@ -119,12 +122,12 @@ if [ ! -d "$BIN_DIR" ]; then
 		ln -s "$SUBL_APP" "$SUBL_SYMLINK"
 
 		# update z repo and copy
-		cd "$Z_REPO"
+		cd "$Z_REPO" || exit
 		git_info=$(get_git_branch)
 		git pull -v origin "$git_info"
 		cp -f z.sh "$BIN_DIR"
 		chmod +x "$BIN_DIR"/z.sh
-		cd -
+		cd - || exit
 	else
 		e_error "Could not create $BIN_DIR" ; 
 		e_warning "Sublime Text symlink and z will not be installed";
@@ -158,7 +161,7 @@ else
 	chmod +x "$BIN_DIR"/startup-gpg-agent.sh
 
 	# update z repo and copy
-	cd "$Z_REPO"
+	cd "$Z_REPO" || exit
 	git_info=$(get_git_branch)
 	e_debug "cd $Z_REPO. Branch is $git_info"
 
@@ -167,8 +170,8 @@ else
 	git pull -v origin "$git_info"
 	cp -f z.sh "$BIN_DIR"
 	chmod +x "$BIN_DIR"/z.sh
-	cd -
+	cd - || exit
 
 fi
-
+# shellcheck source=/Users/james/.bash_profile
 source ~/.bash_profile

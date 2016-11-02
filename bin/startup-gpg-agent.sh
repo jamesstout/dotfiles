@@ -1,5 +1,7 @@
+# shellcheck shell=sh
 # Ensure that gpg can find the agent when needed
 if [ -f ~/.gnupg/.gpg-agent-info ] && [ -n "$(pgrep gpg-agent)" ]; then
+	# shellcheck source=/Users/james/.gnupg/.gpg-agent-info
     source ~/.gnupg/.gpg-agent-info
     export GPG_AGENT_INFO
 else
@@ -7,4 +9,4 @@ else
 fi
 
 # This line is important for GUI tools to also find it
-launchctl setenv GPG_AGENT_INFO $GPG_AGENT_INFO
+launchctl setenv GPG_AGENT_INFO "$GPG_AGENT_INFO"

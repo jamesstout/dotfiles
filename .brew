@@ -88,13 +88,13 @@ if type_exists 'brew'; then
         fi
     done
 
-    if [[ "$missing_formulae" ]]; then
+    if [[ "${missing_formulae[@]}" ]]; then
         # Convert the array of missing formula into a list of space-separate strings
         list_formulae=$( printf "%s " "${missing_formulae[@]}" )
 
         e_header "Installing missing Homebrew formulae..."
         # Install all missing formulae
-        brew install $list_formulae
+        brew install "$list_formulae"
 
         [[ $? ]] && e_success "Done"
     fi
