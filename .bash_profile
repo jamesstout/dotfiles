@@ -111,4 +111,5 @@ unalias traceroute
 unalias head
 unalias tail
 unalias dig
+unalias diff
 
