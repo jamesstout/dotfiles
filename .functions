@@ -1,3 +1,4 @@
+# shellcheck shell=bash
 function show-empty-folders {
     find . -depth -type d -empty
 }
@@ -23,14 +24,16 @@ function top10 {
 		# Mac OS X's top does not calculate the CPU usage when sampling only
 		# once. So, sample twice and only keep the output of the second
 		# sample. This makes it seem very slow, but them's the breaks.
-		local output="$(top -l 2 -n 10 -o CPU -stats PID,USER,CPU,VSIZE,RSIZE,RSHRD,STATE,TIME,COMMAND)";
+		local output="";
+		output="$(top -l 2 -n 10 -o CPU -stats pid,user,cpu,vsize,state,time,command)";
 		output="$(tail -n "$(($(wc -l <<< "$output") / 2))" <<< "$output")";
 	else
 		# Debian's top (and possibly other Linux versions) does not allow
 		# requesting specific fields on the command line, so create a
 		# temporary .toprc somewhere and use that. The "fieldscur" below
 		# correspond to the "-stats" option for OS X's "top". See above.
-		local tmp_dir="$(mktemp -d -t "top10.$$.XXXX")";
+		local tmp_dir="";
+		tmp_dir="$(mktemp -d -t "top10.$$.XXXX")";
 		cat > "$tmp_dir/.toprc" <<-EOD
 			RCfile for "top with windows"		# shameless braggin'
 			Id:a, Mode_altscr=0, Mode_irixps=1, Delay_time=3.000, Curwin=0
@@ -38,7 +41,8 @@ function top10 {
 				winflags=62777, sortindx=10, maxtasks=0
 				summclr=1, msgsclr=1, headclr=3, taskclr=1
 		EOD
-		local output="$(HOME="$tmp_dir"; top -bn 1)";
+		local output="";
+		output="$(HOME="$tmp_dir"; top -bn 1)";
 		rm -rf "$tmp_dir";
 	fi;
 
@@ -47,13 +51,13 @@ function top10 {
 	# they contain a space, e.g. "Chromium Helper" => "Chromium     Helper".
 	local pid_start_line="$(egrep -nm1 '^\s*PID' <<< "$output" || echo 65536)";
 	pid_start_line="${pid_start_line%:*}";
-	head -n $(($pid_start_line - 1)) <<< "$output";
+	head -n $((pid_start_line - 1)) <<< "$output";
 	tail -n +$pid_start_line <<< "$output" | head -n 11 | column -t;
 }
 
 # Change working directory to the top-most Finder window location
 function cdf() { # short for `cdfinder`
-	cd "$(osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)')"
+	cd "$(osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)')" || exit
 }
 
 # Show the given file(s) in the Finder.
@@ -155,7 +159,7 @@ function human-readable(){
 
 # Sort the "du" output and use human-readable units.
 function duh {
-	du -sk "$@" | sort -n | while read size fname; do
+	du -sk "$@" | sort -n | while read -r size fname; do
 		for unit in KiB MiB GiB TiB PiB EiB ZiB YiB; do
 			if [ "$size" -lt 1000 ]; then
 				echo -e "${size} ${unit}\t${fname}";
@@ -168,8 +172,7 @@ function duh {
 
 
 # Use Git’s colored diff when available
-hash git &>/dev/null
-if [ $? -eq 0 ]; then
+if hash git &>/dev/null; then
 	function diff() {
 		git diff --no-index --color-words "$@"
 	}
