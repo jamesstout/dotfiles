@@ -85,8 +85,19 @@ npm update npm
 # gem update
 # defaul gems bundler i18n ffi json psych rake rdoc vagrant gzip
 e_header "Updating gems..."
-gem update
-gem cleanup
+# gem update
+# gem cleanup
+# rbenv rehash
+
+for version in $(rbenv whence gem); do
+  rbenv shell "$version"
+  echo "Updating rubygems for $version"
+  gem update --system --no-document #--quiet
+  yes | gem update
+  gem cleanup
+  echo ""
+done
+
 rbenv rehash
 
 # gem update
