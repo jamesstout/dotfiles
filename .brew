@@ -25,6 +25,7 @@ if type_exists 'brew'; then
         'binutils'
         'class-dump'
         'coreutils' # GNU core utilities (those that come with OS X are outdated)
+        'dark-mode'
         'doctl'
         'fcrackzip'
         'findutils'
@@ -53,7 +54,6 @@ if type_exists 'brew'; then
         'rename'
         'rsync'
         'ruby-build'
-        'serf'
         'sip'
         'shellcheck'
         'sqlite'
@@ -63,6 +63,7 @@ if type_exists 'brew'; then
         'texi2html'
         'texinfo'
         'the_silver_searcher'
+        'tidy'
         'tmux'
         'tree'
         'unixodbc'
