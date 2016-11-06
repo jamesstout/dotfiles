@@ -11,6 +11,10 @@ for file in ~/.{path,bash_prompt,exports,aliases,utils,functions,extra}; do
 done
 unset file
 
+# remove dupes
+PATH=$(perl -e 'print join ":", grep {!$h{$_}++} split ":", $ENV{PATH}')
+export PATH
+
 # shellcheck source=/Users/james/bin/z.sh
 . ~/bin/z.sh
 
