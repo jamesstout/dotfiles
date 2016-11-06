@@ -170,6 +170,17 @@ function duh {
 	done;
 }
 
+function duh-no-git {
+	du -sk "$@" | grep -v .git | sort -n | while read -r size fname; do
+		for unit in KiB MiB GiB TiB PiB EiB ZiB YiB; do
+			if [ "$size" -lt 1000 ]; then
+				echo -e "${size} ${unit}\t${fname}";
+				break;
+			fi;
+			size=$((size/1000));
+		done;
+	done;
+}
 
 # Use Git’s colored diff when available
 if hash git &>/dev/null; then
@@ -675,6 +686,10 @@ function targz() {
 ## Smarter CD ##
 ################
 function goto() {
+   [[ -d "$1" ]] && { cd "$1"; } || cd "$(dirname "$1")";
+}
+
+function gt() {
    [[ -d "$1" ]] && { cd "$1"; } || cd "$(dirname "$1")";
 }
 
