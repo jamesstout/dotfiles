@@ -32,6 +32,16 @@ alias bl="brew list"
 alias bc="brew cleanup"
 alias bd="brew doctor"
 
+alias path='echo -e ${PATH//:/\\n}'
+
+# Always enable colored `grep` output
+# Note: `GREP_OPTIONS="--color=auto"` is deprecated, hence the alias usage.
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
+alias ifactive="ifconfig | pcregrep -M -o '^[^\t:]+:([^\n]|\n\t)*status: active'"
+
 #nzbs
 alias sab="open -a /Applications/SABnzbd.app"
 alias sick="python /Applications/sickbeard/Sick-Beard/SickBeard.py > /dev/null 2>&1 &"
