@@ -34,6 +34,7 @@ if type_exists 'brew'; then
         'homebrew/dupes/grep'
         'homebrew/dupes/openssh'
         'homebrew/php/php56 --with-gmp'
+        'htop'
         'lesspipe'
         'md5deep'
         'md5sha1sum'
@@ -41,7 +42,6 @@ if type_exists 'brew'; then
         'ngrep'
         'node'
         'openssl'
-        'optipng'
         'p7zip'
         'pigz'
         'pkg-config'
@@ -54,7 +54,6 @@ if type_exists 'brew'; then
         'rename'
         'rsync'
         'ruby-build'
-        'sip'
         'shellcheck'
         'sqlite'
         'ssh-copy-id'
@@ -63,7 +62,7 @@ if type_exists 'brew'; then
         'texi2html'
         'texinfo'
         'the_silver_searcher'
-        'tidy'
+        'tidy-html5'
         'tmux'
         'tree'
         'unixodbc'
@@ -102,7 +101,7 @@ if type_exists 'brew'; then
 
 
     # Remove outdated versions from the Cellar
-    brew cleanup
+    brew cleanup -s
     brew cask cleanup
 else
     printf "\n"
