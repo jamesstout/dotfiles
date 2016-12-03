@@ -32,6 +32,8 @@ alias bl="brew list"
 alias bc="brew cleanup"
 alias bd="brew doctor"
 
+alias vtop="vtop --theme monokai"
+
 alias path='echo -e ${PATH//:/\\n}'
 
 # Always enable colored `grep` output
