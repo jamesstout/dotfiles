@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 #cd "$(dirname "${BASH_SOURCE}")"
 
+
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 cd "$SCRIPT_DIR" || exit
@@ -162,6 +163,8 @@ else
 	cp -f bin/bashmarks.sh "$BIN_DIR"
 	cp -f bin/transcode-video.sh "$BIN_DIR"
 	cp -f bin/startup-gpg-agent.sh "$BIN_DIR"
+	cp -f bin/itunes-apps-periodic-cleanup.py "$BIN_DIR"
+	cp -f bin/blame-bird.py "$BIN_DIR"
 	chmod +x "$BIN_DIR"/extract
 	chmod +x "$BIN_DIR"/editor.sh
 	chmod +x "$BIN_DIR"/ixio
@@ -170,6 +173,8 @@ else
 	chmod +x "$BIN_DIR"/bashmarks.sh
 	chmod +x "$BIN_DIR"/transcode-video.sh
 	chmod +x "$BIN_DIR"/startup-gpg-agent.sh
+	chmod +x "$BIN_DIR"/itunes-apps-periodic-cleanup.py
+	chmod +x "$BIN_DIR"/blame-bird.py
 
 	# update z repo and copy
 	cd "$Z_REPO" || exit
