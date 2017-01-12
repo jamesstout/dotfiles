@@ -1,0 +1,14 @@
+# Flush output immediately, even when piped.
+--flush
+
+# Like in Vim, ignore the case unless the pattern contains mixed case.
+--smart-case
+
+
+
+# Generated documentation.
+--ignore-dir=docs
+--ignore-dir=.cocoapods
+--ignore-dir=.bundle
+--ignore-dir=.cache
+

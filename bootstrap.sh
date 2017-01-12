@@ -15,14 +15,14 @@ fi
 
 # backup
 # backup .z - it contains all the z directory info, just in case
-cp ~/.{bash_profile,bash_prompt,path,exports,aliases,functions,extra,gitattributes,gitconfig,gitignore,inputrc,hgignore,wgetrc,vimrc,utils,bashrc,z,gemrc,tmux.conf,npmrc} "$BACKUPS_DIR"
+cp ~/.{bash_profile,bash_prompt,path,exports,aliases,functions,extra,gitattributes,gitconfig,gitignore,inputrc,hgignore,wgetrc,vimrc,utils,bashrc,z,gemrc,tmux.conf,npmrc,ackrc} "$BACKUPS_DIR"
 cp -R ~/.vim "$BACKUPS_DIR"
 cp -R ~/.git_template "$BACKUPS_DIR"
 
 # update dotfiles
 cp -Rf .vim ~
 cp -Rf .git_template ~
-cp .{bash_profile,bash_prompt,path,exports,aliases,functions,extra,gitattributes,gitconfig,gitignore,inputrc,hgignore,wgetrc,vimrc,utils,bashrc,gemrc,tmux.conf,npmrc} ~
+cp .{bash_profile,bash_prompt,path,exports,aliases,functions,extra,gitattributes,gitconfig,gitignore,inputrc,hgignore,wgetrc,vimrc,utils,bashrc,gemrc,tmux.conf,npmrc,ackrc} ~
 
 # move down here, depends on .utils
 source ./.brew
@@ -81,7 +81,7 @@ cd_and_git_pull "$ST3_TS_DIR"
 e_header "Updating npm..."
 npm update npm -g
 npm update npm
-#npm update -g
+npm update -g
 
 # gem update
 # defaul gems bundler i18n ffi json psych rake rdoc vagrant gzip
