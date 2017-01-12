@@ -147,7 +147,7 @@ function fs() {
 function human-readable(){
 
 	local size=$(("$@" + 0));
-	for unit in KiB MiB GiB TiB PiB EiB ZiB YiB; do
+	for unit in B KiB MiB GiB TiB PiB EiB ZiB YiB; do
 		if [ "$size" -lt 1000 ]; then 
 			echo -e "${size} ${unit}";
 			break;
@@ -156,6 +156,7 @@ function human-readable(){
 	done;
 
 }
+
 
 # Sort the "du" output and use human-readable units.
 function duh {
@@ -646,7 +647,7 @@ man() {
 
 # Create a .tar.gz archive, using `zopfli`, `pigz` or `gzip` for compression
 function targz() {
-	local tmpFile="${@%/}.tar"
+	local tmpFile="${*%/}.tar"
 	gtar -cvf "${tmpFile}" --exclude=".DS_Store" "${@}" || return 1
 
 	size=$(
