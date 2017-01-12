@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-
+# shellcheck shell=bash
 source ./.utils
 
 # Check for Homebrew
@@ -26,24 +26,26 @@ if type_exists 'brew'; then
         'class-dump'
         'coreutils' # GNU core utilities (those that come with OS X are outdated)
         'dark-mode'
-        'doctl'
         'fcrackzip'
         'findutils'
+        'fping'
+        'geoip --with-geoipupdate'
+        'geoipupdate'
         'git'
         'git-lfs'
         'handbrake'
+        'hh'
         'homebrew/dupes/grep'
         'homebrew/dupes/openssh'
         'homebrew/php/php56'
         'php56-gmp'
         'htop'
-        'libyaml'
         'lesspipe'
         'md5deep'
         'md5sha1sum'
         'moreutils'
         'ngrep'
-        'node'
+        'node --without-npm'
         'openssl'
         'p7zip'
         'pigz'
@@ -63,7 +65,6 @@ if type_exists 'brew'; then
         'subversion'
         'testssl'
         'texi2html'
-        'texinfo'
         'the_silver_searcher'
         'tidy-html5'
         'tmux'
@@ -85,7 +86,7 @@ if type_exists 'brew'; then
 
     for index in ${!desired_formulae[*]}
     do
-        if ! formula_exists ${desired_formulae[$index]}; then
+        if ! formula_exists "${desired_formulae[$index]}"; then
             # Store the name (and options) of every missing formula
             missing_formulae=("${missing_formulae[@]}" "${desired_formulae[$index]}")
         fi
