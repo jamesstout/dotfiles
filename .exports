@@ -10,7 +10,9 @@ export EDITOR="$HOME/dotfiles/bin/editor.sh"
 # messages) or a failed substitution (e.g. "^foo^bar" when there was no "foo"
 # in the previous command line), do not throw away the command line, but let me
 # correct it.
-shopt -s histreedit;
+#shopt -s histreedit;
+
+export HH_CONFIG=hicolor
 
 # Keep a reasonably long history.
 export HISTSIZE=10000;
@@ -20,11 +22,10 @@ export HISTSIZE=10000;
 export HISTFILESIZE=32768;
 
 # When executing the same command twice or more in a row, only store it once.
-export HISTCONTROL=ignoredups;
-export HISTCONTROL=erasedups
+export HISTCONTROL=ignoreboth;
 
 # Make some commands not show up in history
-export HISTIGNORE="ls:cd:cd -:pwd:exit:hg:s:o:oo:h:la:"
+export HISTIGNORE="ls:cd:cd -:pwd:exit:hg:s:o:oo:h:"
 
 #export HISTTIMEFORMAT=%Y/%m/%d %H:%M:%S
 

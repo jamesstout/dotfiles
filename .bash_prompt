@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # fmt_time () { #format time just the way I likes it
 #     if [ `date +%p` = "PM" ]; then
 #         meridiem="pm"
@@ -175,9 +177,9 @@
 # Screenshot: http://i.imgur.com/s0Blh.png
 
 if [[ $COLORTERM = gnome-* && $TERM = xterm ]] && infocmp gnome-256color >/dev/null 2>&1; then
-	export TERM=gnome-256color
+    export TERM=gnome-256color
 elif infocmp xterm-256color >/dev/null 2>&1; then
-	export TERM=xterm-256color
+    export TERM=xterm-256color
 fi
 
 tput sgr 0 0
@@ -283,14 +285,23 @@ prompt_git() {
     printf "${SOLAR_WHITE} on ${style_branch}${git_info}"
 }
 
+#export PROMPT_COMMAND="history -a; history -n; ${PROMPT_COMMAND}"   # mem/file sync
+# if this is interactive shell, then bind hh to Ctrl-r (for Vi mode check doc)
+if [[ $- =~ .*i.* ]]; then bind '"\C-r": "\C-a hh -- \C-j"'; fi
+
 # Make new shells get the history lines from all previous
 # shells instead of the default "last window closed" history
 PROMPT_COMMAND='history 1 >> ${HOME}/.bash_eternal_history'
-PROMPT_COMMAND="history -a;history -c; history -r; $PROMPT_COMMAND;"
+
+#my old version
+#PROMPT_COMMAND="history -a;history -c; history -r; $PROMPT_COMMAND;"
+
+#hh version 
+export PROMPT_COMMAND="history -a; history -n; ${PROMPT_COMMAND};"
 
 # Set the terminal title to the current working directory
 #PS1="\[\033]0;\h: \w\007\]"
-PS1="\[\033]0;\w\007\]"
+PS1="\[\033]0;\W\007\]"
 # Build the prompt
 PS1+="\n" # Newline
 PS1+="${style_user}\u" # Username
