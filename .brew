@@ -44,6 +44,7 @@ if type_exists 'brew'; then
         'md5deep'
         'md5sha1sum'
         'moreutils'
+        'netperf'
         'ngrep'
         'node --without-npm'
         'openssl'
