@@ -73,6 +73,7 @@ if type_exists 'brew'; then
         'unixodbc'
         'unrar'
         'virtualhost.sh'
+        'watchman'
         'webkit2png'
         'wget --with-iri'
         'x264'
