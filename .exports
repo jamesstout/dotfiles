@@ -4,6 +4,8 @@ export EDITOR="$HOME/dotfiles/bin/editor.sh"
 
 #export NODE_PATH=/usr/local/lib/node_modules
 
+export HOMEBREW_CASK_OPTS="--appdir=/Applications"
+
 # shamelessly copied from https://github.com/janmoesen/tilde
 # History
 # -----------------------------------------------------------------------------
