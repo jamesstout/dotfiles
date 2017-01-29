@@ -103,7 +103,7 @@ alias mem='top -o rsize' # memory
 alias cl="fc -e -|pbcopy"
 
 # time machine log
-alias tmlog="syslog -F '\$Time \$Message' -k Sender com.apple.backupd-auto -k Time ge -30m | tail -n 1"
+alias tmlog="syslog -F '\$Time \$Message' -k Sender com.apple.backupd -k Time ge -30m | tail -n 1"
 
 
 # git
@@ -135,6 +135,7 @@ alias ll="ls -l ${colorflag}"
 
 # Long form no user group, color
 alias l="ls -o ${colorflag}"
+alias lsh="ls -lh ${colorflag}"
 
 # List all files colorized in long format, including dot files
 #alias la="ls -la ${colorflag}"
