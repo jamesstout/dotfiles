@@ -101,6 +101,15 @@ do
     [[ -e $comp ]] && source $comp
 done
 
+unalias ls
+# Detect which `ls` flavor is in use
+if ls --color > /dev/null 2>&1; then # GNU `ls`
+  colorflag="--color"
+else # OS X `ls`
+  colorflag="-G"
+fi
+
+alias ls="command ls ${colorflag}"
 # these are set in /usr/local/etc/grc.bashrc
 # I don't want them
 unalias make
