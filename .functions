@@ -688,6 +688,29 @@ function targz() {
 	echo "${tmpFile}.gz ($zippedSizeStr) created successfully";
 }
 
+#exec file command on all installatios of a binary
+function ft() {
+
+	allBins=($(type -a "$1" | awk '{ print $3}'))
+	#printf '%s\n' "${allBins[@]}"
+
+	uniqueBins=($(echo "${allBins[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' '))
+	# uniqueBins2=($(tr ' ' '\n' <<< "${allBins[@]}" | sort -u | tr '\n' ' '))
+
+	#echo ""
+
+	#printf '%s\n' "${uniqueBins[@]}"
+	# printf '%s\n' "${uniqueBins2[@]}"
+
+	for i in "${uniqueBins[@]}"
+	do
+   		file "$i"
+   		# or do whatever with individual element of the array
+	done
+
+}
+
+
 ################
 ## Smarter CD ##
 ################
