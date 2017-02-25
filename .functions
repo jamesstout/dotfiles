@@ -666,13 +666,18 @@ function targz() {
 			cmd="gzip"
 		fi
 	fi
-
 	sizeStr=$(human-readable $size);
 
-	echo "Compressing .tar ($sizeStr) using \`${cmd}\`…";
-	"${cmd}" -v "${tmpFile}" || return 1
-	[ -f "${tmpFile}" ] && rm "${tmpFile}"
+	PARMS=()
 
+	if [ "$cmd" != "zopfli" ]
+	then
+		PARMS+=( -9 -v )
+	fi
+
+	echo "Compressing .tar ($sizeStr) using \`${cmd} ${PARMS[@]}\`…";
+	"${cmd}" "${PARMS[@]}" "${tmpFile}" || return 1
+	[ -f "${tmpFile}" ] && rm "${tmpFile}"
 	zippedSize=$(
 		stat -f"%z" "${tmpFile}.gz" 2> /dev/null; # OS X `stat`
 		stat -c"%s" "${tmpFile}.gz" 2> /dev/null; # GNU `stat`
