@@ -71,6 +71,9 @@ alias cx="chmod +x"
 alias cw="chmod +w"
 alias cr="chmod +r"
 
+alias ta="type -a "
+alias f="file "
+
 # file counts
 alias llc="ls -l | wc -l"
 alias findc="find . -type f -print | perl -lne 'print quotemeta' | xargs ls -l | wc -l"
@@ -114,7 +117,7 @@ alias gb='git branch -a'
 alias gr='git remote -v'
 alias gc='git commit'
 alias gd='git diff'
-alias ggo='git checkout '
+alias go='git checkout '
 alias gks='git ksreview '
 alias gom='git checkout master'
 alias gss='git status --short --branch'
