@@ -38,6 +38,7 @@ if type_exists 'brew'; then
         'homebrew/dupes/grep'
         'homebrew/dupes/openssh'
         'homebrew/php/php56'
+        'php56-gmp'
         'htop'
         'lesspipe'
         'md5deep'
