@@ -20,6 +20,7 @@ if type_exists 'brew'; then
     declare -a desired_formulae=(
         'ack'
         'aircrack-ng'
+        'ansiweather'
         'bash'
         'bash-completion2'
         'binutils'
@@ -40,6 +41,7 @@ if type_exists 'brew'; then
         'homebrew/php/php56'
         'php56-gmp'
         'htop'
+        'jq'
         'lesspipe'
         'md5deep'
         'md5sha1sum'
@@ -53,6 +55,7 @@ if type_exists 'brew'; then
         'pkg-config'
         'pngquant'
         'pstree'
+        'pv'
         'python'
         'python3'
         'rbenv'
