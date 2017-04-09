@@ -750,6 +750,14 @@ function llf() {
    ll "$@" && goto "$_";
 }
 
+
+#####################
+## file && follow ##
+#####################
+function ff() {
+   file "$@" && goto "$_";
+}
+
 function wch() 
 {
   FP=`which $1`
