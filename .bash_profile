@@ -84,7 +84,10 @@ done
 complete -W "NSGlobalDomain" defaults
 
 # Add `killall` tab completion for common apps
-complete -o "nospace" -W "Calendar Dock Dashboard Finder Mail Safari iTunes SystemUIServer, Crashlytics, Cloud, Dropbox, Fantastical, Growl, HazelHelper, ChronoSyncBackgrounder, GeekTool\ Helper" killall
+complete -o "nospace" -W "Calendar Dock Dashboard Finder Mail Safari iTunes SystemUIServer, Fabric, Cloud, Dropbox, Fantastical, HazelHelper, ChronoSyncBackgrounder, GeekTool\ Helper" killall
+
+defaults write NSGlobalDomain com.apple.sound.uiaudio.enabled -int 0
+defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
 
 ## Tab Completions
 set completion-ignore-case On
@@ -109,7 +112,7 @@ else # OS X `ls`
   colorflag="-G"
 fi
 
-alias ls="command ls ${colorflag}"
+alias ls="ls ${colorflag}"
 # these are set in /usr/local/etc/grc.bashrc
 # I don't want them
 unalias make
@@ -126,4 +129,4 @@ unalias ip
 unalias tail
 unalias dig
 unalias diff
-
+unalias du
