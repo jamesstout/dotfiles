@@ -15,14 +15,14 @@ fi
 
 # backup
 # backup .z - it contains all the z directory info, just in case
-cp ~/.{bash_profile,bash_prompt,path,exports,aliases,functions,extra,gitattributes,gitconfig,gitignore,inputrc,hgignore,wgetrc,vimrc,utils,bashrc,z,gemrc,tmux.conf,npmrc,ackrc} "$BACKUPS_DIR"
+cp ~/.{bash_profile,bash_prompt,path,exports,aliases,functions,extra,gitattributes,gitconfig,gitignore,gitignore_global,inputrc,hgignore,wgetrc,vimrc,utils,bashrc,z,gemrc,tmux.conf,npmrc,ackrc} "$BACKUPS_DIR"
 cp -R ~/.vim "$BACKUPS_DIR"
 cp -R ~/.git_template "$BACKUPS_DIR"
 
 # update dotfiles
 cp -Rf .vim ~
 cp -Rf .git_template ~
-cp .{bash_profile,bash_prompt,path,exports,aliases,functions,extra,gitattributes,gitconfig,gitignore,inputrc,hgignore,wgetrc,vimrc,utils,bashrc,gemrc,tmux.conf,npmrc,ackrc} ~
+cp .{bash_profile,bash_prompt,path,exports,aliases,functions,extra,gitattributes,gitconfig,gitignore,gitignore_global,inputrc,hgignore,wgetrc,vimrc,utils,bashrc,gemrc,tmux.conf,npmrc,ackrc} ~
 
 # move down here, depends on .utils
 source ./.brew
