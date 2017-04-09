@@ -153,28 +153,8 @@ else
 	fi
 
 	e_debug "Copying bins"
-
-	# cp extract and editor
-	cp -f bin/editor.sh "$BIN_DIR"
-	cp -f bin/extract "$BIN_DIR"
-	cp -f bin/ixio "$BIN_DIR"
-	cp -f bin/httpcompression "$BIN_DIR"
-	cp -f bin/parallel "$BIN_DIR"
-	cp -f bin/bashmarks.sh "$BIN_DIR"
-	cp -f bin/transcode-video.sh "$BIN_DIR"
-	cp -f bin/startup-gpg-agent.sh "$BIN_DIR"
-	cp -f bin/itunes-apps-periodic-cleanup.py "$BIN_DIR"
-	cp -f bin/blame-bird.py "$BIN_DIR"
-	chmod +x "$BIN_DIR"/extract
-	chmod +x "$BIN_DIR"/editor.sh
-	chmod +x "$BIN_DIR"/ixio
-	chmod +x "$BIN_DIR"/httpcompression
-	chmod +x "$BIN_DIR"/parallel
-	chmod +x "$BIN_DIR"/bashmarks.sh
-	chmod +x "$BIN_DIR"/transcode-video.sh
-	chmod +x "$BIN_DIR"/startup-gpg-agent.sh
-	chmod +x "$BIN_DIR"/itunes-apps-periodic-cleanup.py
-	chmod +x "$BIN_DIR"/blame-bird.py
+	cp -f bin/{editor.sh,extract,ixio,httpcompression,parallel,bashmarks.sh,de-dupe-bash-eternal-history.sh,startup-gpg-agent.sh,itunes-apps-periodic-cleanup.py,blame-bird.py} "$BIN_DIR"
+	chmod +x "$BIN_DIR"/{editor.sh,extract,ixio,httpcompression,parallel,bashmarks.sh,de-dupe-bash-eternal-history.sh,startup-gpg-agent.sh,itunes-apps-periodic-cleanup.py,blame-bird.py}
 
 	# update z repo and copy
 	cd "$Z_REPO" || exit
