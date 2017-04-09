@@ -36,8 +36,8 @@ if type_exists 'brew'; then
         'git-lfs'
         'handbrake'
         'hh'
-        'homebrew/dupes/grep'
-        'homebrew/dupes/openssh'
+        'grep'
+        'openssh'
         'homebrew/php/php56'
         'php56-gmp'
         'htop'
@@ -77,7 +77,7 @@ if type_exists 'brew'; then
         'unrar'
         'watchman'
         'webkit2png'
-        'wget --with-iri'
+        'wget'
         'x264'
         'xctool'
         'xvid'
@@ -102,7 +102,7 @@ if type_exists 'brew'; then
 
         e_header "Installing missing Homebrew formulae..."
         # Install all missing formulae
-        brew install "$list_formulae"
+        brew install $list_formulae
 
         [[ $? ]] && e_success "Done"
     fi
