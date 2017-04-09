@@ -22,6 +22,7 @@ alias m="mate ."
 alias s="subl "
 alias o="open"
 alias oo="open ."
+alias wh="which"
 
 # brew
 alias bi="brew info "
