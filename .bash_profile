@@ -122,6 +122,7 @@ unalias netstat
 unalias ping
 unalias traceroute
 unalias head
+unalias ip
 unalias tail
 unalias dig
 unalias diff
