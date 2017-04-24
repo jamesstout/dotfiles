@@ -42,7 +42,7 @@ export CFLAGS="-arch x86_64"
 export ARCHFLAGS="-arch x86_64"
 
 # Highlight section titles in manual pages
-export LESS_TERMCAP_md="$ORANGE"
+#export LESS_TERMCAP_md="$ORANGE"
 
 # Don’t clear the screen after quitting a manual page
 #export MANPAGER="less -X"
@@ -79,14 +79,14 @@ export LESS="${less_options[*]}";
 unset less_options;
 export PAGER='less';
 
-# Make "less" transparently unpack archives etc.
-if [ -x /usr/bin/lesspipe ]; then
-	eval $(/usr/bin/lesspipe);
-elif command -v lesspipe.sh > /dev/null; then
-	# MacPorts recommended "/opt/local/bin/lesspipe.sh", but this is more
-	# portable for people that have it in another directory in their $PATH.
-	eval $(lesspipe.sh);
-fi;
+# # Make "less" transparently unpack archives etc.
+# if [ -x /usr/bin/lesspipe ]; then
+# 	eval $(/usr/bin/lesspipe);
+# elif command -v lesspipe.sh > /dev/null; then
+# 	# MacPorts recommended "/opt/local/bin/lesspipe.sh", but this is more
+# 	# portable for people that have it in another directory in their $PATH.
+# 	eval $(lesspipe.sh);
+# fi;
 
 
 
