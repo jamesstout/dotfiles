@@ -86,7 +86,7 @@ complete -W "NSGlobalDomain" defaults
 # Add `killall` tab completion for common apps
 complete -o "nospace" -W "Calendar Dock Dashboard Finder Mail Safari iTunes SystemUIServer, Fabric, Cloud, Dropbox, Fantastical, HazelHelper, ChronoSyncBackgrounder, GeekTool\ Helper" killall
 
-defaults write NSGlobalDomain com.apple.sound.uiaudio.enabled -int 0
+#defaults write NSGlobalDomain com.apple.sound.uiaudio.enabled -int 0
 defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
 
 ## Tab Completions
