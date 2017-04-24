@@ -27,6 +27,7 @@ if type_exists 'brew'; then
         'class-dump'
         'coreutils' # GNU core utilities (those that come with OS X are outdated)
         'dark-mode'
+        'diff-so-fancy'
         'fcrackzip'
         'findutils'
         'fping'
@@ -35,6 +36,7 @@ if type_exists 'brew'; then
         'gibo'
         'git'
         'git-lfs'
+        'git-quick-stats'
         'handbrake'
         'hh'
         'grep'
