@@ -121,6 +121,7 @@ unalias make
 unalias gcc
 unalias g++
 unalias as
+unalias docker
 unalias gas
 unalias ld
 unalias netstat
@@ -132,3 +133,6 @@ unalias tail
 unalias dig
 unalias diff
 unalias du
+
+alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
+
