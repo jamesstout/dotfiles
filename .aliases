@@ -67,6 +67,7 @@ alias py="python"
 
 alias gurl='curl --compressed'
 
+alias ded='rm -rf /Users/james/Library/Developer/Xcode/DerivedData'
 # chmod commands
 alias cx="chmod +x"
 alias cw="chmod +w"
@@ -118,7 +119,7 @@ alias gb='git branch -a'
 alias gr='git remote -v'
 alias gc='git commit'
 alias gd='git diff'
-alias ggo='git checkout '
+alias gg='git checkout '
 alias gks='git ksreview '
 alias gom='git checkout master'
 alias gss='git status --short --branch'
