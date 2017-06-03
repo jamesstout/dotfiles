@@ -16,7 +16,7 @@ alias cdg="cd ~/Projects/Github"
 alias cds="cd ~/Sites"
 alias su="su -"
 alias lr='echo $?'
-
+alias tf='tail -f '
 # apps
 alias m="mate ."
 alias s="subl "
