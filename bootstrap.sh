@@ -4,25 +4,33 @@
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-cd "$SCRIPT_DIR" || exit
+cd "$SCRIPT_DIR" || return 1
+
+source ./.utils
 
 BACKUPS_DIR="$HOME"/.backups
 
 if [ ! -d "$BACKUPS_DIR" ]; then
 	printf "$(tput setaf 136)! %s$(tput sgr0)\n" "$BACKUPS_DIR does not exist, creating..."
-	mkdir "$BACKUPS_DIR" || printf "$(tput setaf 1)x %s$(tput sgr0)\n" "Could not create $BACKUPS_DIR" ; printf "Aborting...\n"; return 1
+	mkdir "$BACKUPS_DIR" ||  return 1
 fi
 
 # backup
 # backup .z - it contains all the z directory info, just in case
-cp ~/.{bash_profile,bash_prompt,path,exports,aliases,functions,extra,gitattributes,gitconfig,gitignore,gitignore_global,inputrc,hgignore,wgetrc,vimrc,utils,bashrc,z,gemrc,tmux.conf,npmrc,ackrc} "$BACKUPS_DIR"
+cp ~/.{bash_profile,iterm2_shell_integration.bash,bash_prompt,path,exports,aliases,functions,extra,gitattributes,gitconfig,gitignore,gitignore_global,inputrc,hgignore,wgetrc,vimrc,utils,bashrc,z,gemrc,tmux.conf,npmrc,ackrc} "$BACKUPS_DIR"
 cp -R ~/.vim "$BACKUPS_DIR"
 cp -R ~/.git_template "$BACKUPS_DIR"
+
+# do we have an updated .iterm2_shell_integration.bash?
+if ! doiTermIntegrationCheck ; then 
+	e_error "Something went wrong"
+	return 1
+fi
 
 # update dotfiles
 cp -Rf .vim ~
 cp -Rf .git_template ~
-cp .{bash_profile,bash_prompt,path,exports,aliases,functions,extra,gitattributes,gitconfig,gitignore,gitignore_global,inputrc,hgignore,wgetrc,vimrc,utils,bashrc,gemrc,tmux.conf,npmrc,ackrc} ~
+cp .{bash_profile,bash_prompt,iterm2_shell_integration.bash,path,exports,aliases,functions,extra,gitattributes,gitconfig,gitignore,gitignore_global,inputrc,hgignore,wgetrc,vimrc,utils,bashrc,gemrc,tmux.conf,npmrc,ackrc} ~
 
 # move down here, depends on .utils
 source ./.brew
@@ -78,28 +86,28 @@ cd_and_git_pull "$ST3_TS_DIR"
 #cd_and_git_pull "$RBENV_REPO"
 
 # update npm
-e_header "Updating npm..."
-npm update npm -g
-npm update npm
-npm update -g
+# e_header "Updating npm..."
+# npm update npm -g
+# npm update npm
+# npm update -g
 
-# gem update
-# defaul gems bundler i18n ffi json psych rake rdoc vagrant gzip
-e_header "Updating gems..."
-# gem update
-# gem cleanup
+# # gem update
+# # defaul gems bundler i18n ffi json psych rake rdoc vagrant gzip
+# e_header "Updating gems..."
+# # gem update
+# # gem cleanup
+# # rbenv rehash
+
+# for version in $(rbenv whence gem); do
+#   rbenv shell "$version"
+#   echo "Updating rubygems for $version"
+#   gem update --system --no-document #--quiet
+#   yes | gem update
+#   gem cleanup
+#   echo ""
+# done
+
 # rbenv rehash
-
-for version in $(rbenv whence gem); do
-  rbenv shell "$version"
-  echo "Updating rubygems for $version"
-  gem update --system --no-document #--quiet
-  yes | gem update
-  gem cleanup
-  echo ""
-done
-
-rbenv rehash
 
 # gem update
 # defaul gems bundler i18n ffi json psych rake rdoc vagrant gzip
@@ -134,12 +142,12 @@ if [ ! -d "$BIN_DIR" ]; then
 		ln -s "$SUBL_APP" "$SUBL_SYMLINK"
 
 		# update z repo and copy
-		cd "$Z_REPO" || exit
+		cd "$Z_REPO" || return 1
 		git_info=$(get_git_branch)
 		git pull -v origin "$git_info"
 		cp -f z.sh "$BIN_DIR"
 		chmod +x "$BIN_DIR"/z.sh
-		cd - || exit
+		cd - || return 1
 	else
 		e_error "Could not create $BIN_DIR" ; 
 		e_warning "Sublime Text symlink and z will not be installed";
@@ -157,7 +165,7 @@ else
 	chmod +x "$BIN_DIR"/{editor.sh,extract,ixio,httpcompression,parallel,bashmarks.sh,de-dupe-bash-eternal-history.sh,startup-gpg-agent.sh,itunes-apps-periodic-cleanup.py,blame-bird.py}
 
 	# update z repo and copy
-	cd "$Z_REPO" || exit
+	cd "$Z_REPO" || return 1
 	git_info=$(get_git_branch)
 	e_debug "cd $Z_REPO. Branch is $git_info"
 
@@ -166,8 +174,14 @@ else
 	git pull -v origin "$git_info"
 	cp -f z.sh "$BIN_DIR"
 	chmod +x "$BIN_DIR"/z.sh
-	cd - || exit
+	cd - || return 1
 
 fi
 # shellcheck source=/Users/james/.bash_profile
 source ~/.bash_profile
+
+
+
+
+
+
