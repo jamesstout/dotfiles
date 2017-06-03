@@ -81,23 +81,13 @@ fi
 e_debug "Updating Theme Soda"
 cd_and_git_pull "$ST3_TS_DIR"
 
-# update rbenv
-#e_header "Updating rbenv..."
-#cd_and_git_pull "$RBENV_REPO"
-
-# update npm
+#### update npm
 # e_header "Updating npm..."
 # npm update npm -g
 # npm update npm
 # npm update -g
 
-# # gem update
-# # defaul gems bundler i18n ffi json psych rake rdoc vagrant gzip
 # e_header "Updating gems..."
-# # gem update
-# # gem cleanup
-# # rbenv rehash
-
 # for version in $(rbenv whence gem); do
 #   rbenv shell "$version"
 #   echo "Updating rubygems for $version"
@@ -106,17 +96,7 @@ cd_and_git_pull "$ST3_TS_DIR"
 #   gem cleanup
 #   echo ""
 # done
-
 # rbenv rehash
-
-# gem update
-# defaul gems bundler i18n ffi json psych rake rdoc vagrant gzip
-# e_header "Updating pip..."
-# for package in $(pip list --outdated | grep -v Could | grep -v Some | grep -v MySQL | awk '{ print $1}')
-# do 
-# 	echo "updating $package"
-# 	pip install $package --upgrade
-# done
 
 if file_exists "$SUBL3_APP"; then
 	SUBL_APP="$SUBL3_APP"
