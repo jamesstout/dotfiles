@@ -15,6 +15,9 @@ if type_exists 'brew'; then
     [[ $? ]] && e_success "Done"
 
     e_header "Checking status of desired Homebrew formulae..."
+    
+    create_formula_list_file
+
     declare list_formulae
     declare -a missing_formulae=()
     declare -a desired_formulae=(
@@ -22,7 +25,7 @@ if type_exists 'brew'; then
         'aircrack-ng'
         'ansiweather'
         'bash'
-        'bash-completion2'
+        'bash-completion@2'
         'binutils'
         'class-dump'
         'coreutils' # GNU core utilities (those that come with OS X are outdated)
@@ -41,7 +44,7 @@ if type_exists 'brew'; then
         'hh'
         'grep'
         'openssh'
-        'homebrew/php/php56'
+        'php56'
         'php56-gmp'
         'htop'
         'jq'
@@ -93,7 +96,7 @@ if type_exists 'brew'; then
 
     for index in ${!desired_formulae[*]}
     do
-        if ! formula_exists "${desired_formulae[$index]}"; then
+        if ! formula_exists2 "${desired_formulae[$index]}"; then
             # Store the name (and options) of every missing formula
             missing_formulae=("${missing_formulae[@]}" "${desired_formulae[$index]}")
         fi
