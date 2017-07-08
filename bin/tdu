@@ -1,0 +1,198 @@
+#!/usr/bin/env perl
+
+use strict ;
+use warnings ;
+use Getopt::Long;
+use File::Find::Rule ;
+use File::LsColor qw(ls_color);
+
+tdu()  ;
+
+sub tdu
+{
+GetOptions
+	(
+	'e|entries_per_level=i' => \ my $entries_per_level, 
+	'entries_minimum=s' => \ my $entries_minimum,
+	'm|max_depth=i'     => \ my $max_depth,
+	'x|exclude=s'       => \ my @exclude, 
+	'f|files=i'         => \ my $files,
+	'ls_colors'         => \ my $ls_colors,
+	'files_minimum=s'   => \ my $files_minimum,
+
+	'g|generate_bash_completion' => sub { print <<'EOC' ; 
+_bgc_tdu() { COMPREPLY=( $( [[ -n $2 ]] && compgen -W '-e --entries_per_level --entries_minimum -m --max_depth -x --exclude -f --files --ls_colors --files_minimum' -- ${COMP_WORDS[COMP_CWORD]} )) ; }
+complete -o default -F '_bgc_tdu' 'tdu'
+EOC
+	exit ;
+	},
+
+	'h|help'          => sub { print <<'EOH' ,
+NAME	tdu - displays a subset of du's output indented per level
+USAGE 
+	tdu
+	tdu directory
+
+	tdu directory --max_depth N --entries_per_level N --exclude directory 
+	tdu directory -m N -e N -x directory -x directory 
+
+OPTIONS
+	m|max_depth=i            maximum depth of the tree, default is 5
+	e|entries_per_level=i    number of entries per level, default is 5
+	entries_minimum=i        minimum size of entry to display
+	x|exclude=s              directories to exclude, can be used multiple times 
+
+	f|files=i                also display files in each level
+	ls_colors                colors the files
+	files_minimum=i          minimum size of file to display
+
+SEE ALSO
+	ncdu, gt5, piper
+EOH
+	exit ;
+	},
+	) or die "Error: Invalid command line arguments\n" ;
+
+$entries_per_level //= 5 ;
+$entries_minimum   //= 0 ;
+$max_depth         //= 5 ;
+$files             //= 0 ;
+$ls_colors         //= 0 ;
+$files_minimum     //= 0 ;
+
+$entries_minimum = to_bytes($entries_minimum) ;
+$files_minimum = to_bytes($files_minimum) ;
+
+my $directory = $ARGV[0] // '.' ;
+$directory =~ s{/$}{} ;
+
+my $du_exclude = join ' ', map {"--exclude '$_'"} @exclude ;
+
+my %entries ;
+for 
+	(
+	grep { $_->{size} >= $entries_minimum } 
+		grep { $_->{depth} <= $max_depth } 
+			map { depth_size_path_name($_, $directory) } 
+				`du -b '$directory' --max-depth=$max_depth $du_exclude`
+	)
+	{
+	my $entry_name = $_->{path} . $_->{name} ;
+
+	for my $key ( keys %{ $_ } )
+		{
+		$entries{$entry_name}{$key} = $_->{$key} 
+		}
+
+	my $path = $_->{path} ;
+	$path =~ s/\/$// ;
+
+	next if  $directory eq  $entry_name ;
+	
+	$entries{ $path }{entries}{$_->{name}} =  $entries{$entry_name} ;
+	}
+
+use Data::TreeDumper ;
+#print DumpTree \%entries ;
+
+display_level($entries_per_level, $files, $files_minimum, $ls_colors, $entries{$directory}, $directory)
+	if %entries ;
+}
+
+sub display_level
+{
+my ($entries_per_level, $files, $files_minimum, $ls_colors, $entry, $name) = @_ ;
+
+$name //= $entry->{name} ; 
+print "\t" x $entry->{depth} . display_size($entry->{size}) . " $name\n" ;
+
+my $selected = 0 ;
+my @selected =	grep { $selected++ < $entries_per_level }
+			sort {$b->{size} <=> $a->{size} }
+				 values %{ $entry->{entries} } ;
+
+my $minimum_entry = $selected[-1] ;
+my $minimum_entry_size = $minimum_entry->{size} || 0 ;
+
+display_files($files, $minimum_entry_size, $files_minimum, $ls_colors, $entry->{depth} + 1, "$entry->{path}$entry->{name}") ;
+display_level($entries_per_level, $files, $files_minimum, $ls_colors, $_) for @selected ;
+}
+
+sub display_files
+{
+my ($files, $minimum_entry_size, $files_minimum, $ls_colors, $depth, $directory) = @_ ;
+
+my $selected = 0 ;
+for 
+	(
+	grep { $selected++ < $files } 
+		sort { $b->{size} <=> $a->{size} }
+			map { {name => $_, size => -s $_} }
+				File::Find::Rule->file()
+					->size( ">=$minimum_entry_size" )
+					->size( ">=$files_minimum" )
+					->maxdepth( 1 )
+					->in( $directory )
+	) 
+	{
+	my $file_name = $_->{name} ;
+	$file_name =~ s{ ^ .*? / ([^/]+) $ }{$1}x ; # remove path if any
+
+	$file_name = ls_color($file_name) if $ls_colors ;
+
+	print "\t" x $depth . display_size($_->{size}) . " • $file_name\n" ;
+	}
+}
+
+sub depth_size_path_name
+{
+my ($du, $start_directory) = @_ ;
+chomp $du ;
+
+my ($size, $path) = $du =~ /^ ( [[:digit:]]+ ) \s+ (.+) /x ; 
+
+my $root = $path eq $start_directory ;
+(my $directory_no_slash = $start_directory) =~ s[/$][] ;
+
+return
+	{
+	depth => $root ? 0     :  $path =~ tr{/}{/} - $start_directory =~ tr{/}{/},
+	size  => $size,
+	path  => $root ? $directory_no_slash  : $path =~ m{ (.*? /) [^/]+ $ }x,
+	name  => $root ? '' : $path =~ m{ / ( [^/]+ ) $ }x,
+	}
+} 
+
+sub display_size
+{
+my ($size) = @_ ;
+
+my @units = qw( B K M G T P) ;
+my @formats = qw( %d %.1f %.1f %.1f %.1f %.1f) ;
+my $unit = 0 ;
+
+while ($size >= 1024) { $size = $size / 1024 ; $unit++ ; }
+
+sprintf "% 6s", sprintf("$formats[$unit]$units[$unit]", $size) ;
+}
+
+sub to_bytes 
+{
+my ($size) = @_ ;
+
+my %coefficient = ( B => 0, b => 0, K => 1, k => 1, M => 2, m => 2, G => 3, g => 3) ;
+my ($n, $unit, $bytes) ;
+
+if (($n, $unit) = $size =~ / ^ ([\.[:digit:]]+) (B|b|K|k|M|m|G|g)? $ /x)
+	{
+	$unit = $2 // 'B' ;
+	$bytes = sprintf "%d", $1 * (1024 ** +$coefficient{$unit}) ;
+	}
+else
+	{
+	die "Error: malfmrmed size '$size'. Format: [:digit:]+(B|b|K|k|b|M|m|G|g).\n" ;
+	}
+
+return $bytes ;
+}
+	
