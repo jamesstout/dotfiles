@@ -51,6 +51,7 @@ Z_REPO="third-party/z"
 ST3_DIR="$HOME/Library/Application Support/Sublime Text 3/Packages"
 ST3_BH_DIR="$ST3_DIR/BracketHighlighter"
 ST3_TS_DIR="$ST3_DIR/Theme - Soda"
+ST3_B16_DIR="$ST3_DIR/Base16"
 ST3_USER_DIR="$ST3_DIR/User"
 ST3_BH_FILE="$ST3_BH_DIR/bh_core.sublime-settings"
 ST3_BH_USER_FILE="$ST3_USER_DIR/bh_core.sublime-settings"
@@ -80,6 +81,9 @@ fi
 
 e_debug "Updating Theme Soda"
 cd_and_git_pull "$ST3_TS_DIR"
+
+e_debug "Updating Base16 Theme"
+cd_and_git_pull "$ST3_B16_DIR"
 
 #### update npm
 # e_header "Updating npm..."
@@ -141,8 +145,8 @@ else
 	fi
 
 	e_debug "Copying bins"
-	cp -f bin/{editor.sh,extract,ixio,httpcompression,parallel,bashmarks.sh,de-dupe-bash-eternal-history.sh,startup-gpg-agent.sh,itunes-apps-periodic-cleanup.py,blame-bird.py} "$BIN_DIR"
-	chmod +x "$BIN_DIR"/{editor.sh,extract,ixio,httpcompression,parallel,bashmarks.sh,de-dupe-bash-eternal-history.sh,startup-gpg-agent.sh,itunes-apps-periodic-cleanup.py,blame-bird.py}
+	cp -f bin/{tdu,piper,editor.sh,extract,ixio,httpcompression,parallel,bashmarks.sh,de-dupe-bash-eternal-history.sh,startup-gpg-agent.sh,itunes-apps-periodic-cleanup.py,blame-bird.py} "$BIN_DIR"
+	chmod +x "$BIN_DIR"/{tdu,piper,editor.sh,extract,ixio,httpcompression,parallel,bashmarks.sh,de-dupe-bash-eternal-history.sh,startup-gpg-agent.sh,itunes-apps-periodic-cleanup.py,blame-bird.py}
 
 	# update z repo and copy
 	cd "$Z_REPO" || return 1
