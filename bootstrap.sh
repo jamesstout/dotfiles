@@ -86,21 +86,21 @@ e_debug "Updating Base16 Theme"
 cd_and_git_pull "$ST3_B16_DIR"
 
 #### update npm
-# e_header "Updating npm..."
-# npm update npm -g
-# npm update npm
-# npm update -g
+e_header "Updating npm..."
+npm update npm -g
+npm update npm
+npm update -g
 
-# e_header "Updating gems..."
-# for version in $(rbenv whence gem); do
-#   rbenv shell "$version"
-#   echo "Updating rubygems for $version"
-#   gem update --system --no-document #--quiet
-#   yes | gem update
-#   gem cleanup
-#   echo ""
-# done
-# rbenv rehash
+e_header "Updating gems..."
+for version in $(rbenv whence gem); do
+  rbenv shell "$version"
+  echo "Updating rubygems for $version"
+  gem update --system --no-document #--quiet
+  yes | gem update
+  gem cleanup
+  echo ""
+done
+rbenv rehash
 
 if file_exists "$SUBL3_APP"; then
 	SUBL_APP="$SUBL3_APP"
