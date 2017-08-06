@@ -4,6 +4,10 @@
 # export PATH=/usr/local/bin:/usr/local/sbin:/usr/local/share/npm/bin:$PATH:$HOME/Projects/Scripts:$HOME/Scripts
 # "$HOME/.npm-packages/bin"
 
+# this is the root folder where all globally installed node packages will  go
+export NPM_PACKAGES="$HOME/.npm-packages"
+export NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
+
 paths_to_add=(
 	# Private "bin"
 	"$HOME/bin"
@@ -16,7 +20,7 @@ paths_to_add=(
 	/usr/X11/bin
 	"$HOME/Projects/Scripts"
 	"$HOME/Scripts"
-	"$HOME/.npm-packages/bin"
+	"$NPM_PACKAGES/bin"
 );
 
 # Create an array of directories currently in the PATH variable.
