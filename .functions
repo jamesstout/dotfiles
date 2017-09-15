@@ -585,6 +585,40 @@ fi
     fi
 }
 
+function de2()
+{
+    containers=( $(docker ps --all | rev | cut -d " " -f1 | rev | grep -v NAMES) )
+    
+    read -p "$(
+            f=0
+            for container in "${containers[@]}" ; do
+                echo "$((++f)): $container"
+            done
+
+            echo -ne 'Please select a container > '
+    )" selection
+
+    selected_container="${containers[$((selection-1))]}"
+
+    echo " Executing docker exec -it '$selected_container'"
+
+    
+    
+        if [[ " ${containers[@]} " =~ " ${selected_container} " ]]; then
+            case "${selected_container}" in
+                phpmyadmin)
+                    docker exec -it "${selected_container}" /bin/ash
+                ;;
+                *)
+                    docker exec -it "${selected_container}" /bin/bash
+                ;;
+            esac;
+        else
+            echo "'$1' - container does not exist";
+        fi;
+    
+
+}
 
 function last() 
 {
