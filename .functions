@@ -13,6 +13,10 @@ function git-root {
   dirname $root
 }
 
+piper_color_du ()
+{
+	piper $@ '^\s*\d+B' rgb105 '^\s*[5-9]\d{2}(.\d+)?K' rgb033 '^\s*[1-4]\d{2}(.\d+)?K' rgb023 '^\s*\d{2}(.\d+)?K' rgb013 '^\s*\d(.\d+)?K' rgb003 '^\s*[5-9]\d{2}(.\d+)?M' rgb040 '^\s*[1-4]\d{2}(.\d+)?M' rgb030 '^\s*\d{2}(.\d+)?M' rgb020 '^\s*\d(.\d+)?M' rgb010 '^\s*[5-9]\d{2}(.\d+)?G' rgb540 '^\s*[1-4]\d{2}(.\d+)?G' rgb530 '^\s*\d{2}(.\d+)?G' rgb520 '^\s*\d(.\d+)?G' rgb510 '^\s\d+(.\d+)?[TP]' 'yellow on_red' '.+' grey15 '$' reset
+}
 # Show the top 10 processes.
 function top10 {
 	# Default columns displayed by "top" on Debian Linux and Mac OS X:
@@ -551,6 +555,36 @@ function kpy()
   kill $PY
   return 0
 }
+
+function de()
+{
+    containers=( $(docker ps --all | rev | cut -d " " -f1 | rev | grep -v NAMES) )
+    usage_containers=$( printf "%s|" "${containers[@]}" )
+    usage_containers=${usage_containers::-1}
+
+if [ "$1" = '-l' ]; then
+    printf "%s\n" "${containers[@]}"
+    return 0
+fi
+
+    if [ -z "$1" ]; then
+        echo "Usage: de <$usage_containers>";
+    else
+        if [[ " ${containers[@]} " =~ " ${1} " ]]; then
+            case "$1" in
+                phpmyadmin)
+                    docker exec -it "$1" /bin/ash
+                ;;
+                *)
+                    docker exec -it "$1" /bin/bash
+                ;;
+            esac;
+        else
+            echo "'$1' - container does not exist";
+        fi;
+    fi
+}
+
 
 function last() 
 {
