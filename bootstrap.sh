@@ -145,8 +145,8 @@ else
 	fi
 
 	e_debug "Copying bins"
-	cp -f bin/{tdu,piper,editor.sh,extract,ixio,httpcompression,parallel,bashmarks.sh,de-dupe-bash-eternal-history.sh,startup-gpg-agent.sh,itunes-apps-periodic-cleanup.py,blame-bird.py,tm-log} "$BIN_DIR"
-	chmod +x "$BIN_DIR"/{tdu,piper,editor.sh,extract,ixio,httpcompression,parallel,bashmarks.sh,de-dupe-bash-eternal-history.sh,startup-gpg-agent.sh,itunes-apps-periodic-cleanup.py,blame-bird.py,tm-log}
+	cp -f bin/{tdu,piper,merge-branch.sh,editor.sh,extract,ixio,httpcompression,parallel,bashmarks.sh,de-dupe-bash-eternal-history.sh,startup-gpg-agent.sh,itunes-apps-periodic-cleanup.py,blame-bird.py,tm-log} "$BIN_DIR"
+	chmod +x "$BIN_DIR"/{tdu,piper,merge-branch.sh,editor.sh,extract,ixio,httpcompression,parallel,bashmarks.sh,de-dupe-bash-eternal-history.sh,startup-gpg-agent.sh,itunes-apps-periodic-cleanup.py,blame-bird.py,tm-log}
 
 	# update z repo and copy
 	cd "$Z_REPO" || return 1
