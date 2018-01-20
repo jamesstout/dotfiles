@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Array of possible Firefox application names.
-appname="HKBNLocalSpeedTest"    # "Firefox" "IceWeasel" "etc
+appname="TextMate"    # "Firefox" "IceWeasel" "etc
 
 #
 # Calls lsregister -dump and parses the output for "/Firefox.app", etc.
@@ -17,8 +17,8 @@ function get_osx_ffdir()
             if [ -f $i ]; then
                 echo "$i"
                 # Some logic to parse the output from lsregister
-                # pathArray=($($i -dump |grep -E "/$appname.app$" |cut -d'/' -f2-))
-                pathArray=("Volumes/HKBNLocalSpeedTest/HKBNLocalSpeedTest.app" "Volumes/Hard Drive 2/james/Downloads/HKBNLocalSpeedTest.app")
+                 pathArray=($($i -dump |grep -E "/$appname.app$" |cut -d'/' -f2-))
+                # pathArray=("Volumes/HKBNLocalSpeedTest/HKBNLocalSpeedTest.app" "Volumes/Hard Drive 2/james/Downloads/HKBNLocalSpeedTest.app")
 
                 # ffdir=$($i -dump |grep -E "/$appname.app$" |cut -d'/' -f2- |head -1)
                 for path in "${pathArray[@]}"
