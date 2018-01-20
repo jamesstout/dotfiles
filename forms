@@ -9,6 +9,7 @@ automake
 bash
 bash-completion@2
 bashdb
+bear_backup
 binutils
 boost
 bwm-ng
@@ -22,6 +23,7 @@ diff-so-fancy
 diffoscope
 diffutils
 doctl
+ethereum
 fcrackzip
 fdk-aac
 ffind
@@ -37,6 +39,7 @@ geoip
 geoipupdate
 gettext
 gibo
+gifsicle
 git
 git-lfs
 git-quick-stats
@@ -61,17 +64,21 @@ lesspipe
 libarchive
 libebml
 libevent
+libidn2
 libmagic
 libmatroska
 libogg
 libpng
 libtiff
 libtool
+libunistring
 libvorbis
 libxml2
 libyaml
+little-cms2
 lzo
 lzop
+masscan
 md5deep
 md5sha1sum
 media-info
@@ -81,6 +88,8 @@ mkvtoolnix
 moreutils
 mp4v2
 mplayer
+nasm
+neon
 netperf
 ngrep
 node
@@ -99,6 +108,7 @@ pngquant
 protobuf
 pstree
 pv
+pwgen
 python
 python3
 rbenv
@@ -106,9 +116,11 @@ readline
 rename
 rsync
 ruby-build
+s-lang
 sdl2
 shellcheck
 smartmontools
+speedtest-cli
 speedtest_cli
 sqlite
 ssh-copy-id
