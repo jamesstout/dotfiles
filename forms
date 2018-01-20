@@ -15,6 +15,7 @@ boost
 bwm-ng
 cabextract
 class-dump
+cloc
 cocoapods
 composer
 coreutils
