@@ -28,6 +28,7 @@ if type_exists 'brew'; then
         'bash-completion@2'
         'binutils'
         'class-dump'
+        'cloc'
         'coreutils' # GNU core utilities (those that come with OS X are outdated)
         'dark-mode'
         'diff-so-fancy'
