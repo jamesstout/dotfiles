@@ -72,19 +72,25 @@
 	# Detect whitespace errors when applying a patch
 	whitespace = fix
 
-[diff]
-	tool = Kaleidoscope
 [difftool "Kaleidoscope"]
 	cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+
+# If you want to set up Kaleidoscope as the default diff tool,
+# then also set the following variables:
 [difftool]
 	prompt = false
-
-[mergetool]
+[diff]
 	tool = Kaleidoscope
+
 [mergetool "Kaleidoscope"]
-	cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
-	trustExitCode = true
+	cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" \"$REMOTE\"
+
+# If you want to set up Kaleidoscope as the default merge tool,
+# then also set the following variables:
+[mergetool]
 	prompt = false
+[merge]
+	tool = Kaleidoscope
 
 # from https://github.com/necolas/dotfiles
 [pretty]
