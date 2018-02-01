@@ -117,22 +117,8 @@ fi
 alias ls="ls ${colorflag}"
 # these are set in /usr/local/etc/grc.bashrc
 # I don't want them
-unalias make
-unalias gcc
-unalias g++
-unalias as
-unalias docker
-unalias gas
-unalias ld
-unalias netstat
-unalias ping
-unalias traceroute
-unalias head
+
 unalias ip
-unalias tail
-unalias dig
-unalias diff
-unalias du
 
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
 
