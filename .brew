@@ -77,6 +77,7 @@ if type_exists 'brew'; then
         'testssl'
         'texi2html'
         'the_silver_searcher'
+        'thefuck'
         'tidy-html5'
         'tmux'
         'tree'
