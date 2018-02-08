@@ -51,6 +51,7 @@ gnu-tar
 go
 grc
 grep
+gzip
 handbrake
 hh
 htop
@@ -132,6 +133,7 @@ svgo
 testssl
 texi2html
 the_silver_searcher
+thefuck
 tidy-html5
 tmux
 tree
