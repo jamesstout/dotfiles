@@ -1,6 +1,6 @@
 [alias]
 	# View the SHA, description, and history graph of the latest 20 commits
-	l = log --pretty=oneline --graph -n 20 
+	l = log --pretty=oneline --graph -n 20 --abbrev-commit
 	
 	# from https://github.com/necolas/dotfiles
 	logp = log --pretty=nice --date-order
@@ -17,6 +17,8 @@
     trim = !git remote prune origin && git gc
     cleanup = !git clean -df && git stash clear
 
+	# List aliases
+	aliases = config --get-regexp alias
 
 	# View the current working tree status using the short format
 	s = status -s
@@ -126,6 +128,9 @@
 	# http://michael-kuehnel.de/git/2014/11/21/git-mac-osx-and-german-umlaute.html
 	precomposeunicode = false
 	pager = "diff-so-fancy | less --tabs=4 -RFX"
+	# Speed up commands involving untracked files such as `git status`.
+	# https://git-scm.com/docs/git-update-index#_untracked_cache
+	untrackedCache = true
 
 
 [color]
@@ -162,6 +167,6 @@
 	merge = refs/heads/master
 
 [push]
-	default = current
+	default = simple
 [init]
 	templatedir = ~/.git_template
