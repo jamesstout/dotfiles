@@ -38,6 +38,9 @@ alias vtop="vtop --theme monokai"
 
 alias path='echo -e ${PATH//:/\\n}'
 
+# Reload the shell (i.e. invoke as a login shell)
+alias reload="exec ${SHELL} -l"
+
 # Always enable colored `grep` output
 # Note: `GREP_OPTIONS="--color=auto"` is deprecated, hence the alias usage.
 alias grep='grep --color=auto'
@@ -108,8 +111,11 @@ alias mem='top -o rsize' # memory
 alias cl="fc -e -|pbcopy"
 
 # time machine log
-alias tmlog="syslog -F '\$Time \$Message' -k Sender com.apple.backupd -k Time ge -30m | tail -n 1"
-
+#alias tmlog="syslog -F '\$Time \$Message' -k Sender com.apple.backupd -k Time ge -30m | tail -n 1"
+alias tmlog="log show --style syslog  --predicate 'senderImagePath contains[cd] \"TimeMachine\"' --info"
+alias tmlogstream="log stream --style syslog  --predicate 'senderImagePath contains[cd] \"TimeMachine\"' --info"
+alias tmls="sudo tmutil listbackups"
+alias tmfs="sudo fs_usage -f -R filesys backupd"
 
 # git
 alias g="git"
@@ -213,7 +219,7 @@ alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"
 
 # Empty the Trash on all mounted volumes and the main HDD
 # Also, clear Apple’s System Logs to improve shell startup speed
-alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl"
+#alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl"
 
 # Show/hide hidden files in Finder
 alias show="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
