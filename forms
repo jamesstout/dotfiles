@@ -109,6 +109,7 @@ php56
 php56-gmp
 pigz
 pkg-config
+pngcheck
 pngquant
 protobuf
 pstree
@@ -140,6 +141,7 @@ tmux
 tree
 unixodbc
 unrar
+vbindiff
 watchman
 webkit2png
 wget
