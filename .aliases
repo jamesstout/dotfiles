@@ -122,7 +122,7 @@ alias tmlog="log show --style syslog  --predicate 'senderImagePath contains[cd] 
 alias tmlogstream="log stream --style syslog  --predicate 'senderImagePath contains[cd] \"TimeMachine\"' --info"
 alias tmls="sudo tmutil listbackups"
 alias tmfs="sudo fs_usage -f -R filesys backupd"
-
+alias tmdiff="sudo tmutil listbackups | tail -2 | sed 's/.*/\"&\"/' | xargs sudo tmutil compare"
 # git
 alias g="git"
 alias gs='git status '
