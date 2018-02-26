@@ -50,6 +50,7 @@ Z_REPO="third-party/z"
 #RBENV_REPO="$HOME/.rbenv"
 ST3_DIR="$HOME/Library/Application Support/Sublime Text 3/Packages"
 ST3_BH_DIR="$ST3_DIR/BracketHighlighter"
+ST3_GS_DIR="$ST3_DIR/GoSublime"
 ST3_TS_DIR="$ST3_DIR/Theme - Soda"
 ST3_B16_DIR="$ST3_DIR/Base16"
 ST3_USER_DIR="$ST3_DIR/User"
@@ -85,6 +86,9 @@ cd_and_git_pull "$ST3_TS_DIR"
 e_debug "Updating Base16 Theme"
 cd_and_git_pull "$ST3_B16_DIR"
 
+e_debug "Updating GoSublime"
+cd_and_git_pull "$ST3_GS_DIR"
+
 #### update npm
 e_header "Updating npm..."
 npm update npm -g
@@ -94,10 +98,20 @@ npm update -g
 e_header "Updating gems..."
 for version in $(rbenv whence gem); do
   rbenv shell "$version"
-  echo "Updating rubygems for $version"
+  e_debug "Updating rubygems for $version"
   gem update --system --no-document #--quiet
-  yes | gem update
-  gem cleanup
+  if [[ $version = "2.2.2" ]]; then
+	e_debug "version == 2.2.2"
+	e_debug "Updating outdated gems, excluding frankenstein and rdoc"
+	gem outdated | awk '{print $1}' | grep -v -E '(frankenstein|rdoc)' | xargs gem update
+  elif [[ $version = "2.3.1" ]]; then
+  	e_debug "version == 2.3.1"
+	e_debug "Updating outdated gems, excluding rdoc"
+	gem outdated | awk '{print $1}' | grep -v rdoc | xargs gem update
+  else
+  	yes | gem update
+  fi
+  gem cleanup -v
   echo ""
 done
 rbenv rehash
