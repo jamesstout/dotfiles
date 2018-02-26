@@ -7,6 +7,7 @@
 # this is the root folder where all globally installed node packages will  go
 export NPM_PACKAGES="$HOME/.npm-packages"
 export NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
+export GOROOT="/usr/local/opt/go/libexec"
 
 paths_to_add=(
 	# Private "bin"
@@ -21,6 +22,7 @@ paths_to_add=(
 	"$HOME/Projects/Scripts"
 	"$HOME/Scripts"
 	"$NPM_PACKAGES/bin"
+	"$GOROOT/bin"
 );
 
 # Create an array of directories currently in the PATH variable.
