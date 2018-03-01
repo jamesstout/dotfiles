@@ -117,7 +117,8 @@ if type_exists 'brew'; then
         [[ $? ]] && e_success "Done"
     fi
 
-
+    e_header "Updating any outdated casks..."
+    brew cask upgrade
     # Remove outdated versions from the Cellar
     brew cleanup -s
     brew cask cleanup
