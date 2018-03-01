@@ -14,6 +14,7 @@ bear_backup
 bfg
 binutils
 boost
+brew-cask-completion
 bwm-ng
 cabextract
 class-dump
@@ -74,6 +75,7 @@ libmagic
 libmatroska
 libogg
 libpng
+libssh2
 libtiff
 libtool
 libunistring
@@ -122,12 +124,12 @@ readline
 rename
 rsync
 ruby-build
+rust
 s-lang
 sdl2
 shellcheck
 smartmontools
 speedtest-cli
-speedtest_cli
 sqlite
 ssh-copy-id
 subversion
