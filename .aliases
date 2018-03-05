@@ -101,7 +101,6 @@ alias ts="top -o state"
 # AESendMessage bug - http://www.openradar.me/12424662
 alias kae='sudo killall -KILL appleeventsd'
 alias kf='killall Finder'
-alias kcp="sudo launchctl unload /Library/LaunchDaemons/com.crashplan.engine.plist"
 
 # copy the working directory path
 alias cpwd='pwd|tr -d "\n"|pbcopy'
@@ -123,6 +122,8 @@ alias tmlogstream="log stream --style syslog  --predicate 'senderImagePath conta
 alias tmls="sudo tmutil listbackups"
 alias tmfs="sudo fs_usage -f -R filesys backupd"
 alias tmdiff="sudo tmutil listbackups | tail -2 | sed 's/.*/\"&\"/' | xargs sudo tmutil compare"
+
+alias logshutdown="log show --style syslog --last 36h | egrep shutdown\\ cause"
 # git
 alias g="git"
 alias gs='git status '
