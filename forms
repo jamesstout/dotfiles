@@ -92,6 +92,7 @@ pstree
 pv
 python
 python3
+python@2
 rbenv
 readline
 rename

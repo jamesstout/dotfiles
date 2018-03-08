@@ -6,7 +6,7 @@ source ./.utils
 if type_exists 'brew'; then
     e_header "Updating Homebrew..."
     # Use the latest version of Homebrew
-    #brew update
+    brew update
     [[ $? ]] && e_success "Done"
 
     e_header "Updating any existing Homebrew formulae..."
@@ -119,7 +119,8 @@ if type_exists 'brew'; then
        [[ $? ]] && e_success "Done"
     fi
 
-
+    e_header "Updating any outdated casks..."
+    brew cask upgrade
     # Remove outdated versions from the Cellar
     brew cleanup -s
     brew cask cleanup
