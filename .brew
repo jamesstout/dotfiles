@@ -6,7 +6,7 @@ source ./.utils
 if type_exists 'brew'; then
     e_header "Updating Homebrew..."
     # Use the latest version of Homebrew
-    brew update
+    #brew update
     [[ $? ]] && e_success "Done"
 
     e_header "Updating any existing Homebrew formulae..."
@@ -32,11 +32,11 @@ if type_exists 'brew'; then
         'coreutils' # GNU core utilities (those that come with OS X are outdated)
         'dark-mode'
         'diff-so-fancy'
-        'fcrackzip'
+        #'fcrackzip'
         'findutils'
         'fping'
-        'geoip --with-geoipupdate'
-        'geoipupdate'
+        #'geoip --with-geoipupdate'
+        #'geoipupdate'
         'gibo'
         'git'
         'git-lfs'
@@ -45,17 +45,17 @@ if type_exists 'brew'; then
         'hh'
         'grep'
         'openssh'
-        'php56'
-        'php56-gmp'
+       # 'php56'
+       # 'php56-gmp'
         'htop'
         'jq'
         'lesspipe'
         'md5deep'
         'md5sha1sum'
         'moreutils'
-        'netperf'
-        'ngrep'
-        'node --without-npm'
+        #'netperf'
+        #'ngrep'
+        #'node --without-npm'
         'openssl'
         'p7zip'
         'pigz'
@@ -74,18 +74,18 @@ if type_exists 'brew'; then
         'shellcheck'
         'sqlite'
         'ssh-copy-id'
-        'subversion'
+        #'subversion'
         'testssl'
-        'texi2html'
+        #'texi2html'
         'the_silver_searcher'
         'thefuck'
-        'tidy-html5'
-        'tmux'
+        #'tidy-html5'
+        #'tmux'
         'tree'
         'unixodbc'
         'unrar'
         'vbindiff'
-        'watchman'
+        #'watchman'
         'webkit2png'
         'wget'
         'x264'
@@ -112,9 +112,11 @@ if type_exists 'brew'; then
 
         e_header "Installing missing Homebrew formulae..."
         # Install all missing formulae
-        brew install $list_formulae
+        #echo "$list_formulae"
+       # exit;
+       brew install $list_formulae
 
-        [[ $? ]] && e_success "Done"
+       [[ $? ]] && e_success "Done"
     fi
 
 
