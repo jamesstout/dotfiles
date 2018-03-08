@@ -175,7 +175,6 @@
 # Shamelessly copied from https://github.com/gf3/dotfiles and 
 # https://github.com/necolas/dotfiles/blob/master/bash/bash_prompt
 # Screenshot: http://i.imgur.com/s0Blh.png
-
 if [[ $COLORTERM = gnome-* && $TERM = xterm ]] && infocmp gnome-256color >/dev/null 2>&1; then
     export TERM=gnome-256color
 elif infocmp xterm-256color >/dev/null 2>&1; then
@@ -224,6 +223,16 @@ is_git_dir() {
     $(git rev-parse --is-inside-git-dir 2> /dev/null)
 }
 
+is_cocoapods_repo() {
+    local repo_name
+    repo_name=$(git rev-parse --show-toplevel 2> /dev/null)
+    if [[ "$repo_name" =~ cocoapods ]]; then
+        return 0
+    else
+        return 1
+    fi
+}
+
 get_git_branch() {
     local branch_name
 
@@ -245,8 +254,10 @@ prompt_git() {
         return 1
     fi
 
-    # ensure index is up to date
-    git update-index --really-refresh  -q &>/dev/null
+    if ! is_cocoapods_repo; then
+        # ensure index is up to date
+        git update-index --really-refresh  -q &>/dev/null
+    fi
 
     git_info=$(get_git_branch)
 
@@ -254,25 +265,26 @@ prompt_git() {
     # unless they contain a .gitignore file
     # so the prompt should be correct
     # with the caveat that it ignores any new empty folders
+    if ! is_cocoapods_repo; then
+        # Check for uncommitted changes in the index
+        if ! $(git diff --quiet --ignore-submodules --cached); then
+            uc="+"
+        fi
 
-    # Check for uncommitted changes in the index
-    if ! $(git diff --quiet --ignore-submodules --cached); then
-        uc="+"
-    fi
+        # Check for unstaged changes
+        if ! $(git diff-files --quiet --ignore-submodules --); then
+            us="!"
+        fi
 
-    # Check for unstaged changes
-    if ! $(git diff-files --quiet --ignore-submodules --); then
-        us="!"
-    fi
+        # Check for untracked files
+        if [ -n "$(git ls-files --others --exclude-standard)" ]; then
+            ut="?"
+        fi
 
-    # Check for untracked files
-    if [ -n "$(git ls-files --others --exclude-standard)" ]; then
-        ut="?"
-    fi
-
-    # Check for stashed files
-    if $(git rev-parse --verify refs/stash &>/dev/null); then
-        st="$"
+        # Check for stashed files
+        if $(git rev-parse --verify refs/stash &>/dev/null); then
+            st="$"
+        fi
     fi
 
     git_state=$uc$us$ut$st
