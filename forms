@@ -85,6 +85,7 @@ libyaml
 little-cms2
 lzo
 lzop
+mas
 masscan
 md5deep
 md5sha1sum
@@ -130,6 +131,7 @@ sdl2
 shellcheck
 smartmontools
 speedtest-cli
+sphinx-doc
 sqlite
 ssh-copy-id
 subversion
@@ -139,6 +141,7 @@ texi2html
 the_silver_searcher
 thefuck
 tidy-html5
+timewarrior
 tmux
 tree
 unixodbc
