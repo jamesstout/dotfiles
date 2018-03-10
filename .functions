@@ -334,7 +334,7 @@ function tz()
 		exit 1
 	fi
 
-	cd "$TZ_DIR"
+	safe_cd "$TZ_DIR"
 
 	# get all the timezones, trim off first 2 chars: "./"
 	# store in array for repeat use
@@ -520,7 +520,7 @@ function serve() {
 # Edit and reload the profile.
 function pro {
 
-	cd ~/dotfiles
+	safe_cd ~/dotfiles
 	go working # should always be on working branch
 	subl -n -w .{bash_profile,path,exports,aliases,functions,extra,utils};
 	source bootstrap.sh
@@ -644,55 +644,55 @@ function last()
 
 	export LAST
 
-	TYPE=`file -b $LAST`
+	TYPE=`file -b "$LAST"`
 
 	if [ $# -eq 0 ]; 
 		then
 		if [ "$TYPE" = "directory" ]
 			then
-			ls -ld $LAST
+			ls -ld "$LAST"
 		else
-			ls -l $LAST
+			ls -l "$LAST"
 		fi
 	
 	elif [ "$1" = "-cd" ] && [ "$TYPE" = "directory" ]
 		then
-			cd $LAST
+			safe_cd "$LAST"
 			pwd
 
 	elif [ "$1" = "-cd" ] && [ "$TYPE" != "directory" ]
 		then
 			echo "Last item in the directory is a FILE - you can't cd into it"
-			ls -l $LAST
+			ls -l "$LAST"
 
 	elif [ "$1" = "-s" ] #you can open a dir with subl
 		then
-			subl -w $LAST &
+			subl -w "$LAST" &
 
 	elif [ "$TYPE" = "directory" ]	
 		then
 			echo "Last item in the directory IS a directory - you can't tail/cat/less/vi"
-			ls -ld $LAST
+			ls -ld "$LAST"
 	
 	elif [ "$1" = "-c" ]
 		then
-			cat $LAST
+			cat "$LAST"
 
 	elif [ "$1" = "-t" ]
 		then
-			tail $LAST
+			tail "$LAST"
 
 	elif [ "$1" = "-l" ]
 		then
-			less $LAST
+			less "$LAST"
 
 	elif [ "$1" = "-v" ]
 		then
-			vi $LAST			
+			vi "$LAST"			
 
 	elif [ "$1" = "-tf" ]
 		then
-			tail -f $LAST
+			tail -f "$LAST"
 	fi
 	
 	return 0
@@ -835,7 +835,7 @@ function wch()
 
   if [ "$2" = "cd" ];
     then
-      cd $WP
+      safe_cd "$WP"
     fi
 }
 

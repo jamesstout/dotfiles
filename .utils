@@ -24,6 +24,31 @@ e_warning() {
     printf "$(tput setaf 136)! %s$(tput sgr0)\n" "$@"
 }
 
+onoe() {
+  if [[ -t 2 ]] # check whether stderr is a tty.
+  then
+    echo -ne "\033[4;31mError\033[0m: " >&2 # highlight Error with underline and red color
+  else
+    echo -n "Error: " >&2
+  fi
+  if [[ $# -eq 0 ]]
+  then
+    /bin/cat >&2
+  else
+    echo "$*" >&2
+  fi
+}
+
+odie() {
+  onoe "$@"
+  exit 1
+}
+
+safe_cd() {
+  cd "$@" >/dev/null || odie "Error: failed to cd to $*!"
+}
+
+
 # Ask for confirmation before proceeding
 seek_confirmation() {
     printf "\n"
@@ -50,7 +75,7 @@ git_pull(){
 cd_and_git_pull(){
 
     e_debug "cd to $1"
-    cd "$1" || exit 255
+    safe_cd "$1"
     
     if ! is_git_repo ; then
         e_warning "Not a git repo"
