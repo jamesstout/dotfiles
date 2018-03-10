@@ -6,7 +6,14 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 cd "$SCRIPT_DIR" || return 1
 
+# shellcheck source=/dev/null
+source ./.emails
+# shellcheck source=/dev/null
 source ./.utils
+
+e_header "Setting LoginwindowText if required"
+logn "Configuring security settings:"
+addLoginwindowText
 
 BACKUPS_DIR="$HOME"/.backups
 
@@ -33,13 +40,12 @@ cp -Rf .git_template ~
 cp .{bash_profile,bash_prompt,iterm2_shell_integration.bash,path,emails,exports,aliases,functions,extra,gitattributes,gitconfig,gitignore,gitignore_global,inputrc,hgignore,wgetrc,vimrc,utils,bashrc,gemrc,tmux.conf,npmrc,ackrc} ~
 
 # move down here, depends on .utils
+# shellcheck source=/dev/null
 source ./.brew
 
 # for testing without .brew
 #source ./.utils
-e_header "Setting LoginwindowText if required"
 
-addLoginwindowText
 
 # setup vars for dirs and symlinks
 BIN_DIR="$HOME"/bin
@@ -178,7 +184,7 @@ else
 	cd - || return 1
 
 fi
-# shellcheck source=/Users/james/.bash_profile
+# shellcheck source=$HOME/.bash_profile
 source ~/.bash_profile
 
 

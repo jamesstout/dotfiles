@@ -85,21 +85,37 @@ cd_and_git_pull(){
     cd - 1>/dev/null || exit 255
 }
 
+logn()  { DOTFILES_STEP="$*"; sudo_init; printf -- "--> %s " "$*"; }
+
 sudo_init() {
     # We want to always prompt for sudo password at least once rather than doing
     # root stuff unexpectedly.
     sudo -k
 
     if ! sudo -vn &>/dev/null; then
-      if [ -n "$STRAP_SUDOED_ONCE" ]; then
+      if [ -n "$DOTFILES_SUDOED_ONCE" ]; then
         echo "--> Re-enter your password (for sudo access; sudo has timed out):"
       else
         echo "--> Enter your password (for sudo access):"
       fi
       sudo /usr/bin/true
-      STRAP_SUDOED_ONCE="1"
+      DOTFILES_SUDOED_ONCE="1"
     fi
 }
+
+sudo_cleanup() {
+    if [ -n "$DOTFILES_SUDOED_ONCE" ]; then
+        DOTFILES_SUDO_WAIT_PID=$(ps -aef | grep  [s]udo | grep [t]rue | awk '{ print $2 }')
+
+        if [ -n "$DOTFILES_SUDO_WAIT_PID" ]; then
+            e_debug "Killing sudo PID: $DOTFILES_SUDO_WAIT_PID"
+            sudo kill -9 "$DOTFILES_SUDO_WAIT_PID" > /dev/null 2>&1
+        fi
+
+        sudo -k
+    fi
+}
+
 
 function addLoginwindowText(){
 
@@ -112,9 +128,10 @@ function addLoginwindowText(){
     fi
 
     if [ -n "$DOTFILE_NAME" ] && [ -n "$DOTFILE_EMAIL" ]; then
-        sudo_init
+        # sudo_init
         sudo defaults write /Library/Preferences/com.apple.loginwindow LoginwindowText "Found this computer? Please contact $DOTFILE_NAME at $DOTFILE_EMAIL."
         [[ $? ]] && e_success "LoginwindowText set to Found this computer? Please contact $DOTFILE_NAME at $DOTFILE_EMAIL." 
+        sudo_cleanup
         return 0
     fi
 }
