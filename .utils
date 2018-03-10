@@ -85,6 +85,40 @@ cd_and_git_pull(){
     cd - 1>/dev/null || exit 255
 }
 
+sudo_init() {
+    # We want to always prompt for sudo password at least once rather than doing
+    # root stuff unexpectedly.
+    sudo -k
+
+    if ! sudo -vn &>/dev/null; then
+      if [ -n "$STRAP_SUDOED_ONCE" ]; then
+        echo "--> Re-enter your password (for sudo access; sudo has timed out):"
+      else
+        echo "--> Enter your password (for sudo access):"
+      fi
+      sudo /usr/bin/true
+      STRAP_SUDOED_ONCE="1"
+    fi
+}
+
+function addLoginwindowText(){
+
+    CURRENT_TEXT=$(defaults read /Library/Preferences/com.apple.loginwindow LoginwindowText 2>/dev/null)
+
+    if [ -n "$CURRENT_TEXT" ]; then
+        e_success "LoginwindowText already set to $CURRENT_TEXT" 
+        unset CURRENT_TEXT
+        return 0
+    fi
+
+    if [ -n "$DOTFILE_NAME" ] && [ -n "$DOTFILE_EMAIL" ]; then
+        sudo_init
+        sudo defaults write /Library/Preferences/com.apple.loginwindow LoginwindowText "Found this computer? Please contact $DOTFILE_NAME at $DOTFILE_EMAIL."
+        [[ $? ]] && e_success "LoginwindowText set to Found this computer? Please contact $DOTFILE_NAME at $DOTFILE_EMAIL." 
+        return 0
+    fi
+}
+
 function doiTermIntegrationCheck(){
 
     e_header "Checking for iterm2_shell_integration update."
