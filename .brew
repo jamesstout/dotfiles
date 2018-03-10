@@ -131,6 +131,26 @@ else
     return 1
 fi
 
+if type_exists 'mas'; then
+    e_header "Checking for MAS updates..."
+    mas outdated
+else
+    printf "\n"
+    e_error "Error: mas not found."
+    printf "Aborting...\n"
+    return 1
+fi
+
+if brew bundle -h > /dev/null 2>&1; then 
+    e_header "Updating Brewfile..."
+    brew bundle dump --force
+else # OS X `ls`
+    printf "\n"
+    e_error "Error: brew bundle not found."
+    printf "Aborting...\n"
+    return 1
+fi
+
 
 #
 ## Install GNU core utilities (those that come with OS X are outdated)
