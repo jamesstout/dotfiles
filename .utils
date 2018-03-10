@@ -154,10 +154,10 @@ function doiTermIntegrationCheck(){
     OUR_SHELL=$(basename $SHELL)
     NEW_FILE="${TEMP_DIR}"/.iterm2_shell_integration."${OUR_SHELL}"
 
-    curl -s -L https://iterm2.com/misc/"${OUR_SHELL}"_startup.in -o "$NEW_FILE"
+    curl -s -L https://iterm2.com/shell_integration/"${OUR_SHELL}" -o "$NEW_FILE"
 
     NEW_VER=$(grep ShellIntegrationVersion "$NEW_FILE" | cut -d ';' -f 2 | cut -d '=' -f 2)
-    CUR_VER=$(grep ShellIntegrationVersion "$SCRIPT_DIR"/.iterm2_shell_integration.bash | cut -d ';' -f 2 | cut -d '=' -f 2)
+    CUR_VER=$(grep ShellIntegrationVersion "$SCRIPT_DIR"/.iterm2_shell_integration."${OUR_SHELL}" | cut -d ';' -f 2 | cut -d '=' -f 2)
 
     # e_debug "new - $NEW_VER"
     # e_debug "cur - $CUR_VER"
