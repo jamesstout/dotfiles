@@ -125,7 +125,6 @@ readline
 rename
 rsync
 ruby-build
-rust
 s-lang
 sdl2
 shellcheck
