@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #cd "$(dirname "${BASH_SOURCE}")"
-
+# shellcheck disable=SC1091,SC1117
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 

@@ -1,5 +1,6 @@
 # shellcheck shell=bash
 #!/usr/bin/env bash
+# shellcheck disable=SC2016,SC2119,SC2155
 function show-empty-folders {
     find . -depth -type d -empty
 }
