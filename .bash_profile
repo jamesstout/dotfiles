@@ -96,11 +96,11 @@ prefix=$(brew --prefix)
 for comp in \
   /etc/bash_completion \
   $prefix/share/bash-completion/bash_completion \
-  $prefix/Library/Contributions/brew_bash_completion.sh \
   $prefix/etc/grc.bashrc \
   $prefix/etc/bash_completion.d/git-completion.bash \
   $prefix/etc/bash_completion.d/brew \
-  $prefix/etc/bash_completion.d/gibo-completion.bash
+  $prefix/etc/bash_completion.d/gibo-completion.bash \
+  $prefix/etc/bash_completion.d/mas
 do
     # shellcheck source=/dev/null
     [[ -e $comp ]] && source $comp
