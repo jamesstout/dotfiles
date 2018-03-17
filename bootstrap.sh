@@ -12,8 +12,8 @@ source ./.emails
 source ./.utils
 
 e_header "Setting LoginwindowText if required"
-logn "Configuring security settings:"
-addLoginwindowText
+#logn "Configuring security settings:"
+#addLoginwindowText
 
 BACKUPS_DIR="$HOME"/.backups
 
