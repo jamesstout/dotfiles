@@ -1,4 +1,5 @@
 # shellcheck shell=bash
+#!/usr/bin/env bash
 function show-empty-folders {
     find . -depth -type d -empty
 }
@@ -447,7 +448,7 @@ function webtext() {
 # get any apps full-size icon, compression via jpegtran
 function geticon() {
   # Autocompletes app names with modified .app_completions scripts
-  APP=`echo $1|sed -e 's/\.app$//'`
+  APP=$(echo $1|sed -e 's/\.app$//')
   APPDIR=''
   for dir in "/Applications/" "/Applications/Utilities/" "/Developer/Applications/" "/Developer/Applications/Utilties/"; do
     if [[ -d ${dir}$APP.app ]]; then
@@ -458,10 +459,10 @@ function geticon() {
   if [[ $APPDIR == '' ]]; then
     echo "App not found"
   else
-    ICON=`defaults read "${APPDIR}$APP.app/Contents/Info" CFBundleIconFile|sed -e 's/\.icns$//'`
+    ICON=$(defaults read "${APPDIR}$APP.app/Contents/Info" CFBundleIconFile|sed -e 's/\.icns$//')
     TMPFILE="${TMPDIR}${APP}_icon.jpg"
     OUTFILE="$HOME/Desktop/${APP}_icon.jpg"
-    MAXAVAIL=`sips -g pixelWidth "${APPDIR}$APP.app/Contents/Resources/$ICON.icns"|tail -1|awk '{print $2}'`
+    MAXAVAIL=$(sips -g pixelWidth "${APPDIR}$APP.app/Contents/Resources/$ICON.icns"|tail -1|awk '{print $2}')
     echo -n "Enter max pixel width ($MAXAVAIL): "
     read MAX
     if [[ $MAX == '' || $MAX -gt $MAXAVAIL ]]; then
@@ -481,7 +482,7 @@ function geticon() {
 # get any app's full-size icon, PNG version
 function geticonpng() {
   # Autocompletes app names with modified .app_completions scripts
-  APP=`echo $1|sed -e 's/\.app$//'`
+  APP=$(echo $1|sed -e 's/\.app$//')
   APPDIR=''
   for dir in "/Applications/" "/Applications/Utilities/" "/Developer/Applications/" "/Developer/Applications/Utilties/"; do
     if [[ -d ${dir}$APP.app ]]; then
@@ -492,10 +493,10 @@ function geticonpng() {
   if [[ $APPDIR == '' ]]; then
     echo "App not found"
   else
-    ICON=`defaults read "${APPDIR}$APP.app/Contents/Info" CFBundleIconFile|sed -e 's/\.icns$//'`
+    ICON=$(defaults read "${APPDIR}$APP.app/Contents/Info" CFBundleIconFile|sed -e 's/\.icns$//')
     TMPFILE="${TMPDIR}${APP}_icon.png"
     OUTFILE="$HOME/Desktop/${APP}_icon.png"
-    MAXAVAIL=`sips -g pixelWidth "${APPDIR}$APP.app/Contents/Resources/$ICON.icns"|tail -1|awk '{print $2}'`
+    MAXAVAIL=$(sips -g pixelWidth "${APPDIR}$APP.app/Contents/Resources/$ICON.icns"|tail -1|awk '{print $2}')
     echo -n "Enter max pixel width ($MAXAVAIL): "
     read MAX
     if [[ $MAX == '' || $MAX -gt $MAXAVAIL ]]; then
