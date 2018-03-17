@@ -50,6 +50,7 @@ if type_exists 'brew'; then
         'htop'
         'jq'
         'lesspipe'
+        'mas'
         'md5deep'
         'md5sha1sum'
         'moreutils'
