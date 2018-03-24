@@ -641,7 +641,7 @@ function last()
 	fi
 
 	shopt -s dotglob #skip . and .. 
-	LAST=`ls -lrtd * | grep -v DS_Store | tail -1 |  awk ' { print $9 }'`
+	LAST=$(\ls -lrtd * | grep -v DS_Store | tail -1 |  awk ' { print $9 }')
 	shopt -u dotglob #unset it
 
 	export LAST
