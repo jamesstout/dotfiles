@@ -27,7 +27,6 @@ brew "bashdb"
 brew "bear_backup", args: ["HEAD"]
 brew "bfg"
 brew "binutils"
-brew "brew-cask-completion"
 brew "bwm-ng"
 brew "cabextract"
 brew "cloc"
@@ -147,8 +146,10 @@ brew "kateinoigakukun/tap/iblinter"
 cask "cakebrew"
 cask "ccleaner"
 cask "charles"
+cask "crunch"
 cask "easyfind"
 cask "filebot"
+cask "mysqlworkbench"
 cask "rocket-chat"
 cask "suspicious-package"
 cask "vagrant"
@@ -159,6 +160,7 @@ mas "1Password", id: 443987910
 mas "Amphetamine", id: 937984704
 mas "Aperture", id: 408981426
 mas "Asset Catalog Creator Pro", id: 809625456
+mas "ASUS Device Discovery", id: 995124504
 mas "Bear", id: 1091189122
 mas "Bitcoin Ticker TTM", id: 731453251
 mas "Blackmagic Disk Speed Test", id: 425264550
@@ -218,6 +220,7 @@ mas "Todoist", id: 585829637
 mas "TrackSift 2", id: 908737079
 mas "Tweetbot", id: 557168941
 mas "Twitter", id: 409789998
+mas "Ulysses", id: 623795237
 mas "Unclutter", id: 577085396
 mas "unDock", id: 402359583
 mas "VisualGrep", id: 597887722
