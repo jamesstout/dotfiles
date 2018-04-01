@@ -5,6 +5,7 @@ apktool
 apr
 apr-util
 archey
+aspell
 autoconf
 automake
 bash
@@ -36,6 +37,7 @@ findutils
 flac
 fontconfig
 fping
+freetds
 freetype
 gdbm
 geoip
@@ -46,6 +48,7 @@ gifsicle
 git
 git-lfs
 git-quick-stats
+glib
 gmp
 gnu-sed
 gnu-tar
@@ -69,11 +72,13 @@ lesspipe
 libarchive
 libebml
 libevent
+libffi
 libidn2
 libmagic
 libmatroska
 libogg
 libpng
+libpq
 libssh2
 libtiff
 libtool
@@ -81,14 +86,17 @@ libunistring
 libvorbis
 libxml2
 libyaml
+libzip
 little-cms2
 lzo
 lzop
 mas
 masscan
+mcrypt
 md5deep
 md5sha1sum
 media-info
+mhash
 miniupnpc
 mitmproxy
 mkvtoolnix
@@ -107,8 +115,7 @@ openssl@1.1
 p7zip
 pcre
 perl
-php56
-php56-gmp
+php@5.6
 pigz
 pkg-config
 pngcheck
@@ -147,6 +154,7 @@ unrar
 vbindiff
 watchman
 webkit2png
+webp
 wget
 x264
 xctool
