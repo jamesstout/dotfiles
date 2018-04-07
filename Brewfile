@@ -96,6 +96,7 @@ brew "mkvtoolnix"
 brew "moreutils"
 brew "mp4v2"
 brew "mplayer"
+brew "namebench"
 brew "netperf"
 brew "ngrep"
 brew "node", args: ["without-npm"]
@@ -103,6 +104,7 @@ brew "openssh"
 brew "openssl@1.1"
 brew "p7zip"
 brew "unixodbc"
+brew "php"
 brew "pigz"
 brew "pkg-config"
 brew "pngcheck"
@@ -134,6 +136,7 @@ brew "vbindiff"
 brew "watchman"
 brew "webkit2png"
 brew "wget"
+brew "wrk"
 brew "xctool"
 brew "yarn"
 brew "yasm"
@@ -155,7 +158,6 @@ cask "vagrant"
 cask "visual-studio-code"
 cask "caskroom/versions/java8"
 mas "1Blocker", id: 1107421413
-mas "1Password", id: 443987910
 mas "Amphetamine", id: 937984704
 mas "Aperture", id: 408981426
 mas "Asset Catalog Creator Pro", id: 809625456
@@ -198,6 +200,7 @@ mas "Numbers", id: 409203825
 mas "OneDrive", id: 823766827
 mas "Oyster", id: 655527594
 mas "Pages", id: 409201541
+mas "Paste", id: 967805235
 mas "PhotoSweeper", id: 463362050
 mas "Pixelmator", id: 407963104
 mas "Radium", id: 597611879

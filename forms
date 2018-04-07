@@ -5,6 +5,7 @@ apktool
 apr
 apr-util
 archey
+argon2
 aspell
 autoconf
 automake
@@ -79,6 +80,7 @@ libmatroska
 libogg
 libpng
 libpq
+libsodium
 libssh2
 libtiff
 libtool
@@ -103,6 +105,7 @@ mkvtoolnix
 moreutils
 mp4v2
 mplayer
+namebench
 nasm
 neon
 netperf
@@ -115,6 +118,9 @@ openssl@1.1
 p7zip
 pcre
 perl
+php
+php56
+php56-gmp
 php@5.6
 pigz
 pkg-config
@@ -156,6 +162,7 @@ watchman
 webkit2png
 webp
 wget
+wrk
 x264
 xctool
 xvid
