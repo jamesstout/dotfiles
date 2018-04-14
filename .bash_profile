@@ -99,7 +99,6 @@ for comp in \
   $prefix/etc/grc.bashrc \
   $prefix/etc/bash_completion.d/git-completion.bash \
   $prefix/etc/bash_completion.d/brew \
-  $prefix/etc/bash_completion.d/gibo-completion.bash \
   $prefix/etc/bash_completion.d/mas
 do
     # shellcheck source=/dev/null

@@ -37,7 +37,6 @@ if type_exists 'brew'; then
         'fping'
         'geoip --with-geoipupdate'
         'geoipupdate'
-        'gibo'
         'git'
         'git-lfs'
         'git-quick-stats'
