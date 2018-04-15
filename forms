@@ -6,6 +6,7 @@ apr
 apr-util
 archey
 argon2
+asciinema
 aspell
 autoconf
 automake
