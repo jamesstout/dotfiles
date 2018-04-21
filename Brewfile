@@ -8,6 +8,7 @@ tap "homebrew/services"
 tap "caskroom/versions"
 tap "caskroom/cask"
 tap "ethereum/ethereum"
+cask "caskroom/versions/java8"
 brew "ack"
 brew "openssl"
 brew "readline"
@@ -159,7 +160,6 @@ cask "mysqlworkbench"
 cask "suspicious-package"
 cask "vagrant"
 cask "visual-studio-code"
-cask "caskroom/versions/java8"
 mas "1Blocker", id: 1107421413
 mas "Amphetamine", id: 937984704
 mas "Aperture", id: 408981426
