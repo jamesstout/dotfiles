@@ -108,6 +108,7 @@ brew "node", args: ["without-npm"]
 brew "openssh"
 brew "openssl@1.1"
 brew "p7zip"
+brew "pandoc"
 brew "unixodbc"
 brew "php"
 brew "pigz"
@@ -197,6 +198,7 @@ mas "Lost Photos", id: 516801330
 mas "Marked", id: 448925439
 mas "MediaInfo", id: 510620098
 mas "Memory Clean 2", id: 1114591412
+mas "Memory Clean 3", id: 1302310792
 mas "MultiMarkdown Composer", id: 593294811
 mas "NetworkUtilityX", id: 979299240
 mas "Numbers", id: 409203825
