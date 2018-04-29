@@ -104,6 +104,8 @@ do
     # shellcheck source=/dev/null
     [[ -e $comp ]] && source $comp
 done
+# shellcheck source=/dev/null
+. <(ng completion --bash)
 
 unalias ls
 # Detect which `ls` flavor is in use
