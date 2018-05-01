@@ -20,6 +20,7 @@ alias tf='tail -f '
 # apps
 alias m="mate ."
 alias s="subl "
+alias c="code "
 alias o="open"
 alias oo="open ."
 alias wh="which"
