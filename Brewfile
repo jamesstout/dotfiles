@@ -191,6 +191,7 @@ mas "iStat View", id: 1148868081
 mas "JPEGmini Lite", id: 525742250
 mas "JSON Accelerator", id: 511324989
 mas "Keynote", id: 409183694
+mas "Keynote", id: 409183694
 mas "LilyView", id: 529490330
 mas "Linkinus", id: 402390998
 mas "Liya", id: 455484422
@@ -202,8 +203,10 @@ mas "Memory Clean 3", id: 1302310792
 mas "MultiMarkdown Composer", id: 593294811
 mas "NetworkUtilityX", id: 979299240
 mas "Numbers", id: 409203825
+mas "Numbers", id: 409203825
 mas "OneDrive", id: 823766827
 mas "Oyster", id: 655527594
+mas "Pages", id: 409201541
 mas "Pages", id: 409201541
 mas "Paste", id: 967805235
 mas "PhotoSweeper", id: 463362050
