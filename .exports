@@ -8,6 +8,8 @@ export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
 export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
 
+#export ANDROID_SDK_ROOT="/usr/local/share/android-sdk"
+
 # shamelessly copied from https://github.com/janmoesen/tilde
 # History
 # -----------------------------------------------------------------------------
