@@ -11,6 +11,7 @@ tap "ethereum/ethereum"
 cask "caskroom/versions/java8"
 brew "ack"
 brew "openssl"
+brew "pcre"
 brew "readline"
 brew "sqlite"
 brew "aircrack-ng"
@@ -61,7 +62,6 @@ brew "gifsicle"
 brew "git"
 brew "git-lfs"
 brew "git-quick-stats"
-brew "pcre"
 brew "gmp"
 brew "gnu-sed"
 brew "grc"
@@ -152,7 +152,6 @@ brew "zopfli"
 brew "ethereum/ethereum/ethereum"
 brew "kateinoigakukun/tap/iblinter"
 cask "cakebrew"
-cask "ccleaner"
 cask "charles"
 cask "crunch"
 cask "easyfind"
@@ -179,7 +178,6 @@ mas "Day One", id: 1055511498
 mas "djay", id: 411699771
 mas "Duplicate Detective", id: 686428787
 mas "Duplicates Finder", id: 1101010407
-mas "Fantastical", id: 435003921
 mas "File Viewer", id: 495987613
 mas "Flare", id: 419917767
 mas "GarageBand", id: 408980954
@@ -191,22 +189,18 @@ mas "iStat View", id: 1148868081
 mas "JPEGmini Lite", id: 525742250
 mas "JSON Accelerator", id: 511324989
 mas "Keynote", id: 409183694
-mas "Keynote", id: 409183694
 mas "LilyView", id: 529490330
 mas "Linkinus", id: 402390998
 mas "Liya", id: 455484422
 mas "Lost Photos", id: 516801330
 mas "Marked", id: 448925439
 mas "MediaInfo", id: 510620098
-mas "Memory Clean 2", id: 1114591412
 mas "Memory Clean 3", id: 1302310792
 mas "MultiMarkdown Composer", id: 593294811
 mas "NetworkUtilityX", id: 979299240
 mas "Numbers", id: 409203825
-mas "Numbers", id: 409203825
 mas "OneDrive", id: 823766827
 mas "Oyster", id: 655527594
-mas "Pages", id: 409201541
 mas "Pages", id: 409201541
 mas "Paste", id: 967805235
 mas "PhotoSweeper", id: 463362050
