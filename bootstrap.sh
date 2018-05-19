@@ -11,8 +11,8 @@ source ./.utils
 BACKUPS_DIR="$HOME"/.backups
 
 if [ ! -d "$BACKUPS_DIR" ]; then
-	printf "$(tput setaf 136)! %s$(tput sgr0)\n" "$BACKUPS_DIR does not exist, creating..."
-	mkdir "$BACKUPS_DIR" ||  return 1
+    printf "$(tput setaf 136)! %s$(tput sgr0)\n" "$BACKUPS_DIR does not exist, creating..."
+    mkdir "$BACKUPS_DIR" ||  return 1
 fi
 
 # backup
@@ -22,9 +22,9 @@ cp -R ~/.vim "$BACKUPS_DIR"
 cp -R ~/.git_template "$BACKUPS_DIR"
 
 # do we have an updated .iterm2_shell_integration.bash?
-if ! doiTermIntegrationCheck ; then 
-	e_error "Something went wrong"
-	return 1
+if ! doiTermIntegrationCheck ; then
+    e_error "Something went wrong"
+    return 1
 fi
 
 # update dotfiles
@@ -61,10 +61,10 @@ declare -a dirs_to_check=("$ST3_BH_DIR" "$ST3_TS_DIR")
 
 for ((i=0; i<${#dirs_to_check[@]}; ++i));
 do
-	if ! dir_exists "${dirs_to_check[$i]}"; then
-		e_error "${dirs_to_check[$i]} does not exist. Exiting"
-		return 23
-	fi
+    if ! dir_exists "${dirs_to_check[$i]}"; then
+        e_error "${dirs_to_check[$i]} does not exist. Exiting"
+        return 23
+    fi
 done
 
 #ST3 stuff
@@ -103,63 +103,63 @@ done
 # rbenv rehash
 
 if file_exists "$SUBL3_APP"; then
-	SUBL_APP="$SUBL3_APP"
+    SUBL_APP="$SUBL3_APP"
 fi
 
 # check stats dir
 if [ ! -d "$STATS_DIR" ]; then
-	e_warning "$STATS_DIR does not exist, creating..."
-	if mkdir "$STATS_DIR"; then
-		e_debug "Done"
-	else
-		e_error "Could not create $STATS_DIR" ; 
-		e_warning "git post-commit hook will not record commits";
-	fi
+    e_warning "$STATS_DIR does not exist, creating..."
+    if mkdir "$STATS_DIR"; then
+        e_debug "Done"
+    else
+        e_error "Could not create $STATS_DIR" ;
+        e_warning "git post-commit hook will not record commits";
+    fi
 fi
 
 # check on bin and links
 # should exist but if not...
 if [ ! -d "$BIN_DIR" ]; then
-	e_warning "$BIN_DIR does not exist, creating..."
-	if mkdir "$BIN_DIR"; then
-		printf "Creating subl symlink"
-		ln -s "$SUBL_APP" "$SUBL_SYMLINK"
-
-		# update z repo and copy
-		cd "$Z_REPO" || return 1
-		git_info=$(get_git_branch)
-		git pull -v origin "$git_info"
-		cp -f z.sh "$BIN_DIR"
-		chmod +x "$BIN_DIR"/z.sh
-		cd - || return 1
-	else
-		e_error "Could not create $BIN_DIR" ; 
-		e_warning "Sublime Text symlink and z will not be installed";
-	fi
+    e_warning "$BIN_DIR does not exist, creating..."
+    if mkdir "$BIN_DIR"; then
+        printf "Creating subl symlink"
+        ln -s "$SUBL_APP" "$SUBL_SYMLINK"
+        
+        # update z repo and copy
+        cd "$Z_REPO" || return 1
+        git_info=$(get_git_branch)
+        git pull -v origin "$git_info"
+        cp -f z.sh "$BIN_DIR"
+        chmod +x "$BIN_DIR"/z.sh
+        cd - || return 1
+    else
+        e_error "Could not create $BIN_DIR" ;
+        e_warning "Sublime Text symlink and z will not be installed";
+    fi
 else
-
-	# check subl symlink exists if not create it
-	if ! file_exists "$SUBL_SYMLINK"; then
-		printf "Creating subl symlink"
-		ln -s "$SUBL_APP" "$SUBL_SYMLINK"
-	fi
-
-	e_debug "Copying bins"
-	cp -f bin/{tdu,piper,merge-branch.sh,editor.sh,extract,ixio,httpcompression,parallel,bashmarks.sh,de-dupe-bash-eternal-history.sh,startup-gpg-agent.sh,itunes-apps-periodic-cleanup.py,blame-bird.py,tm-log} "$BIN_DIR"
-	chmod +x "$BIN_DIR"/{tdu,piper,merge-branch.sh,editor.sh,extract,ixio,httpcompression,parallel,bashmarks.sh,de-dupe-bash-eternal-history.sh,startup-gpg-agent.sh,itunes-apps-periodic-cleanup.py,blame-bird.py,tm-log}
-
-	# update z repo and copy
-	cd "$Z_REPO" || return 1
-	git_info=$(get_git_branch)
-	e_debug "cd $Z_REPO. Branch is $git_info"
-
-	e_debug "cmd is git pull -v origin $git_info"
-
-	git pull -v origin "$git_info"
-	cp -f z.sh "$BIN_DIR"
-	chmod +x "$BIN_DIR"/z.sh
-	cd - || return 1
-
+    
+    # check subl symlink exists if not create it
+    if ! file_exists "$SUBL_SYMLINK"; then
+        printf "Creating subl symlink"
+        ln -s "$SUBL_APP" "$SUBL_SYMLINK"
+    fi
+    
+    e_debug "Copying bins"
+    cp -f bin/{tdu,piper,merge-branch.sh,editor.sh,extract,ixio,httpcompression,parallel,bashmarks.sh,de-dupe-bash-eternal-history.sh,startup-gpg-agent.sh,itunes-apps-periodic-cleanup.py,blame-bird.py,tm-log} "$BIN_DIR"
+    chmod +x "$BIN_DIR"/{tdu,piper,merge-branch.sh,editor.sh,extract,ixio,httpcompression,parallel,bashmarks.sh,de-dupe-bash-eternal-history.sh,startup-gpg-agent.sh,itunes-apps-periodic-cleanup.py,blame-bird.py,tm-log}
+    
+    # update z repo and copy
+    cd "$Z_REPO" || return 1
+    git_info=$(get_git_branch)
+    e_debug "cd $Z_REPO. Branch is $git_info"
+    
+    e_debug "cmd is git pull -v origin $git_info"
+    
+    git pull -v origin "$git_info"
+    cp -f z.sh "$BIN_DIR"
+    chmod +x "$BIN_DIR"/z.sh
+    cd - || return 1
+    
 fi
 # shellcheck source=/Users/james/.bash_profile
 source ~/.bash_profile
