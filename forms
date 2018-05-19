@@ -5,6 +5,7 @@ apr
 apr-util
 autoconf
 automake
+awscli
 bash
 bash-completion@2
 binutils
@@ -12,6 +13,7 @@ class-dump
 cloc
 cloog
 cloog018
+cocoapods
 coreutils
 cscope
 dark-mode
@@ -66,6 +68,7 @@ libyaml
 lighttpd
 little-cms2
 makedepend
+mas
 md5deep
 md5sha1sum
 moreutils
@@ -103,10 +106,10 @@ serf
 shellcheck
 sip
 sloccount
+sphinx-doc
 sqlite
 ssh-copy-id
 sub2srt
-subversion
 testssl
 texi2html
 texinfo
