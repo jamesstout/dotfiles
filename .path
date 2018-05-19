@@ -12,6 +12,7 @@ paths_to_add=(
 	# Private "bin"
 	"$HOME/bin"
 	# Homebrew, Rudix (and various other distributions and local installations)
+	/usr/local/opt/python/libexec/bin
 	/usr/local/{,s}bin
 	# System
 	/{,s}bin
