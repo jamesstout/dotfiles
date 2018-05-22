@@ -11,6 +11,7 @@ export NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
 paths_to_add=(
 	# Private "bin"
 	"$HOME/bin"
+	"$HOME/.rbenv/bin"
 	# Homebrew, Rudix (and various other distributions and local installations)
 	/usr/local/opt/python/libexec/bin
 	/usr/local/{,s}bin
