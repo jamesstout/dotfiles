@@ -47,7 +47,7 @@ SUBL3_APP="/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl"
 # default to v2
 SUBL_APP="$SUBL2_APP"
 Z_REPO="third-party/z"
-#RBENV_REPO="$HOME/.rbenv"
+RBENV_REPO="$(rbenv root)"
 ST3_DIR="$HOME/Library/Application Support/Sublime Text 3/Packages"
 ST3_BH_DIR="$ST3_DIR/BracketHighlighter"
 ST3_TS_DIR="$ST3_DIR/Theme - Soda"
@@ -66,6 +66,12 @@ do
         return 23
     fi
 done
+
+e_debug "Updating rbenv"
+cd_and_git_pull "$RBENV_REPO"
+
+e_debug "Updating ruby-build plugin"
+cd_and_git_pull "$RBENV_REPO/plugins/ruby-build"
 
 #ST3 stuff
 # e_header "Updating ST3 packages..."
@@ -86,21 +92,32 @@ done
 # cd_and_git_pull "$ST3_B16_DIR"
 
 #### update npm
-# e_header "Updating npm..."
-# npm update npm -g
-# npm update npm
-# npm update -g
+e_header "Updating npm..."
+npm update npm -g
+npm update npm
+npm update -g
 
-# e_header "Updating gems..."
-# for version in $(rbenv whence gem); do
-#   rbenv shell "$version"
-#   echo "Updating rubygems for $version"
-#   gem update --system --no-document #--quiet
-#   yes | gem update
-#   gem cleanup
-#   echo ""
-# done
-# rbenv rehash
+for version in $(rbenv whence gem); do
+  rbenv shell "$version"
+  e_debug "Updating rubygems for $version"
+  gem update --system --no-document #--quiet
+  if [[ $version = "2.2.2" ]]; then
+	e_debug "version == 2.2.2"
+	e_debug "Updating outdated gems, excluding frankenstein and rdoc"
+	gem outdated | awk '{print $1}' | grep -v -E '(frankenstein|rdoc)' | xargs gem update
+  elif [[ $version = "2.5.1" ]]; then
+  	e_debug "version == 2.5.1"
+	e_debug "Updating outdated gems, excluding rdoc"
+	gem outdated | awk '{print $1}' | grep -v rdoc | xargs gem update
+  else
+  	yes | gem update
+  fi
+  gem cleanup -v
+  echo ""
+done
+rbenv rehash
+
+
 
 if file_exists "$SUBL3_APP"; then
     SUBL_APP="$SUBL3_APP"
