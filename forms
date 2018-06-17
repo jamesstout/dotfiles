@@ -1,6 +1,7 @@
 ack
 aircrack-ng
 ansiweather
+ant
 apktool
 apr
 apr-util
@@ -128,6 +129,7 @@ pandoc
 pcre
 perl
 php
+php-code-sniffer
 php56
 php56-gmp
 php@5.6
