@@ -9,6 +9,8 @@ export NPM_PACKAGES="$HOME/.npm-packages"
 export NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
 export GOROOT="/usr/local/opt/go/libexec"
 
+export gp=$(go env GOPATH)
+
 paths_to_add=(
 	# Private "bin"
 	"$HOME/bin"
@@ -23,6 +25,7 @@ paths_to_add=(
 	"$HOME/Scripts"
 	"$NPM_PACKAGES/bin"
 	"$GOROOT/bin"
+    "$gp/bin"
 	"$HOME/bin/flutter/bin"
 );
 
