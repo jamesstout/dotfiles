@@ -1,14 +1,13 @@
-tap "kateinoigakukun/tap"
-tap "homebrew/dupes"
+tap "ethereum/ethereum"
+tap "homebrew/boneyard"
+tap "homebrew/bundle"
+tap "homebrew/cask"
 tap "homebrew/cask-versions"
 tap "homebrew/core"
+tap "homebrew/dupes"
 tap "homebrew/php"
-tap "homebrew/boneyard"
-tap "homebrew/cask"
-tap "homebrew/bundle"
 tap "homebrew/services"
-tap "ethereum/ethereum"
-cask "homebrew/cask-versions/java8"
+tap "kateinoigakukun/tap"
 brew "ack"
 brew "openssl"
 brew "pcre"
@@ -158,6 +157,7 @@ cask "charles"
 cask "crunch"
 cask "easyfind"
 cask "filebot"
+cask "java8"
 cask "mysqlworkbench"
 cask "suspicious-package"
 cask "vagrant"
@@ -191,6 +191,7 @@ mas "iStat View", id: 1148868081
 mas "JPEGmini Lite", id: 525742250
 mas "JSON Accelerator", id: 511324989
 mas "Keynote", id: 409183694
+mas "Keynote", id: 409183694
 mas "LilyView", id: 529490330
 mas "Linkinus", id: 402390998
 mas "Liya", id: 455484422
@@ -201,8 +202,10 @@ mas "Memory Clean 3", id: 1302310792
 mas "MultiMarkdown Composer", id: 593294811
 mas "NetworkUtilityX", id: 979299240
 mas "Numbers", id: 409203825
+mas "Numbers", id: 409203825
 mas "OneDrive", id: 823766827
 mas "Oyster", id: 655527594
+mas "Pages", id: 409201541
 mas "Pages", id: 409201541
 mas "Paste", id: 967805235
 mas "PhotoSweeper", id: 463362050
@@ -224,8 +227,8 @@ mas "The Unarchiver", id: 425424353
 mas "Things3", id: 904280696
 mas "Todoist", id: 585829637
 mas "TrackSift 2", id: 908737079
-mas "Tweetbot", id: 1384080005
 mas "Tweetbot", id: 557168941
+mas "Tweetbot", id: 1384080005
 mas "Twitter", id: 409789998
 mas "Ulysses", id: 623795237
 mas "Unclutter", id: 577085396
