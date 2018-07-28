@@ -3,7 +3,8 @@
 	l = log --pretty=oneline --graph -n 20 --abbrev-commit
 	
 	# from https://github.com/necolas/dotfiles
-	logp = log --pretty=nice --date-order
+	# logp = log --pretty=nice --date-order
+    lp = log --pretty=nice --date-order
 	# Custom graph log (append any tree-ish)
     graph = log --pretty=nice --date-order --graph
     # Custom graph log for all branches

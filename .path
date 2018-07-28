@@ -26,7 +26,6 @@ paths_to_add=(
 	"$NPM_PACKAGES/bin"
 	"$GOROOT/bin"
     "$gp/bin"
-	"$HOME/bin/flutter/bin"
 );
 
 # Create an array of directories currently in the PATH variable.
