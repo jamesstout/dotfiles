@@ -20,6 +20,7 @@ binutils
 boost
 bwm-ng
 cabextract
+carthage
 class-dump
 cloc
 cocoapods
@@ -42,12 +43,14 @@ fontconfig
 fping
 freetds
 freetype
+gawk
 gdbm
 geoip
 geoipupdate
 gettext
 gifsicle
 git
+git-extras
 git-lfs
 git-quick-stats
 glib
@@ -62,12 +65,11 @@ handbrake
 hh
 htop
 httperf
+httrack
 iblinter
 icu4c
-ideviceinstaller
 iftop
 imagemagick
-ios-deploy
 iperf
 jpeg
 jq
@@ -112,6 +114,7 @@ mitmproxy
 mkvtoolnix
 moreutils
 mp4v2
+mpfr
 mplayer
 mysql
 namebench

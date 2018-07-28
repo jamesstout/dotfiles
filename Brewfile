@@ -34,6 +34,7 @@ brew "bfg"
 brew "binutils"
 brew "bwm-ng"
 brew "cabextract"
+brew "carthage"
 brew "cloc"
 brew "cocoapods"
 brew "composer"
@@ -57,13 +58,15 @@ brew "libogg"
 brew "flac"
 brew "fontconfig"
 brew "fping"
-brew "geoip", args: ["with-geoipupdate"]
 brew "gettext"
+brew "gmp"
+brew "gawk"
+brew "geoip", args: ["with-geoipupdate"]
 brew "gifsicle"
 brew "git"
+brew "git-extras"
 brew "git-lfs"
 brew "git-quick-stats"
-brew "gmp"
 brew "gnu-sed"
 brew "grc"
 brew "grep"
@@ -72,18 +75,17 @@ brew "handbrake"
 brew "hh"
 brew "htop"
 brew "httperf"
+brew "httrack"
 brew "icu4c"
-brew "libxml2"
-brew "libimobiledevice", args: ["HEAD"]
-brew "ideviceinstaller"
 brew "iftop"
 brew "libtool"
 brew "imagemagick"
-brew "ios-deploy"
 brew "iperf"
 brew "lesspipe"
 brew "libevent"
 brew "libunistring"
+brew "libxml2"
+brew "libimobiledevice", args: ["HEAD"]
 brew "libmatroska"
 brew "libvorbis"
 brew "libyaml"
@@ -159,12 +161,14 @@ cask "easyfind"
 cask "filebot"
 cask "java8"
 cask "mysqlworkbench"
+cask "postman"
 cask "suspicious-package"
 cask "vagrant"
 cask "visual-studio-code"
 mas "1Blocker", id: 1107421413
 mas "Amphetamine", id: 937984704
 mas "Aperture", id: 408981426
+mas "Apple Configurator 2", id: 1037126344
 mas "Asset Catalog Creator Pro", id: 809625456
 mas "ASUS Device Discovery", id: 995124504
 mas "Bear", id: 1091189122
@@ -191,7 +195,6 @@ mas "iStat View", id: 1148868081
 mas "JPEGmini Lite", id: 525742250
 mas "JSON Accelerator", id: 511324989
 mas "Keynote", id: 409183694
-mas "Keynote", id: 409183694
 mas "LilyView", id: 529490330
 mas "Linkinus", id: 402390998
 mas "Liya", id: 455484422
@@ -202,10 +205,8 @@ mas "Memory Clean 3", id: 1302310792
 mas "MultiMarkdown Composer", id: 593294811
 mas "NetworkUtilityX", id: 979299240
 mas "Numbers", id: 409203825
-mas "Numbers", id: 409203825
 mas "OneDrive", id: 823766827
 mas "Oyster", id: 655527594
-mas "Pages", id: 409201541
 mas "Pages", id: 409201541
 mas "Paste", id: 967805235
 mas "PhotoSweeper", id: 463362050
