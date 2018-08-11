@@ -8,6 +8,7 @@ tap "homebrew/dupes"
 tap "homebrew/php"
 tap "homebrew/services"
 tap "kateinoigakukun/tap"
+cask "java"
 brew "ack"
 brew "openssl"
 brew "pcre"
@@ -202,6 +203,7 @@ mas "Lost Photos", id: 516801330
 mas "Marked", id: 448925439
 mas "MediaInfo", id: 510620098
 mas "Memory Clean 3", id: 1302310792
+mas "MetaDoctor", id: 988250390
 mas "MultiMarkdown Composer", id: 593294811
 mas "NetworkUtilityX", id: 979299240
 mas "Numbers", id: 409203825
