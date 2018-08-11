@@ -46,6 +46,8 @@ export LC_ALL="en_US.UTF-8"
 export CFLAGS="-arch x86_64"
 export ARCHFLAGS="-arch x86_64"
 
+export CP_HOME_DIR='/Volumes/Hard Drive 2/CocoaPods/.cocoapods'
+
 # Highlight section titles in manual pages
 #export LESS_TERMCAP_md="$ORANGE"
 
