@@ -15,6 +15,14 @@ function git-root {
   dirname $root
 }
 
+function count_all_files {
+    find . | wc -l
+}
+
+function count_all_dirs {
+    find . -type d | wc -l
+}
+
 piper_color_du ()
 {
 	piper $@ '^\s*\d+B' rgb105 '^\s*[5-9]\d{2}(.\d+)?K' rgb033 '^\s*[1-4]\d{2}(.\d+)?K' rgb023 '^\s*\d{2}(.\d+)?K' rgb013 '^\s*\d(.\d+)?K' rgb003 '^\s*[5-9]\d{2}(.\d+)?M' rgb040 '^\s*[1-4]\d{2}(.\d+)?M' rgb030 '^\s*\d{2}(.\d+)?M' rgb020 '^\s*\d(.\d+)?M' rgb010 '^\s*[5-9]\d{2}(.\d+)?G' rgb540 '^\s*[1-4]\d{2}(.\d+)?G' rgb530 '^\s*\d{2}(.\d+)?G' rgb520 '^\s*\d(.\d+)?G' rgb510 '^\s\d+(.\d+)?[TP]' 'yellow on_red' '.+' grey15 '$' reset
