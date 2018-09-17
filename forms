@@ -31,7 +31,10 @@ diff-so-fancy
 diffoscope
 diffutils
 doctl
+dssim
 ethereum
+exif
+exiftool
 fcrackzip
 fdk-aac
 ffind
@@ -66,11 +69,13 @@ hh
 htop
 httperf
 httrack
+hub
 iblinter
 icu4c
 iftop
 imagemagick
 iperf
+iperf3
 jpeg
 jq
 lame
@@ -78,7 +83,9 @@ lesspipe
 libarchive
 libebml
 libevent
+libexif
 libffi
+libiconv
 libidn2
 libimobiledevice
 libmagic
@@ -116,6 +123,7 @@ moreutils
 mp4v2
 mpfr
 mplayer
+mtr
 mysql
 namebench
 nasm
@@ -124,12 +132,14 @@ netperf
 ngrep
 node
 oniguruma
+openldap
 openssh
 openssl
 openssl@1.1
 p7zip
 pandoc
 pcre
+pcre2
 perl
 php
 php-code-sniffer
@@ -140,6 +150,7 @@ pigz
 pkg-config
 pngcheck
 pngquant
+popt
 protobuf
 pstree
 pv
@@ -162,6 +173,7 @@ sqlite
 ssh-copy-id
 subversion
 svgo
+telnet
 testssl
 texi2html
 the_silver_searcher

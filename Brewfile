@@ -46,6 +46,9 @@ brew "libarchive"
 brew "diffoscope"
 brew "diffutils"
 brew "doctl"
+brew "dssim"
+brew "exif"
+brew "exiftool"
 brew "fcrackzip"
 brew "fdk-aac"
 brew "ffind"
@@ -77,15 +80,18 @@ brew "hh"
 brew "htop"
 brew "httperf"
 brew "httrack"
+brew "hub"
 brew "icu4c"
 brew "iftop"
 brew "libtool"
 brew "imagemagick"
 brew "iperf"
+brew "iperf3"
 brew "lesspipe"
 brew "libevent"
 brew "libunistring"
 brew "libxml2"
+brew "python@2"
 brew "libimobiledevice", args: ["HEAD"]
 brew "libmatroska"
 brew "libvorbis"
@@ -103,6 +109,7 @@ brew "mkvtoolnix"
 brew "moreutils"
 brew "mp4v2"
 brew "mplayer"
+brew "mtr"
 brew "mysql"
 brew "namebench"
 brew "netperf"
@@ -133,6 +140,7 @@ brew "speedtest-cli"
 brew "ssh-copy-id"
 brew "subversion"
 brew "svgo"
+brew "telnet"
 brew "testssl"
 brew "texi2html"
 brew "the_silver_searcher"
@@ -157,7 +165,9 @@ brew "ethereum/ethereum/ethereum"
 brew "kateinoigakukun/tap/iblinter"
 cask "cakebrew"
 cask "charles"
+cask "coconutbattery"
 cask "crunch"
+cask "docker"
 cask "easyfind"
 cask "filebot"
 cask "java8"
@@ -200,12 +210,11 @@ mas "LilyView", id: 529490330
 mas "Linkinus", id: 402390998
 mas "Liya", id: 455484422
 mas "Lost Photos", id: 516801330
-mas "Marked", id: 448925439
 mas "MediaInfo", id: 510620098
 mas "Memory Clean 3", id: 1302310792
 mas "MetaDoctor", id: 988250390
 mas "MultiMarkdown Composer", id: 593294811
-mas "NetworkUtilityX", id: 979299240
+mas "NetworkKitX", id: 979299240
 mas "Numbers", id: 409203825
 mas "OneDrive", id: 823766827
 mas "Oyster", id: 655527594
@@ -239,4 +248,3 @@ mas "unDock", id: 402359583
 mas "VisualGrep", id: 597887722
 mas "Voila", id: 407741870
 mas "VOX", id: 461369673
-mas "Xcode", id: 497799835
