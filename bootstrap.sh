@@ -2,7 +2,7 @@
 #cd "$(dirname "${BASH_SOURCE}")"
 # shellcheck disable=SC1091,SC1117
 
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 cd "$SCRIPT_DIR" || return 1
 
@@ -19,7 +19,7 @@ BACKUPS_DIR="$HOME"/.backups
 
 if [ ! -d "$BACKUPS_DIR" ]; then
 	printf "$(tput setaf 136)! %s$(tput sgr0)\n" "$BACKUPS_DIR does not exist, creating..."
-	mkdir "$BACKUPS_DIR" ||  return 1
+	mkdir "$BACKUPS_DIR" || return 1
 fi
 
 # backup
@@ -29,7 +29,7 @@ cp -R ~/.vim "$BACKUPS_DIR"
 cp -R ~/.git_template "$BACKUPS_DIR"
 
 # do we have an updated .iterm2_shell_integration.bash?
-if ! doiTermIntegrationCheck ; then 
+if ! doiTermIntegrationCheck; then
 	e_error "Something went wrong"
 	return 1
 fi
@@ -45,7 +45,6 @@ source ./.brew
 
 # for testing without .brew
 #source ./.utils
-
 
 # setup vars for dirs and symlinks
 BIN_DIR="$HOME"/bin
@@ -69,8 +68,7 @@ ST3_BH_USER_FILE_BAK="$ST3_USER_DIR/bh_core.sublime-settings.bak"
 
 declare -a dirs_to_check=("$ST3_BH_DIR" "$ST3_TS_DIR")
 
-for ((i=0; i<${#dirs_to_check[@]}; ++i));
-do
+for ((i = 0; i < ${#dirs_to_check[@]}; ++i)); do
 	if ! dir_exists "${dirs_to_check[$i]}"; then
 		e_error "${dirs_to_check[$i]} does not exist. Exiting"
 		return 23
@@ -82,7 +80,7 @@ e_header "Updating ST3 packages..."
 
 e_debug "Updating BracketHighlighter"
 # if not already up to date, there could be new settings to copy
-if ! [[ $(cd_and_git_pull "$ST3_BH_DIR" 2> /dev/null | tail -n1) =~ ^Already ]]; then
+if ! [[ $(cd_and_git_pull "$ST3_BH_DIR" 2>/dev/null | tail -n1) =~ ^Already ]]; then
 	# back up current settings
 	e_debug "Copying BracketHighlighter settings"
 	mv "$ST3_BH_USER_FILE" "$ST3_BH_USER_FILE_BAK"
@@ -110,22 +108,22 @@ rustup update
 #### update ruby gems
 e_header "Updating gems..."
 for version in $(rbenv whence gem); do
-  rbenv shell "$version"
-  e_debug "Updating rubygems for $version"
-  gem update --system --no-document #--quiet
-  if [[ $version = "2.2.2" ]]; then
-	e_debug "version == 2.2.2"
-	e_debug "Updating outdated gems, excluding frankenstein and rdoc"
-	gem outdated | awk '{print $1}' | grep -v -E '(frankenstein|rdoc)' | xargs gem update
-  elif [[ $version = "2.3.1" ]]; then
-  	e_debug "version == 2.3.1"
-	e_debug "Updating outdated gems, excluding rdoc"
-	gem outdated | awk '{print $1}' | grep -v rdoc | xargs gem update
-  else
-  	yes | gem update
-  fi
-  gem cleanup -v
-  echo ""
+	rbenv shell "$version"
+	e_debug "Updating rubygems for $version"
+	gem update --system --no-document #--quiet
+	if [[ $version == "2.2.2" ]]; then
+		e_debug "version == 2.2.2"
+		e_debug "Updating outdated gems, excluding frankenstein and rdoc"
+		gem outdated | awk '{print $1}' | grep -v -E '(frankenstein|rdoc)' | xargs gem update
+	elif [[ $version == "2.3.1" ]]; then
+		e_debug "version == 2.3.1"
+		e_debug "Updating outdated gems, excluding rdoc"
+		gem outdated | awk '{print $1}' | grep -v rdoc | xargs gem update
+	else
+		yes | gem update
+	fi
+	gem cleanup -v
+	echo ""
 done
 rbenv rehash
 
@@ -139,8 +137,8 @@ if [ ! -d "$STATS_DIR" ]; then
 	if mkdir "$STATS_DIR"; then
 		e_debug "Done"
 	else
-		e_error "Could not create $STATS_DIR" ; 
-		e_warning "git post-commit hook will not record commits";
+		e_error "Could not create $STATS_DIR"
+		e_warning "git post-commit hook will not record commits"
 	fi
 fi
 
@@ -160,8 +158,8 @@ if [ ! -d "$BIN_DIR" ]; then
 		chmod +x "$BIN_DIR"/z.sh
 		cd - || return 1
 	else
-		e_error "Could not create $BIN_DIR" ; 
-		e_warning "Sublime Text symlink and z will not be installed";
+		e_error "Could not create $BIN_DIR"
+		e_warning "Sublime Text symlink and z will not be installed"
 	fi
 else
 
@@ -190,9 +188,3 @@ else
 fi
 # shellcheck source=$HOME/.bash_profile
 source ~/.bash_profile
-
-
-
-
-
-

@@ -23,14 +23,14 @@ export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
 export HH_CONFIG=hicolor
 
 # Keep a reasonably long history.
-export HISTSIZE=10000;
+export HISTSIZE=10000
 
 # Keep even more history lines inside the file, so we can still look up
 # previous commands without needlessly cluttering the current shell's history.
-export HISTFILESIZE=32768;
+export HISTFILESIZE=32768
 
 # When executing the same command twice or more in a row, only store it once.
-export HISTCONTROL=ignoreboth;
+export HISTCONTROL=ignoreboth
 
 # Make some commands not show up in history
 export HISTIGNORE="ls:cd:cd -:pwd:exit:hg:s:o:oo:h:"
@@ -81,10 +81,10 @@ less_options=(
 
 	# Do not complain when we are on a dumb terminal.
 	--dumb
-);
-export LESS="${less_options[*]}";
-unset less_options;
-export PAGER='less';
+)
+export LESS="${less_options[*]}"
+unset less_options
+export PAGER='less'
 
 # # Make "less" transparently unpack archives etc.
 # if [ -x /usr/bin/lesspipe ]; then
@@ -94,8 +94,3 @@ export PAGER='less';
 # 	# portable for people that have it in another directory in their $PATH.
 # 	eval $(lesspipe.sh);
 # fi;
-
-
-
-
-

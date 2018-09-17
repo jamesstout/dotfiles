@@ -4,150 +4,148 @@ source ./.utils
 
 # Check for Homebrew
 if type_exists 'brew'; then
-    e_header "Updating Homebrew..."
-    # Use the latest version of Homebrew
-    brew update
-    [[ $? ]] && e_success "Done"
+	e_header "Updating Homebrew..."
+	# Use the latest version of Homebrew
+	brew update
+	[[ $? ]] && e_success "Done"
 
-    e_header "Updating any existing Homebrew formulae..."
-    # Upgrade any already-installed formulae
-    brew upgrade
-    [[ $? ]] && e_success "Done"
+	e_header "Updating any existing Homebrew formulae..."
+	# Upgrade any already-installed formulae
+	brew upgrade
+	[[ $? ]] && e_success "Done"
 
-    e_header "Checking status of desired Homebrew formulae..."
-    
-    create_formula_list_file
+	e_header "Checking status of desired Homebrew formulae..."
 
-    declare list_formulae
-    declare -a missing_formulae=()
-    declare -a desired_formulae=(
-        'ack'
-        'aircrack-ng'
-        'ansiweather'
-        'bash'
-        'bash-completion@2'
-        'binutils'
-        'class-dump'
-        'cloc'
-        'coreutils' # GNU core utilities (those that come with OS X are outdated)
-        'dark-mode'
-        'diff-so-fancy'
-        'fcrackzip'
-        'findutils'
-        'fping'
-        'geoip --with-geoipupdate'
-        'geoipupdate'
-        'git'
-        'git-lfs'
-        'git-quick-stats'
-        'handbrake'
-        'hh'
-        'grep'
-        'openssh'
-        'php@5.6'
-        'htop'
-        'jq'
-        'lesspipe'
-        'mas'
-        'md5deep'
-        'md5sha1sum'
-        'moreutils'
-        'netperf'
-        'ngrep'
-        'node --without-npm'
-        'openssl'
-        'p7zip'
-        'pigz'
-        'pkg-config'
-        'pngcheck'
-        'pngquant'
-        'pstree'
-        'pv'
-        'python'
-        'python3'
-        'rbenv'
-        'readline'
-        'rename'
-        'rsync'
-        'ruby-build'
-        'shellcheck'
-        'sqlite'
-        'ssh-copy-id'
-        'subversion'
-        'testssl'
-        'texi2html'
-        'the_silver_searcher'
-        'thefuck'
-        'tidy-html5'
-        'timewarrior'
-        'tmux'
-        'tree'
-        'unixodbc'
-        'unrar'
-        'vbindiff'
-        'watchman'
-        'webkit2png'
-        'wget'
-        'x264'
-        'xctool'
-        'xvid'
-        'xz'
-        'yasm'
-        'youtube-dl'
-        'zlib'
-        'zopfli'
-    )
+	create_formula_list_file
 
-    for index in ${!desired_formulae[*]}
-    do
-        if ! formula_exists2 "${desired_formulae[$index]}"; then
-            # Store the name (and options) of every missing formula
-            missing_formulae=("${missing_formulae[@]}" "${desired_formulae[$index]}")
-        fi
-    done
+	declare list_formulae
+	declare -a missing_formulae=()
+	declare -a desired_formulae=(
+		'ack'
+		'aircrack-ng'
+		'ansiweather'
+		'bash'
+		'bash-completion@2'
+		'binutils'
+		'class-dump'
+		'cloc'
+		'coreutils' # GNU core utilities (those that come with OS X are outdated)
+		'dark-mode'
+		'diff-so-fancy'
+		'fcrackzip'
+		'findutils'
+		'fping'
+		'geoip --with-geoipupdate'
+		'geoipupdate'
+		'git'
+		'git-lfs'
+		'git-quick-stats'
+		'handbrake'
+		'hh'
+		'grep'
+		'openssh'
+		'php@5.6'
+		'htop'
+		'jq'
+		'lesspipe'
+		'mas'
+		'md5deep'
+		'md5sha1sum'
+		'moreutils'
+		'netperf'
+		'ngrep'
+		'node --without-npm'
+		'openssl'
+		'p7zip'
+		'pigz'
+		'pkg-config'
+		'pngcheck'
+		'pngquant'
+		'pstree'
+		'pv'
+		'python'
+		'python3'
+		'rbenv'
+		'readline'
+		'rename'
+		'rsync'
+		'ruby-build'
+		'shellcheck'
+		'sqlite'
+		'ssh-copy-id'
+		'subversion'
+		'testssl'
+		'texi2html'
+		'the_silver_searcher'
+		'thefuck'
+		'tidy-html5'
+		'timewarrior'
+		'tmux'
+		'tree'
+		'unixodbc'
+		'unrar'
+		'vbindiff'
+		'watchman'
+		'webkit2png'
+		'wget'
+		'x264'
+		'xctool'
+		'xvid'
+		'xz'
+		'yasm'
+		'youtube-dl'
+		'zlib'
+		'zopfli'
+	)
 
-    if [[ "${missing_formulae[@]}" ]]; then
-        # Convert the array of missing formula into a list of space-separate strings
-        list_formulae=$( printf "%s " "${missing_formulae[@]}" )
+	for index in ${!desired_formulae[*]}; do
+		if ! formula_exists2 "${desired_formulae[$index]}"; then
+			# Store the name (and options) of every missing formula
+			missing_formulae=("${missing_formulae[@]}" "${desired_formulae[$index]}")
+		fi
+	done
 
-        e_header "Installing missing Homebrew formulae..."
-        # Install all missing formulae
-        brew install $list_formulae
+	if [[ "${missing_formulae[@]}" ]]; then
+		# Convert the array of missing formula into a list of space-separate strings
+		list_formulae=$(printf "%s " "${missing_formulae[@]}")
 
-        [[ $? ]] && e_success "Done"
-    fi
+		e_header "Installing missing Homebrew formulae..."
+		# Install all missing formulae
+		brew install $list_formulae
 
-    e_header "Updating any outdated casks..."
-    brew cask upgrade
-    # Remove outdated versions from the Cellar
-    brew cleanup -s
+		[[ $? ]] && e_success "Done"
+	fi
+
+	e_header "Updating any outdated casks..."
+	brew cask upgrade
+	# Remove outdated versions from the Cellar
+	brew cleanup -s
 else
-    printf "\n"
-    e_error "Error: Homebrew not found."
-    printf "Aborting...\n"
-    return 1
+	printf "\n"
+	e_error "Error: Homebrew not found."
+	printf "Aborting...\n"
+	return 1
 fi
 
 if type_exists 'mas'; then
-    e_header "Checking for MAS updates..."
-    mas outdated
+	e_header "Checking for MAS updates..."
+	mas outdated
 else
-    printf "\n"
-    e_error "Error: mas not found."
-    printf "Aborting...\n"
-    return 1
+	printf "\n"
+	e_error "Error: mas not found."
+	printf "Aborting...\n"
+	return 1
 fi
 
-if brew bundle -h > /dev/null 2>&1; then 
-    e_header "Updating Brewfile..."
-    brew bundle dump --force
+if brew bundle -h >/dev/null 2>&1; then
+	e_header "Updating Brewfile..."
+	brew bundle dump --force
 else # OS X `ls`
-    printf "\n"
-    e_error "Error: brew bundle not found."
-    printf "Aborting...\n"
-    return 1
+	printf "\n"
+	e_error "Error: brew bundle not found."
+	printf "Aborting...\n"
+	return 1
 fi
-
 
 #
 ## Install GNU core utilities (those that come with OS X are outdated)
@@ -192,39 +190,36 @@ fi
 ## Remove outdated versions from the cellar
 #brew cleanup
 
-    # brew tap caskroom/cask
-    # brew install brew-cask
-    # brew tap caskroom/versions
+# brew tap caskroom/cask
+# brew install brew-cask
+# brew tap caskroom/versions
 
-    # # Install packages
+# # Install packages
 
-    # apps=(
-    #   alfred
-    #   dash
-    #   dropbox
-    #   firefox
-    #   firefox-nightly
-    #   flux
-    #   glimmerblocker
-    #   google-chrome
-    #   google-chrome-canary
-    #   google-drive
-    #   hammerspoon
-    #   kaleidoscope
-    #   macdown
-    #   opera
-    #   screenflow
-    #   slack
-    #   sourcetree
-    #   spotify
-    #   sublime-text3
-    #   transmit
-    #   virtualbox
-    #   vlc
-    #   webstorm
-    # )
+# apps=(
+#   alfred
+#   dash
+#   dropbox
+#   firefox
+#   firefox-nightly
+#   flux
+#   glimmerblocker
+#   google-chrome
+#   google-chrome-canary
+#   google-drive
+#   hammerspoon
+#   kaleidoscope
+#   macdown
+#   opera
+#   screenflow
+#   slack
+#   sourcetree
+#   spotify
+#   sublime-text3
+#   transmit
+#   virtualbox
+#   vlc
+#   webstorm
+# )
 
-    # brew cask install "${apps[@]}"
-
-
-
+# brew cask install "${apps[@]}"

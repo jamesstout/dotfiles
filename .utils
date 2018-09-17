@@ -2,173 +2,173 @@
 
 # Header logging
 e_header() {
-    printf "\n$(tput setaf 7)%s$(tput sgr0)\n" "$@"
+	printf "\n$(tput setaf 7)%s$(tput sgr0)\n" "$@"
 }
 # debug logging
 e_debug() {
-    printf "$(tput setaf 2)%s$(tput sgr0)\n" "$@"
+	printf "$(tput setaf 2)%s$(tput sgr0)\n" "$@"
 }
 
 # Success logging
 e_success() {
-    printf "$(tput setaf 64)✓ %s$(tput sgr0)\n" "$@"
+	printf "$(tput setaf 64)✓ %s$(tput sgr0)\n" "$@"
 }
 
 # Error logging
 e_error() {
-    printf "$(tput setaf 1)x %s$(tput sgr0)\n" "$@"
+	printf "$(tput setaf 1)x %s$(tput sgr0)\n" "$@"
 }
 
 # Warning logging
 e_warning() {
-    printf "$(tput setaf 136)! %s$(tput sgr0)\n" "$@"
+	printf "$(tput setaf 136)! %s$(tput sgr0)\n" "$@"
 }
 
 onoe() {
-  if [[ -t 2 ]] # check whether stderr is a tty.
-  then
-    echo -ne "\033[4;31mError\033[0m: " >&2 # highlight Error with underline and red color
-  else
-    echo -n "Error: " >&2
-  fi
-  if [[ $# -eq 0 ]]
-  then
-    /bin/cat >&2
-  else
-    echo "$*" >&2
-  fi
+	if [[ -t 2 ]]; then # check whether stderr is a tty.
+		echo -ne "\033[4;31mError\033[0m: " >&2 # highlight Error with underline and red color
+	else
+		echo -n "Error: " >&2
+	fi
+	if [[ $# -eq 0 ]]; then
+		/bin/cat >&2
+	else
+		echo "$*" >&2
+	fi
 }
 
 odie() {
-  onoe "$@"
-  exit 1
+	onoe "$@"
+	exit 1
 }
 
 safe_cd() {
-  cd "$@" >/dev/null || odie "Error: failed to cd to $*!"
+	cd "$@" >/dev/null || odie "Error: failed to cd to $*!"
 }
-
 
 # Ask for confirmation before proceeding
 seek_confirmation() {
-    printf "\n"
-    e_warning "$@"
-    read -p "Continue? (y/n) " -n 1
-    printf "\n"
+	printf "\n"
+	e_warning "$@"
+	read -p "Continue? (y/n) " -n 1
+	printf "\n"
 }
 
 # Test whether the result of an 'ask' is a confirmation
 is_confirmed() {
-    if [[ "$REPLY" =~ ^[Yy]$ ]]; then
-      return 0
-    fi
-    return 1
+	if [[ "$REPLY" =~ ^[Yy]$ ]]; then
+		return 0
+	fi
+	return 1
 }
 
-git_pull(){
+git_pull() {
 
-    git_info=$(get_git_branch)
-    e_debug "exec git pull -v origin $git_info"
-    git pull -v origin "$git_info"
+	git_info=$(get_git_branch)
+	e_debug "exec git pull -v origin $git_info"
+	git pull -v origin "$git_info"
 }
 
-cd_and_git_pull(){
+cd_and_git_pull() {
 
-    e_debug "cd to $1"
-    safe_cd "$1"
-    
-    if ! is_git_repo ; then
-        e_warning "Not a git repo"
-    else
-        git_pull
-    fi
-    cd - 1>/dev/null || exit 255
+	e_debug "cd to $1"
+	safe_cd "$1"
+
+	if ! is_git_repo; then
+		e_warning "Not a git repo"
+	else
+		git_pull
+	fi
+	cd - 1>/dev/null || exit 255
 }
 
-logn()  { DOTFILES_STEP="$*"; sudo_init; printf -- "--> %s " "$*"; }
+logn() {
+	DOTFILES_STEP="$*"
+	sudo_init
+	printf -- "--> %s " "$*"
+}
 
 sudo_init() {
-    # We want to always prompt for sudo password at least once rather than doing
-    # root stuff unexpectedly.
-    sudo -k
+	# We want to always prompt for sudo password at least once rather than doing
+	# root stuff unexpectedly.
+	sudo -k
 
-    if ! sudo -vn &>/dev/null; then
-      if [ -n "$DOTFILES_SUDOED_ONCE" ]; then
-        echo "--> Re-enter your password (for sudo access; sudo has timed out):"
-      else
-        echo "--> Enter your password (for sudo access):"
-      fi
-      sudo /usr/bin/true
-      DOTFILES_SUDOED_ONCE="1"
-    fi
+	if ! sudo -vn &>/dev/null; then
+		if [ -n "$DOTFILES_SUDOED_ONCE" ]; then
+			echo "--> Re-enter your password (for sudo access; sudo has timed out):"
+		else
+			echo "--> Enter your password (for sudo access):"
+		fi
+		sudo /usr/bin/true
+		DOTFILES_SUDOED_ONCE="1"
+	fi
 }
 
 sudo_cleanup() {
-    if [ -n "$DOTFILES_SUDOED_ONCE" ]; then
-        DOTFILES_SUDO_WAIT_PID=$(ps -aef | grep  [s]udo | grep [t]rue | awk '{ print $2 }')
+	if [ -n "$DOTFILES_SUDOED_ONCE" ]; then
+		DOTFILES_SUDO_WAIT_PID=$(ps -aef | grep [s]udo | grep [t]rue | awk '{ print $2 }')
 
-        if [ -n "$DOTFILES_SUDO_WAIT_PID" ]; then
-            e_debug "Killing sudo PID: $DOTFILES_SUDO_WAIT_PID"
-            sudo kill -9 "$DOTFILES_SUDO_WAIT_PID" > /dev/null 2>&1
-        fi
+		if [ -n "$DOTFILES_SUDO_WAIT_PID" ]; then
+			e_debug "Killing sudo PID: $DOTFILES_SUDO_WAIT_PID"
+			sudo kill -9 "$DOTFILES_SUDO_WAIT_PID" >/dev/null 2>&1
+		fi
 
-        sudo -k
-    fi
+		sudo -k
+	fi
 }
 
+function addLoginwindowText() {
 
-function addLoginwindowText(){
+	CURRENT_TEXT=$(defaults read /Library/Preferences/com.apple.loginwindow LoginwindowText 2>/dev/null)
 
-    CURRENT_TEXT=$(defaults read /Library/Preferences/com.apple.loginwindow LoginwindowText 2>/dev/null)
+	if [ -n "$CURRENT_TEXT" ]; then
+		e_success "LoginwindowText already set to $CURRENT_TEXT"
+		unset CURRENT_TEXT
+		return 0
+	fi
 
-    if [ -n "$CURRENT_TEXT" ]; then
-        e_success "LoginwindowText already set to $CURRENT_TEXT" 
-        unset CURRENT_TEXT
-        return 0
-    fi
-
-    if [ -n "$DOTFILE_NAME" ] && [ -n "$DOTFILE_EMAIL" ]; then
-        # sudo_init
-        sudo defaults write /Library/Preferences/com.apple.loginwindow LoginwindowText "Found this computer? Please contact $DOTFILE_NAME at $DOTFILE_EMAIL."
-        [[ $? ]] && e_success "LoginwindowText set to Found this computer? Please contact $DOTFILE_NAME at $DOTFILE_EMAIL." 
-        sudo_cleanup
-        return 0
-    fi
+	if [ -n "$DOTFILE_NAME" ] && [ -n "$DOTFILE_EMAIL" ]; then
+		# sudo_init
+		sudo defaults write /Library/Preferences/com.apple.loginwindow LoginwindowText "Found this computer? Please contact $DOTFILE_NAME at $DOTFILE_EMAIL."
+		[[ $? ]] && e_success "LoginwindowText set to Found this computer? Please contact $DOTFILE_NAME at $DOTFILE_EMAIL."
+		sudo_cleanup
+		return 0
+	fi
 }
 
-function doiTermIntegrationCheck(){
+function doiTermIntegrationCheck() {
 
-    e_header "Checking for iterm2_shell_integration update."
-    
-    TEMP_DIR="${TMPDIR}iterm2_shell_integration"
+	e_header "Checking for iterm2_shell_integration update."
 
-    if dir_exists "$TEMP_DIR"; then
-        e_debug "$TEMP_DIR exists, removing"
-        rm -rf "$TEMP_DIR" ||  return 1
-    fi
+	TEMP_DIR="${TMPDIR}iterm2_shell_integration"
 
-    e_debug "[Re]creating $TEMP_DIR"
-    mkdir -p "$TEMP_DIR" ||  return 1
-    chmod 777 "$TEMP_DIR"
+	if dir_exists "$TEMP_DIR"; then
+		e_debug "$TEMP_DIR exists, removing"
+		rm -rf "$TEMP_DIR" || return 1
+	fi
 
-    OUR_SHELL=$(basename $SHELL)
-    NEW_FILE="${TEMP_DIR}"/.iterm2_shell_integration."${OUR_SHELL}"
+	e_debug "[Re]creating $TEMP_DIR"
+	mkdir -p "$TEMP_DIR" || return 1
+	chmod 777 "$TEMP_DIR"
 
-    curl -s -L https://iterm2.com/shell_integration/"${OUR_SHELL}" -o "$NEW_FILE"
+	OUR_SHELL=$(basename $SHELL)
+	NEW_FILE="${TEMP_DIR}"/.iterm2_shell_integration."${OUR_SHELL}"
 
-    NEW_VER=$(grep ShellIntegrationVersion "$NEW_FILE" | cut -d ';' -f 2 | cut -d '=' -f 2)
-    CUR_VER=$(grep ShellIntegrationVersion "$SCRIPT_DIR"/.iterm2_shell_integration."${OUR_SHELL}" | cut -d ';' -f 2 | cut -d '=' -f 2)
+	curl -s -L https://iterm2.com/shell_integration/"${OUR_SHELL}" -o "$NEW_FILE"
 
-    # e_debug "new - $NEW_VER"
-    # e_debug "cur - $CUR_VER"
+	NEW_VER=$(grep ShellIntegrationVersion "$NEW_FILE" | cut -d ';' -f 2 | cut -d '=' -f 2)
+	CUR_VER=$(grep ShellIntegrationVersion "$SCRIPT_DIR"/.iterm2_shell_integration."${OUR_SHELL}" | cut -d ';' -f 2 | cut -d '=' -f 2)
 
-    if [ "$NEW_VER" -gt "$CUR_VER" ]; then
-        e_debug "We have a new version [$NEW_VER] vs [$CUR_VER]. Copying new version to $SCRIPT_DIR"
-        cp -f "$NEW_FILE" "$SCRIPT_DIR" ||  return 1
-    else
-        e_debug "No new version, still at [$CUR_VER]"
-    fi
-    return 0
+	# e_debug "new - $NEW_VER"
+	# e_debug "cur - $CUR_VER"
+
+	if [ "$NEW_VER" -gt "$CUR_VER" ]; then
+		e_debug "We have a new version [$NEW_VER] vs [$CUR_VER]. Copying new version to $SCRIPT_DIR"
+		cp -f "$NEW_FILE" "$SCRIPT_DIR" || return 1
+	else
+		e_debug "No new version, still at [$CUR_VER]"
+	fi
+	return 0
 }
 
 # Test whether we're in a git repo
@@ -179,56 +179,55 @@ function doiTermIntegrationCheck(){
 # Test whether a command exists
 # $1 - cmd to test
 type_exists() {
-    if [ $(type -P $1) ]; then
-      return 0
-    fi
-    return 1
+	if [ $(type -P $1) ]; then
+		return 0
+	fi
+	return 1
 }
 
 dir_exists() {
-    if [ -d "$1" ]; then
-      return 0
-    fi
-    return 1
+	if [ -d "$1" ]; then
+		return 0
+	fi
+	return 1
 }
 
 file_exists() {
-    if [ -e "$1" ]; then
-      return 0
-    fi
-    return 1
+	if [ -e "$1" ]; then
+		return 0
+	fi
+	return 1
 }
 
-create_formula_list_file(){
-   $(brew list >  "$SCRIPT_DIR"/forms )
+create_formula_list_file() {
+	$(brew list >"$SCRIPT_DIR"/forms)
 }
 
 # Test whether a Homebrew formula is already installed
 # $1 - formula name (may include options)
 formula_exists() {
-    if $(brew list $1 >/dev/null 2>&1); then
-        printf "%s already installed.\n" "$1"
-        return 0
-    fi
+	if $(brew list $1 >/dev/null 2>&1); then
+		printf "%s already installed.\n" "$1"
+		return 0
+	fi
 
-    e_warning "Missing formula: $1"
-    return 1
+	e_warning "Missing formula: $1"
+	return 1
 }
 
 formula_exists2() {
 
-   # echo ".. $1"
-   # strip off any params from --
-    b=${1% --*} 
+	# echo ".. $1"
+	# strip off any params from --
+	b=${1% --*}
 
-    #echo ".. $b"
+	#echo ".. $b"
 
-    if $(grep $b "$SCRIPT_DIR"/forms >/dev/null 2>&1); then
-        printf "%s already installed.\n" "$b"
-        return 0
-    fi
+	if $(grep $b "$SCRIPT_DIR"/forms >/dev/null 2>&1); then
+		printf "%s already installed.\n" "$b"
+		return 0
+	fi
 
-    e_warning "Missing formula: $1"
-    return 1
+	e_warning "Missing formula: $1"
+	return 1
 }
-

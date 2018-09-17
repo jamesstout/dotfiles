@@ -6,7 +6,7 @@ export PATH="$HOME/bin:$PATH"
 # * ~/.path can be used to extend `$PATH`.
 # * ~/.extra can be used for other settings you don’t want to commit.
 for file in ~/.{path,bash_prompt,exports,emails,aliases,utils,functions,extra}; do
-  # shellcheck source=/dev/null
+	# shellcheck source=/dev/null
 	[ -r "$file" ] && source "$file"
 done
 unset file
@@ -25,11 +25,11 @@ source ~/.iterm2_shell_integration.bash
 
 # GPG
 if [ -f "${HOME}/.gnupg/.gpg-agent-info" ]; then
-    # shellcheck source=/Users/james/.gnupg/.gpg-agent-info
-    . "${HOME}/.gnupg/.gpg-agent-info"
-    export GPG_AGENT_INFO
-    export SSH_AUTH_SOCK
-    launchctl setenv GPG_AGENT_INFO "$GPG_AGENT_INFO"
+	# shellcheck source=/Users/james/.gnupg/.gpg-agent-info
+	. "${HOME}/.gnupg/.gpg-agent-info"
+	export GPG_AGENT_INFO
+	export SSH_AUTH_SOCK
+	launchctl setenv GPG_AGENT_INFO "$GPG_AGENT_INFO"
 fi
 GPG_TTY=$(tty)
 export GPG_TTY
@@ -44,7 +44,7 @@ export GPG_TTY
 
 # Do not autocomplete when accidentally pressing Tab on an empty line. (It takes
 # forever and yields "Display all 15 gazillion possibilites?")
-shopt -s no_empty_cmd_completion;
+shopt -s no_empty_cmd_completion
 
 # Case-insensitive globbing (used in pathname expansion)
 shopt -s nocaseglob
@@ -73,7 +73,7 @@ shopt -s checkwinsize 2>/dev/null
 # * `autocd`, e.g. `**/qux` will enter `./foo/bar/baz/qux`
 # * Recursive globbing, e.g. `echo **/*.txt`
 for option in autocd globstar; do
-	shopt -s "$option" 2> /dev/null
+	shopt -s "$option" 2>/dev/null
 done
 
 # Add tab completion for SSH hostnames based on ~/.ssh/config, ignoring wildcards
@@ -94,23 +94,22 @@ set completion-ignore-case On
 
 prefix=$(brew --prefix)
 for comp in \
-  /etc/bash_completion \
-  $prefix/share/bash-completion/bash_completion \
-  $prefix/etc/grc.bashrc \
-  $prefix/etc/bash_completion.d/git-completion.bash \
-  $prefix/etc/bash_completion.d/brew \
-  $prefix/etc/bash_completion.d/mas
-do
-    # shellcheck source=/dev/null
-    [[ -e $comp ]] && source $comp
+	/etc/bash_completion \
+	$prefix/share/bash-completion/bash_completion \
+	$prefix/etc/grc.bashrc \
+	$prefix/etc/bash_completion.d/git-completion.bash \
+	$prefix/etc/bash_completion.d/brew \
+	$prefix/etc/bash_completion.d/mas; do
+	# shellcheck source=/dev/null
+	[[ -e $comp ]] && source $comp
 done
 
 unalias ls
 # Detect which `ls` flavor is in use
-if ls --color > /dev/null 2>&1; then # GNU `ls`
-  colorflag="--color"
+if ls --color >/dev/null 2>&1; then # GNU `ls`
+	colorflag="--color"
 else # OS X `ls`
-  colorflag="-G"
+	colorflag="-G"
 fi
 
 alias ls="ls ${colorflag}"
@@ -134,4 +133,3 @@ unalias diff
 unalias du
 
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
-

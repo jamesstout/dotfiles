@@ -110,7 +110,7 @@ alias kf='killall Finder'
 alias cpwd='pwd|tr -d "\n"|pbcopy'
 
 # recursively delete Dropbox conflicted files
-alias rmdbc="find . -name *\ \(*conflicted* -exec rm {} \;" 
+alias rmdbc="find . -name *\ \(*conflicted* -exec rm {} \;"
 
 # top
 alias cpu='top -o cpu'
@@ -146,7 +146,7 @@ alias bit='git '
 alias vit='git '
 
 # Detect which `ls` flavor is in use
-if ls --color > /dev/null 2>&1; then # GNU `ls`
+if ls --color >/dev/null 2>&1; then # GNU `ls`
 	colorflag="--color"
 else # OS X `ls`
 	colorflag="-G"
@@ -208,7 +208,6 @@ alias lscleanup="/System/Library/Frameworks/CoreServices.framework/Frameworks/La
 alias sniff="sudo ngrep -q -d 'en0' -t '^(GET|POST|PUT|HEAD|CONNECT) ' 'tcp and port 80'"
 alias httpdump="sudo tcpdump -i en0 -n -s 0 -w - | grep -a -o -E '(GET|POST|HEAD|PUT|CONNECT) .* HTTP/1.[01]|Host: .*'"
 alias snifftcp="sudo ngrep -q -d 'en0' -t '^(GET|POST|PUT|HEAD|CONNECT) ' 'tcp'"
-
 
 # Canonical hex dump; some systems have this symlinked
 #command -v hd > /dev/null || alias hd="hexdump -C"
@@ -278,6 +277,3 @@ done
 #alias stfu="osascript -e 'set volume output muted true'"
 #alias pumpitup="osascript -e 'set volume 7'"
 #alias hax="growlnotify -a 'Activity Monitor' 'System error' -m 'WTF R U DOIN'"
-
-
-
