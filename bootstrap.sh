@@ -104,6 +104,10 @@ npm update npm -g
 npm update npm
 npm update -g
 
+#### update rust
+rustup update
+
+#### update ruby gems
 e_header "Updating gems..."
 for version in $(rbenv whence gem); do
   rbenv shell "$version"
