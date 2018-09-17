@@ -121,7 +121,6 @@ if type_exists 'brew'; then
     brew cask upgrade
     # Remove outdated versions from the Cellar
     brew cleanup -s
-    brew cask cleanup
 else
     printf "\n"
     e_error "Error: Homebrew not found."
