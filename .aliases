@@ -86,6 +86,9 @@ alias cr="chmod +r"
 alias ta="type -a "
 alias f="file "
 
+alias cpunum="sysctl -n hw.ncpu"
+alias cpubrand="sysctl -n machdep.cpu.brand_string"
+
 # file counts
 alias llc="ls -l | wc -l"
 alias findc="find . -type f -print | perl -lne 'print quotemeta' | xargs ls -l | wc -l"
