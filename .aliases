@@ -43,6 +43,8 @@ alias bkd="brew cask doctor"
 
 alias vtop="vtop --theme monokai"
 
+alias hh=hstr
+
 alias path='echo -e ${PATH//:/\\n}'
 
 # Reload the shell (i.e. invoke as a login shell)
