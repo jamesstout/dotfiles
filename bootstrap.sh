@@ -111,11 +111,7 @@ for version in $(rbenv whence gem); do
 	rbenv shell "$version"
 	e_debug "Updating rubygems for $version"
 	gem update --system --no-document #--quiet
-	if [[ $version == "2.2.2" ]]; then
-		e_debug "version == 2.2.2"
-		e_debug "Updating outdated gems, excluding frankenstein and rdoc"
-		gem outdated | awk '{print $1}' | grep -v -E '(frankenstein|rdoc)' | xargs gem update
-	elif [[ $version == "2.3.1" ]]; then
+	if [[ $version == "2.3.1" ]]; then
 		e_debug "version == 2.3.1"
 		e_debug "Updating outdated gems, excluding rdoc"
 		gem outdated | awk '{print $1}' | grep -v rdoc | xargs gem update
