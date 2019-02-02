@@ -6,7 +6,7 @@ export EDITOR="$HOME/dotfiles/bin/editor.sh"
 
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
-export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
+export JAVA_HOME=$(/usr/libexec/java_home -v 11)
 
 #export ANDROID_SDK_ROOT="/usr/local/share/android-sdk"
 
@@ -20,7 +20,7 @@ export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
 # correct it.
 #shopt -s histreedit;
 
-export HH_CONFIG=hicolor
+export HSTR_CONFIG=hicolor
 
 # Keep a reasonably long history.
 export HISTSIZE=10000
