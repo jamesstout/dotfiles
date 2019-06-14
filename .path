@@ -9,6 +9,8 @@ export NPM_PACKAGES="$HOME/.npm-packages"
 export NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
 export GOROOT="/usr/local/opt/go/libexec"
 
+eval "$(rbenv init -)"
+
 export gp=$(go env GOPATH)
 
 paths_to_add=(
@@ -63,7 +65,7 @@ unset {old,new}_path{,s} path{s,}_to_add;
 #export GEM_PATH=$HOME/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0
 #export GEM_SPEC_CACHE=$HOME/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/specifications
 
-eval "$(rbenv init -)"
+
 eval "$(thefuck --alias fk)"
 #export PATH="$HOME/.fastlane/bin:$PATH"
 
