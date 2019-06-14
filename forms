@@ -28,6 +28,7 @@ cabextract
 cairo
 carthage
 chromaprint
+clang-format
 class-dump
 cloc
 composer
@@ -37,6 +38,8 @@ dark-mode
 diff-so-fancy
 diffoscope
 diffutils
+docbook
+docbook-xsl
 doctl
 doxygen
 dssim
@@ -50,6 +53,7 @@ ffmpeg
 figlet
 findutils
 flac
+fmt
 fontconfig
 fping
 freetds
@@ -97,6 +101,7 @@ jemalloc
 jpeg
 jq
 lame
+ldns
 leptonica
 lesspipe
 libarchive
@@ -163,6 +168,7 @@ ncurses
 neofetch
 neon
 netcat
+nethogs
 netperf
 nettle
 nghttp2
@@ -197,6 +203,7 @@ pngquant
 popt
 protobuf
 pstree
+pugixml
 pv
 pwgen
 python
@@ -224,6 +231,7 @@ sqlite
 ssh-copy-id
 subversion
 svgo
+swiftformat
 swiftlint
 telnet
 tesseract
