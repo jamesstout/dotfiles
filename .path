@@ -9,8 +9,6 @@ export NPM_PACKAGES="$HOME/.npm-packages"
 export NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
 export GOROOT="/usr/local/opt/go/libexec"
 
-eval "$(rbenv init -)"
-
 export gp=$(go env GOPATH)
 
 paths_to_add=(
@@ -67,6 +65,7 @@ unset {old,new}_path{,s} path{s,}_to_add;
 
 
 eval "$(thefuck --alias fk)"
+eval "$(rbenv init -)"
 #export PATH="$HOME/.fastlane/bin:$PATH"
 
 
