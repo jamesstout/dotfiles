@@ -65,6 +65,8 @@ alias sick="python /Applications/sickbeard/Sick-Beard/SickBeard.py > /dev/null 2
 alias pigs="du | sort -nr | cut -f2- | xargs du -hs"
 alias pigs1="du -d1 | sort -nr | cut -f2- | xargs du -hs"
 
+alias ksim='sudo killall -9 com.apple.CoreSimulator.CoreSimulatorService'
+
 # history
 alias h=history
 alias hg="history | grep"
