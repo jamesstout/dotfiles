@@ -212,6 +212,7 @@ python@2
 rbenv
 readline
 rename
+rpl
 rsync
 rtmpdump
 rubberband
