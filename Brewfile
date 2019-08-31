@@ -5,8 +5,9 @@ tap "homebrew/cask-versions"
 tap "homebrew/core"
 tap "homebrew/services"
 tap "kateinoigakukun/tap"
+tap "owncloud/owncloud"
 brew "ack"
-brew "openssl"
+brew "openssl@1.1"
 brew "pcre"
 brew "readline"
 brew "sqlite"
@@ -16,6 +17,7 @@ brew "ansiweather"
 brew "ant"
 brew "apktool"
 brew "apr"
+brew "openssl"
 brew "apr-util"
 brew "archey"
 brew "xz"
@@ -34,13 +36,15 @@ brew "binutils", link: true
 brew "icu4c"
 brew "bwm-ng"
 brew "cabextract"
-brew "fontconfig"
 brew "gettext"
+brew "cadaver"
+brew "fontconfig"
 brew "lzo"
 brew "carthage"
 brew "chromaprint"
 brew "clang-format"
 brew "cloc"
+brew "cmake"
 brew "composer"
 brew "coreutils"
 brew "libevent"
@@ -121,7 +125,6 @@ brew "netperf"
 brew "ngrep"
 brew "node"
 brew "openssh"
-brew "openssl@1.1"
 brew "optipng"
 brew "p7zip"
 brew "pandoc"
@@ -135,6 +138,8 @@ brew "pngquant"
 brew "pstree"
 brew "pv"
 brew "pwgen"
+brew "qt"
+brew "qtkeychain"
 brew "ruby-build"
 brew "rbenv"
 brew "rename"
@@ -247,13 +252,16 @@ mas "Smarts", id: 438671026
 mas "Snapheal", id: 480623975
 mas "Soulver", id: 413965349
 mas "Spark", id: 1176895641
+mas "SQLPro for Postgres", id: 976140091
+mas "Swiftify for Xcode", id: 1183412116
 mas "Telegram", id: 747648890
+mas "Termius", id: 1176074088
 mas "The Unarchiver", id: 425424353
 mas "Things3", id: 904280696
 mas "Todoist", id: 585829637
 mas "TrackSift 2", id: 908737079
-mas "Tweetbot", id: 557168941
 mas "Tweetbot", id: 1384080005
+mas "Tweetbot", id: 557168941
 mas "Twitter", id: 409789998
 mas "Ulysses", id: 623795237
 mas "Unclutter", id: 577085396

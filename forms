@@ -25,12 +25,14 @@ brotli
 bwm-ng
 c-ares
 cabextract
+cadaver
 cairo
 carthage
 chromaprint
 clang-format
 class-dump
 cloc
+cmake
 composer
 coreutils
 curl-openssl
@@ -209,6 +211,8 @@ pwgen
 python
 python3
 python@2
+qt
+qtkeychain
 rbenv
 readline
 rename
