@@ -2,6 +2,8 @@
 # shellcheck shell=bash
 source ./.utils
 
+bundle_needs_update=0
+
 # Check for Homebrew
 if type_exists 'brew'; then
 	e_header "Updating Homebrew..."
@@ -10,9 +12,31 @@ if type_exists 'brew'; then
 	[[ $? ]] && e_success "Done"
 
 	e_header "Updating any existing Homebrew formulae..."
-	# Upgrade any already-installed formulae
-	brew upgrade
-	[[ $? ]] && e_success "Done"
+	
+	do_old_way=0
+
+	if brew bundle -h >/dev/null 2>&1; then
+		if file_exists "$SCRIPT_DIR/Brewfile"; then
+			e_header "Updating via Brewfile..."
+			brew bundle --verbose --file="$SCRIPT_DIR/Brewfile"
+			[[ $? ]] && e_success "Done"
+		else
+			do_old_way=1
+		fi	
+	else 
+		do_old_way=1
+	fi
+
+	if [ $do_old_way -eq 1 ]
+	then
+        # use normal upgrade
+		e_debug "No brew bundle - use normal upgrade"
+		brew upgrade
+		[[ $? ]] && e_success "Done"
+		e_header "Updating any outdated casks..."
+		brew cask upgrade
+		[[ $? ]] && e_success "Done"
+    fi
 
 	e_header "Checking status of desired Homebrew formulae..."
 
@@ -20,104 +44,42 @@ if type_exists 'brew'; then
 
 	declare list_formulae
 	declare -a missing_formulae=()
+
+	# just declare new formulae that you wish to install
 	declare -a desired_formulae=(
-		'ack'
-		'aircrack-ng'
-		'ansiweather'
-		'bash'
-		'bash-completion@2'
-		'binutils'
-		'class-dump'
-		'cloc'
-		'coreutils' # GNU core utilities (those that come with OS X are outdated)
-		'dark-mode'
-		'diff-so-fancy'
-		'fcrackzip'
-		'findutils'
-		'fping'
-		'geoip --with-geoipupdate'
-		'geoipupdate'
-		'git'
-		'git-lfs'
-		'git-quick-stats'
-		'handbrake'
-		'hh'
-		'grep'
-		'openssh'
-		# 'php@5.6'
-		'htop'
-		'jq'
-		'lesspipe'
-		'mas'
-		'md5deep'
-		# 'md5sha1sum'
-		'moreutils'
-		'netperf'
-		'ngrep'
-		'node --without-npm'
-		'openssl'
-		'p7zip'
-		'pigz'
-		'pkg-config'
-		'pngcheck'
-		'pngquant'
-		'pstree'
-		'pv'
-		'python'
-		'python3'
-		'rbenv'
-		'readline'
-		'rename'
-		'rsync'
-		'ruby-build'
-		'shellcheck'
-		'sqlite'
-		'ssh-copy-id'
-		'subversion'
-		'testssl'
-		'texi2html'
-		'the_silver_searcher'
-		'thefuck'
-		'tidy-html5'
-		'tmux'
-		'tree'
-		'unixodbc'
-		'unrar'
-		'vbindiff'
-		'watchman'
-		'webkit2png'
-		'wget'
-		'x264'
-		'xctool'
-		'xvid'
-		'xz'
-		'yasm'
-		'youtube-dl'
-		'zlib'
-		'zopfli'
+		# e.g. 
+		# 'ack'
+		# 'aircrack-ng'
+		# 'ansiweather'
+		# 'trash'
+		# 'tree'
+		# 'wget'
+	
 	)
 
-	for index in ${!desired_formulae[*]}; do
-		if ! formula_exists2 "${desired_formulae[$index]}"; then
-			# Store the name (and options) of every missing formula
-			missing_formulae=("${missing_formulae[@]}" "${desired_formulae[$index]}")
+	if [ ${#desired_formulae[@]} -ne 0 ]; then
+		for index in ${!desired_formulae[*]}; do
+			if ! formula_exists2 "${desired_formulae[$index]}"; then
+				# Store the name (and options) of every missing formula
+				missing_formulae=("${missing_formulae[@]}" "${desired_formulae[$index]}")
+			fi
+		done
+
+		if [[ "${missing_formulae[@]}" ]]; then
+			# Convert the array of missing formula into a list of space-separate strings
+			list_formulae=$(printf "%s " "${missing_formulae[@]}")
+			e_header "Installing missing Homebrew formulae..."
+			# Install all missing formulae
+			brew install $list_formulae
+			[[ $? ]] && e_success "Done"
+			bundle_needs_update=1
 		fi
-	done
-
-	if [[ "${missing_formulae[@]}" ]]; then
-		# Convert the array of missing formula into a list of space-separate strings
-		list_formulae=$(printf "%s " "${missing_formulae[@]}")
-
-		e_header "Installing missing Homebrew formulae..."
-		# Install all missing formulae
-		brew install $list_formulae
-
-		[[ $? ]] && e_success "Done"
+	else
+		e_debug "No new formulae to install"
 	fi
 
-	e_header "Updating any outdated casks..."
-	brew cask upgrade
 	# Remove outdated versions from the Cellar
+	e_header "Remove outdated versions from the Cellar..."
 	brew cleanup -s
 else
 	printf "\n"
@@ -137,14 +99,31 @@ else
 fi
 
 if brew bundle -h >/dev/null 2>&1; then
-	e_header "Updating Brewfile..."
-	brew bundle dump --force
-else # OS X `ls`
+
+	if [ $bundle_needs_update -eq 1 ]
+	then
+		e_header "Updating Brewfile..."
+		brew bundle dump --force
+		[[ $? ]] && e_success "Done"
+	else
+		e_debug "Brewfile does not need updating"
+	fi	
+else 
 	printf "\n"
 	e_error "Error: brew bundle not found."
 	printf "Aborting...\n"
 	return 1
 fi
+
+if [ $bundle_needs_update -eq 1 ]
+then
+	e_header "Updating forms file..."
+	create_formula_list_file
+	[[ $? ]] && e_success "Done"
+else
+	e_debug "forms file does not need updating"
+fi
+
 
 #
 ## Install GNU core utilities (those that come with OS X are outdated)
@@ -196,29 +175,11 @@ fi
 # # Install packages
 
 # apps=(
-#   alfred
-#   dash
-#   dropbox
-#   firefox
-#   firefox-nightly
-#   flux
-#   glimmerblocker
 #   google-chrome
-#   google-chrome-canary
-#   google-drive
-#   hammerspoon
 #   kaleidoscope
-#   macdown
-#   opera
-#   screenflow
-#   slack
-#   sourcetree
-#   spotify
-#   sublime-text3
-#   transmit
-#   virtualbox
-#   vlc
-#   webstorm
+#   textmate
+#   imageoptim
+#   imagealpha
 # )
 
-# brew cask install "${apps[@]}"
+# # brew cask install "${apps[@]}"
