@@ -6,9 +6,9 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 cd "$SCRIPT_DIR" || return 1
 
-# shellcheck source=/dev/null
+# shellcheck source=.emails
 source ./.emails
-# shellcheck source=/dev/null
+# shellcheck source=.utils
 source ./.utils
 
 e_header "Setting LoginwindowText if required"
@@ -40,7 +40,7 @@ cp -Rf .git_template ~
 cp .{bash_profile,bash_prompt,iterm2_shell_integration.bash,path,emails,exports,aliases,functions,extra,gitattributes,gitconfig,gitignore,gitignore_global,inputrc,hgignore,wgetrc,vimrc,utils,bashrc,gemrc,tmux.conf,npmrc,ackrc} ~
 
 # move down here, depends on .utils
-# shellcheck source=/dev/null
+# shellcheck source=.brew
 source ./.brew
 
 # for testing without .brew
@@ -106,18 +106,18 @@ npm update -g
 rustup update
 
 #### update ruby gems
-e_header "Updating gems..."
-for version in $(rbenv whence gem); do
-	rbenv shell "$version"
-	e_debug "Updating rubygems for $version"
-	gem update --system --no-document #--quiet
+# e_header "Updating gems..."
+# for version in $(rbenv whence gem); do
+# 	rbenv shell "$version"
+# 	e_debug "Updating rubygems for $version"
+# 	gem update --system --no-document #--quiet
 	
-	yes | gem update
+# 	yes | gem update
 	
-	gem cleanup -v
-	echo ""
-done
-rbenv rehash
+# 	gem cleanup -v
+# 	echo ""
+# done
+# rbenv rehash
 
 if file_exists "$SUBL3_APP"; then
 	SUBL_APP="$SUBL3_APP"
