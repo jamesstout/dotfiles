@@ -14,7 +14,8 @@ export gp=$(go env GOPATH)
 paths_to_add=(
 	# Private "bin"
 	"$HOME/bin"
-    "$HOME/.fastlane/bin"
+    "/usr/local/opt/openssl@1.1/bin"
+    "/usr/local/opt/qt/bin"
 	# Homebrew, Rudix (and various other distributions and local installations)
 	/usr/local/{,s}bin
 	# System
