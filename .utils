@@ -42,6 +42,13 @@ odie() {
 	exit 1
 }
 
+check_command() {
+  if ! "$@";
+  then
+	 odie "$* failed"
+  fi
+}
+
 safe_cd() {
 	cd "$@" >/dev/null || odie "Error: failed to cd to $*!"
 }
@@ -201,6 +208,7 @@ file_exists() {
 
 create_formula_list_file() {
 	$(brew list >"$SCRIPT_DIR"/forms)
+	return 0
 }
 
 # Test whether a Homebrew formula is already installed
@@ -221,9 +229,9 @@ formula_exists2() {
 	# strip off any params from --
 	b=${1% --*}
 
-	#echo ".. $b"
+	# echo ".. $b"
 
-	if $(grep $b "$SCRIPT_DIR"/forms >/dev/null 2>&1); then
+	if $(grep "^$b" "$SCRIPT_DIR"/forms >/dev/null 2>&1); then
 		printf "%s already installed.\n" "$b"
 		return 0
 	fi
