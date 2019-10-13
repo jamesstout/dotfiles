@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # shellcheck shell=bash
-# shellcheck disable=SC2016,SC2119,SC2155
+# shellcheck disable=SC2016,SC2119,SC2155,SC2031,SC2010
 function show-empty-folders {
     find . -depth -type d -empty
 }
@@ -414,7 +414,7 @@ urlenc () { #url encode the passed string
 }
 
 fymd () {
-  encurl=$(urlenc $1)
+  encurl=$(urlenc "$1")
   curl "http://fuckyeahmarkdown.com/go/?read=1&preview=0&showframe=0&u=$encurl"|pbcopy
   echo "In your clipboard, man."
 }
@@ -437,15 +437,15 @@ function imgsize() {
 # gets the current 1m avg CPU load, was part of my prompt,
 # but was too slow for prompt_command
 chkload () {
-  local CURRLOAD=`uptime|awk '{print $(NF-2)}'`
-  if [ "$CURRLOAD" > "1" ]; then
+  local CURRLOAD=$(uptime|awk '{print $(NF-2)}')
+  if [ "$CURRLOAD" -gt "1" ]; then
     local OUTP="HIGH"
-  elif [ "$CURRLOAD" < "1" ]; then
+  elif [ "$CURRLOAD" -lt "1" ]; then
     local OUTP="NORMAL"
   else
     local OUTP="UNKNOWN"
   fi
-  echo $CURRLOAD
+  echo "$CURRLOAD"
 }
 
 # glorified strip_tags to get plain text from websites
@@ -560,7 +560,7 @@ function psg()
 
 function kpy() 
 {
-  PY=`ps | grep '[p]yth' | awk '{ print $1 }'`
+  PY=$(ps | grep '[p]yth' | awk '{ print $1 }')
   echo "Killing python pid: ${PY}"
   kill $PY
   return 0
@@ -654,7 +654,7 @@ function last()
 
 	export LAST
 
-	TYPE=`file -b "$LAST"`
+	TYPE=$(file -b "$LAST")
 
 	if [ $# -eq 0 ]; 
 		then
@@ -953,19 +953,19 @@ function kp()
   # it's looking for a command with 'l' followed by 'ib' not grep [l]ib
   # so we don't need to add the usual grep -v grep
   # using ps -e -o uid,pid,comm ensures we don't match the userid with the grep
-  declare -a PID=(`ps -e -o uid,pid,comm | grep "[${1:0:1}]${1:1}" | awk '{ print $2 }'`)
+  declare -a PID=($(ps -e -o uid,pid,comm | grep "[${1:0:1}]${1:1}" | awk '{ print $2 }'))
 
   pidCount=${#PID[@]} 
 
-  if [ $pidCount -gt 0 ]; then
+  if [ "$pidCount" -gt 0 ]; then
 
     echo "$pidCount processes match:"
 
     amRoot=0
-    userID=`id -u`
+    userID=$(id -u)
     usePFEXEC=0
 
-    if [ "$LOGNAME" = "root" -o "$userID" = "0" ]
+    if [ "$LOGNAME" = "root" ] || [ "$userID" = "0" ]
     then
       e_warning "You are ROOT - EASY NOW..."
       amRoot=1
@@ -1022,8 +1022,8 @@ function kp()
     fi
 
     # list out the processes
-    pidStr=`printf "%s," "${PID[@]}"`
-    ps -f -p $pidStr
+    pidStr=$(printf "%s," "${PID[@]}")
+    ps -f -p "$pidStr"
     
     # check they are really sure
     seek_confirmation "Are you sure you want to kill all $pidCount processes?"
@@ -1031,7 +1031,7 @@ function kp()
     if is_confirmed; then
       # reformat pidStr without commas - could also do
       # pidStr=`echo "$pidStr" | rev | cut -c 2- | rev`
-      pidStr=`printf "%s " "${PID[@]}"`
+      pidStr=$(printf "%s " "${PID[@]}")
 
       if [ $usePFEXEC -ne 1 ]
       then
@@ -1056,7 +1056,7 @@ function extract2 {
     echo "Usage: extract2 <path/file_name>.<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|xz|ex|tar.bz2|tar.gz|tar.xz>"
  else
     if [ -f "$1" ] ; then
-        local nameInLowerCase=`echo "$1" | awk '{print tolower($0)}'`
+        local nameInLowerCase=$(echo "$1" | awk '{print tolower($0)}')
         case "$nameInLowerCase" in
           *.tar.bz2)   tar xvjf ./"$1"    ;;
           *.tar.gz)    tar xvzf ./"$1"    ;;
