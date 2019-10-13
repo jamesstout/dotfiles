@@ -18,7 +18,7 @@ export PATH
 # shellcheck source=/Users/james/bin/z.sh
 . ~/bin/z.sh
 
-# shellcheck source=/Users/james/.iterm2_shell_integration.bash
+# shellcheck source=~/.iterm2_shell_integration.bash
 source ~/.iterm2_shell_integration.bash
 
 #~/bin/startup-gpg-agent.sh
@@ -92,10 +92,10 @@ defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
 ## Tab Completions
 set completion-ignore-case On
 
+[[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
+
 prefix=$(brew --prefix)
 for comp in \
-	/etc/bash_completion \
-	$prefix/share/bash-completion/bash_completion \
 	$prefix/etc/grc.bashrc \
 	$prefix/etc/bash_completion.d/git-completion.bash \
 	$prefix/etc/bash_completion.d/brew \
@@ -115,21 +115,21 @@ fi
 alias ls="ls ${colorflag}"
 # these are set in /usr/local/etc/grc.bashrc
 # I don't want them
-unalias make
-unalias gcc
-unalias g++
-unalias as
-unalias docker
-unalias gas
-unalias ld
-unalias netstat
-unalias ping
-unalias traceroute
+# unalias make
+# unalias gcc
+# unalias g++
+# unalias as
+# unalias docker
+# unalias gas
+# unalias ld
+# unalias netstat
+# unalias ping
+# unalias traceroute
 unalias head
 unalias ip
 unalias tail
 unalias dig
 unalias diff
-unalias du
+# unalias du
 
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
