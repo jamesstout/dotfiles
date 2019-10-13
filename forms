@@ -10,12 +10,15 @@ archey
 argon2
 asciinema
 aspell
+autobench
 autoconf
+autogen
 automake
 bash
 bash-completion@2
 bashdb
 bats
+bdw-gc
 bear_backup
 bench
 bfg
@@ -73,6 +76,7 @@ git
 git-extras
 git-lfs
 git-quick-stats
+glances
 glib
 gmp
 gnu-sed
@@ -82,6 +86,7 @@ go
 graphite2
 grc
 grep
+guile
 gzip
 handbrake
 harfbuzz
@@ -96,6 +101,7 @@ icu4c
 iftop
 ilmbase
 imagemagick
+imlib2
 iperf
 iperf3
 jansson
@@ -110,6 +116,8 @@ libarchive
 libass
 libbluray
 libcaca
+libcddb
+libcdio
 libde265
 libebml
 libev
@@ -139,12 +147,14 @@ libtiff
 libtool
 libunistring
 libusb
+libvidstab
 libvorbis
 libvpx
 libxml2
 libyaml
 libzip
 little-cms2
+lua
 lz4
 lzo
 lzop
@@ -164,6 +174,7 @@ mpfr
 mplayer
 mtr
 mysql
+mysql-client
 namebench
 nasm
 ncurses
@@ -194,9 +205,6 @@ pcre2
 perl
 php
 php-code-sniffer
-php56
-php56-gmp
-php@5.6
 pigz
 pixman
 pkg-config
@@ -238,6 +246,7 @@ subversion
 svgo
 swiftformat
 swiftlint
+sysbench
 telnet
 tesseract
 testssl
@@ -258,6 +267,7 @@ usbmuxd
 utf8proc
 vbindiff
 watchman
+wavpack
 webkit2png
 webp
 wget
@@ -272,3 +282,4 @@ yasm
 youtube-dl
 zlib
 zopfli
+zsh

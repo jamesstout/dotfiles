@@ -1,11 +1,11 @@
-tap "ethereum/ethereum"
+tap "caskroom/fonts"
 tap "homebrew/bundle"
 tap "homebrew/cask"
 tap "homebrew/cask-versions"
 tap "homebrew/core"
 tap "homebrew/services"
 tap "kateinoigakukun/tap"
-tap "owncloud/owncloud"
+cask "xquartz"
 brew "ack"
 brew "openssl@1.1"
 brew "pcre"
@@ -17,13 +17,20 @@ brew "ansiweather"
 brew "ant"
 brew "apktool"
 brew "apr"
-brew "openssl"
 brew "apr-util"
 brew "archey"
+brew "openssl"
 brew "xz"
 brew "python"
 brew "asciinema"
+brew "httperf"
+brew "autobench"
 brew "autoconf"
+brew "gmp"
+brew "libtool"
+brew "libunistring"
+brew "pkg-config"
+brew "autogen"
 brew "automake"
 brew "bash"
 brew "bash-completion@2"
@@ -32,7 +39,7 @@ brew "bats"
 brew "bear_backup", args: ["HEAD"]
 brew "bench"
 brew "bfg"
-brew "binutils", link: true
+brew "binutils"
 brew "icu4c"
 brew "bwm-ng"
 brew "cabextract"
@@ -56,6 +63,7 @@ brew "diffutils"
 brew "doctl"
 brew "doxygen"
 brew "dssim"
+brew "ethereum"
 brew "exif"
 brew "exiftool"
 brew "fcrackzip"
@@ -63,18 +71,15 @@ brew "fdk-aac"
 brew "ffind"
 brew "libogg"
 brew "flac"
-brew "gmp"
-brew "libunistring"
+brew "harfbuzz"
 brew "lame"
 brew "libvorbis"
 brew "sdl2"
-brew "x264"
 brew "xvid"
 brew "ffmpeg"
 brew "figlet"
 brew "findutils"
 brew "fping"
-brew "libtool"
 brew "unixodbc"
 brew "gawk"
 brew "geoip", args: ["with-geoipupdate"]
@@ -83,6 +88,7 @@ brew "git"
 brew "git-extras"
 brew "git-lfs"
 brew "git-quick-stats"
+brew "glances"
 brew "gnu-sed"
 brew "grc"
 brew "grep"
@@ -90,7 +96,6 @@ brew "gzip"
 brew "handbrake"
 brew "hstr"
 brew "htop"
-brew "httperf"
 brew "httrack"
 brew "hub"
 brew "iftop"
@@ -98,11 +103,13 @@ brew "imagemagick"
 brew "iperf"
 brew "iperf3"
 brew "lesspipe"
+brew "libcddb"
 brew "libxml2"
 brew "python@2"
 brew "libimobiledevice", args: ["HEAD"]
 brew "libmatroska"
 brew "libyaml"
+brew "lua"
 brew "lzop"
 brew "mas"
 brew "masscan"
@@ -132,7 +139,6 @@ brew "tidy-html5"
 brew "php"
 brew "php-code-sniffer"
 brew "pigz"
-brew "pkg-config"
 brew "pngcheck"
 brew "pngquant"
 brew "pstree"
@@ -154,6 +160,7 @@ brew "subversion"
 brew "svgo"
 brew "swiftformat"
 brew "swiftlint"
+brew "sysbench"
 brew "telnet"
 brew "testssl"
 brew "texi2html"
@@ -165,6 +172,7 @@ brew "unrar"
 brew "upx"
 brew "vbindiff"
 brew "watchman"
+brew "wavpack"
 brew "webkit2png"
 brew "wget"
 brew "wrk"
@@ -174,7 +182,7 @@ brew "yasm"
 brew "youtube-dl"
 brew "zlib"
 brew "zopfli"
-brew "ethereum/ethereum/ethereum"
+brew "zsh"
 brew "kateinoigakukun/tap/iblinter"
 cask "cakebrew"
 cask "charles"
@@ -197,6 +205,7 @@ mas "1Blocker", id: 1107421413
 mas "Amphetamine", id: 937984704
 mas "Aperture", id: 408981426
 mas "Apple Configurator 2", id: 1037126344
+mas "Araxis Folder Size Explorer", id: 510309552
 mas "Asset Catalog Creator Pro", id: 809625456
 mas "ASUS Device Discovery", id: 995124504
 mas "Bear", id: 1091189122
@@ -214,10 +223,13 @@ mas "Duplicate Detective", id: 686428787
 mas "Duplicates Finder", id: 1101010407
 mas "File Viewer", id: 495987613
 mas "Flare", id: 419917767
+mas "Flare 2", id: 924691732
 mas "GarageBand", id: 408980954
 mas "Image Resizer Toolbox", id: 950414687
+mas "iMazing HEIC Converter", id: 1292198261
 mas "iMovie", id: 408981434
 mas "iPhoto", id: 408981381
+mas "iPulse", id: 1028916583
 mas "iRamDisk", id: 492615400
 mas "iStat View", id: 1148868081
 mas "JPEGmini Lite", id: 525742250
@@ -229,44 +241,35 @@ mas "Linkinus", id: 402390998
 mas "Liya", id: 455484422
 mas "Lost Photos", id: 516801330
 mas "MediaInfo", id: 510620098
-mas "Memory Clean 3", id: 1302310792
 mas "MetaDoctor", id: 988250390
 mas "MultiMarkdown Composer", id: 593294811
 mas "NetworkKitX", id: 979299240
 mas "Numbers", id: 409203825
-mas "OneDrive", id: 823766827
 mas "Oyster", id: 655527594
 mas "Pages", id: 409201541
 mas "Paste", id: 967805235
-mas "PhotoSweeper", id: 463362050
-mas "Pixelmator", id: 407963104
 mas "Radium", id: 597611879
 mas "Receigen", id: 452840086
 mas "RegexMatch", id: 582049745
 mas "Resizer", id: 411277085
 mas "Screenium 3", id: 921553264
 mas "Screenshot Creator", id: 1238399722
-mas "Slack", id: 803453959
 mas "Slender", id: 493656257
 mas "Smarts", id: 438671026
 mas "Snapheal", id: 480623975
 mas "Soulver", id: 413965349
-mas "Spark", id: 1176895641
 mas "SQLPro for Postgres", id: 976140091
-mas "Swiftify for Xcode", id: 1183412116
-mas "Telegram", id: 747648890
 mas "Termius", id: 1176074088
 mas "The Unarchiver", id: 425424353
-mas "Things3", id: 904280696
 mas "Todoist", id: 585829637
 mas "TrackSift 2", id: 908737079
-mas "Tweetbot", id: 1384080005
 mas "Tweetbot", id: 557168941
+mas "Tweetbot", id: 1384080005
 mas "Twitter", id: 409789998
+mas "Twitterrific", id: 1289378661
 mas "Ulysses", id: 623795237
 mas "Unclutter", id: 577085396
 mas "unDock", id: 402359583
 mas "VisualGrep", id: 597887722
 mas "Voila", id: 407741870
-mas "VOX", id: 461369673
 mas "Xcode", id: 497799835
