@@ -14,6 +14,7 @@ autobench
 autoconf
 autogen
 automake
+bandwhich
 bash
 bash-completion@2
 bashdb
@@ -48,9 +49,9 @@ docbook-xsl
 doctl
 doxygen
 dssim
-ethereum
 exif
 exiftool
+fakeroot
 fcrackzip
 fdk-aac
 ffind
@@ -96,6 +97,7 @@ htop
 httperf
 httrack
 hub
+hugo
 iblinter
 icu4c
 iftop
@@ -147,6 +149,7 @@ libtiff
 libtool
 libunistring
 libusb
+libusbmuxd
 libvidstab
 libvorbis
 libvpx
@@ -169,6 +172,7 @@ miniupnpc
 mitmproxy
 mkvtoolnix
 moreutils
+mosh
 mp4v2
 mpfr
 mplayer
@@ -190,6 +194,7 @@ node
 oniguruma
 opencore-amr
 openexr
+openjdk
 openjpeg
 openldap
 openssh
@@ -206,12 +211,14 @@ perl
 php
 php-code-sniffer
 pigz
+pipenv
 pixman
 pkg-config
 pngcheck
 pngquant
 popt
 protobuf
+protobuf@3.7
 pstree
 pugixml
 pv
@@ -219,9 +226,11 @@ pwgen
 python
 python3
 python@2
+python@3.8
 qt
 qtkeychain
 rbenv
+rclone
 readline
 rename
 rpl
@@ -245,7 +254,6 @@ ssh-copy-id
 subversion
 svgo
 swiftformat
-swiftlint
 sysbench
 telnet
 tesseract
