@@ -29,6 +29,8 @@ paths_to_add=(
 	"$GOROOT/bin"
     "$gp/bin"
     "$HOME/.cargo/bin"
+    "/Applications/iPhone Backup Extractor.app/Contents/MacOS"
+    
 );
 
 # Create an array of directories currently in the PATH variable.
