@@ -106,18 +106,18 @@ npm update -g
 rustup update
 
 #### update ruby gems
-# e_header "Updating gems..."
-# for version in $(rbenv whence gem); do
-# 	rbenv shell "$version"
-# 	e_debug "Updating rubygems for $version"
-# 	gem update --system --no-document #--quiet
+e_header "Updating gems..."
+for version in $(rbenv whence gem); do
+	rbenv shell "$version"
+	e_debug "Updating rubygems for $version"
+	gem update --system --no-document #--quiet
 	
-# 	yes | gem update
+	yes | gem update
 	
-# 	gem cleanup -v
-# 	echo ""
-# done
-# rbenv rehash
+	gem cleanup -v
+	echo ""
+done
+rbenv rehash
 
 if file_exists "$SUBL3_APP"; then
 	SUBL_APP="$SUBL3_APP"
