@@ -91,6 +91,7 @@ guile
 gzip
 handbrake
 harfbuzz
+hashcat
 hh
 hstr
 htop
@@ -118,6 +119,7 @@ libarchive
 libass
 libbluray
 libcaca
+libcbor
 libcddb
 libcdio
 libde265
@@ -126,6 +128,7 @@ libev
 libevent
 libexif
 libffi
+libfido2
 libheif
 libiconv
 libidn
