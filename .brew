@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # shellcheck shell=bash
+# shellcheck source=.utils
 source ./.utils
 
 bundle_needs_update=0

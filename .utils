@@ -207,7 +207,7 @@ file_exists() {
 }
 
 create_formula_list_file() {
-	$(brew list >"$SCRIPT_DIR"/forms)
+	brew list > "$SCRIPT_DIR"/forms
 	return 0
 }
 
