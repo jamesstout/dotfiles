@@ -89,7 +89,6 @@ grc
 grep
 guile
 gzip
-handbrake
 harfbuzz
 hashcat
 hh
@@ -286,6 +285,7 @@ wrk
 x264
 x265
 xctool
+xmlstarlet
 xvid
 xz
 yarn
