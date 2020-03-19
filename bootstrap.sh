@@ -112,12 +112,22 @@ for version in $(rbenv whence gem); do
 	e_debug "Updating rubygems for $version"
 	gem update --system --no-document #--quiet
 	
-	yes | gem update
+    if [[ $version == "2.3.1" ]]; then
+        e_debug "version == 2.3.1, skipping"
+        continue
+    fi
+    if [[ $version == "2.5.1" ]]; then
+        e_debug "version == 2.5.1, skipping"
+        continue
+    fi
+	
+    yes | gem update
 	
 	gem cleanup -v
+    rbenv rehash
 	echo ""
 done
-rbenv rehash
+
 
 if file_exists "$SUBL3_APP"; then
 	SUBL_APP="$SUBL3_APP"
