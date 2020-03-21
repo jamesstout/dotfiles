@@ -27,6 +27,22 @@ piper_color_du ()
 {
 	piper $@ '^\s*\d+B' rgb105 '^\s*[5-9]\d{2}(.\d+)?K' rgb033 '^\s*[1-4]\d{2}(.\d+)?K' rgb023 '^\s*\d{2}(.\d+)?K' rgb013 '^\s*\d(.\d+)?K' rgb003 '^\s*[5-9]\d{2}(.\d+)?M' rgb040 '^\s*[1-4]\d{2}(.\d+)?M' rgb030 '^\s*\d{2}(.\d+)?M' rgb020 '^\s*\d(.\d+)?M' rgb010 '^\s*[5-9]\d{2}(.\d+)?G' rgb540 '^\s*[1-4]\d{2}(.\d+)?G' rgb530 '^\s*\d{2}(.\d+)?G' rgb520 '^\s*\d(.\d+)?G' rgb510 '^\s\d+(.\d+)?[TP]' 'yellow on_red' '.+' grey15 '$' reset
 }
+
+
+# A function to fetch a file with curl to a directory
+# 1 = https://example.com
+# 2 = name of file
+# 3 = directory that the file should end up in
+# e.g. curl_to_dir google.com google.connectiontest /tmp
+curl_to_dir() {
+if [ ! -d "$3" ]
+then
+    mkdir -p "$3"
+fi
+    rm -f "$3"/"$2"
+    curl -sfL "$1"/"$2" -o "$3"/"$2"
+}
+
 # Show the top 10 processes.
 function top10 {
 	# Default columns displayed by "top" on Debian Linux and Mac OS X:
