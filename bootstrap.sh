@@ -93,8 +93,8 @@ cd_and_git_pull "$ST3_TS_DIR"
 e_debug "Updating Base16 Theme"
 cd_and_git_pull "$ST3_B16_DIR"
 
-e_debug "Updating GoSublime"
-cd_and_git_pull "$ST3_GS_DIR"
+# e_debug "Updating GoSublime"
+# cd_and_git_pull "$ST3_GS_DIR"
 
 #### update npm
 e_header "Updating npm..."
