@@ -116,6 +116,7 @@ leptonica
 lesspipe
 libarchive
 libass
+libb2
 libbluray
 libcaca
 libcbor
@@ -169,6 +170,7 @@ mcrypt
 md5deep
 md5sha1sum
 media-info
+meson
 mhash
 miniupnpc
 mitmproxy
@@ -192,6 +194,7 @@ netperf
 nettle
 nghttp2
 ngrep
+ninja
 node
 oniguruma
 opencore-amr
@@ -294,3 +297,4 @@ youtube-dl
 zlib
 zopfli
 zsh
+zstd
