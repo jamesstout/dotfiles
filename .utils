@@ -86,7 +86,7 @@ cd_and_git_pull() {
 	else
 		git_pull
 	fi
-	cd - 1>/dev/null || exit 255
+	cd - 1>/dev/null || return 255
 }
 
 logn() {
