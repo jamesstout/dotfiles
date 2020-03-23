@@ -77,7 +77,9 @@ alias hgei="cat ${HOME}/.bash_eternal_history | grep -i "
 
 # commands
 alias spwr="/Applications/MAMP/bin/php/php5.4.10/bin/php retrieve.php"
-alias py="python"
+# alias py="python"
+alias python=/usr/local/bin/python3
+alias pip=/usr/local/bin/pip3
 
 alias gurl='curl --compressed'
 
