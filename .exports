@@ -6,7 +6,7 @@ export EDITOR="$HOME/dotfiles/bin/editor.sh"
 
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
-export JAVA_HOME=$(/usr/libexec/java_home -v 13)
+export JAVA_HOME=$(/usr/libexec/java_home)
 
 #export ANDROID_SDK_ROOT="/usr/local/share/android-sdk"
 
