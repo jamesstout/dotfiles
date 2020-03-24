@@ -123,13 +123,13 @@ alias ls="ls ${colorflag}"
 # unalias gas
 # unalias ld
 # unalias netstat
-# unalias ping
-# unalias traceroute
+unalias ping
+unalias traceroute
 unalias head
 unalias ip
 unalias tail
 unalias dig
 unalias diff
-# unalias du
+#unalias du
 
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
