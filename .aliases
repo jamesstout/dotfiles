@@ -89,6 +89,11 @@ alias cx="chmod +x"
 alias cw="chmod +w"
 alias cr="chmod +r"
 
+alias rsync-copy="rsync -avz --progress -h"
+alias rsync-move="rsync -avz --progress -h --remove-source-files"
+alias rsync-update="rsync -avzu --progress -h"
+alias rsync-synchronize="rsync -avzu --delete --progress -h"
+
 alias ta="type -a "
 alias f="file "
 
