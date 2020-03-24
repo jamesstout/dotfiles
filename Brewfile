@@ -64,7 +64,7 @@ brew "cloc"
 brew "cmake"
 brew "composer"
 brew "coreutils"
-brew "dark-mode"
+# brew "dark-mode"
 brew "diff-so-fancy"
 brew "libarchive"
 brew "diffoscope"
@@ -214,14 +214,12 @@ cask "wireshark"
 mas "1Blocker", id: 1107421413
 mas "Amphetamine", id: 937984704
 mas "Aperture", id: 408981426
-mas "Apple Configurator 2", id: 1037126344
 mas "Araxis Folder Size Explorer", id: 510309552
 mas "Asset Catalog Creator Pro", id: 809625456
 mas "ASUS Device Discovery", id: 995124504
 mas "Bear", id: 1091189122
 mas "Bitcoin Ticker TTM", id: 731453251
 mas "Blackmagic Disk Speed Test", id: 425264550
-mas "Byword", id: 420212497
 mas "Caffeine", id: 411246225
 mas "Clean Text Menu", id: 1222295315
 mas "Cleaner for Xcode", id: 1296084683
@@ -232,7 +230,6 @@ mas "djay", id: 411699771
 mas "Duplicate Detective", id: 686428787
 mas "Duplicates Finder", id: 1101010407
 mas "File Viewer", id: 495987613
-mas "Flare", id: 419917767
 mas "Flare 2", id: 924691732
 mas "Front and Center", id: 1493996622
 mas "GarageBand", id: 408980954
@@ -245,13 +242,10 @@ mas "iRamDisk", id: 492615400
 mas "iStat View", id: 1148868081
 mas "JPEGmini Lite", id: 525742250
 mas "JSON Accelerator", id: 511324989
-mas "JSON Class Generator", id: 1137163774
 mas "Keynote", id: 409183694
 mas "LilyView", id: 529490330
 mas "Linkinus", id: 402390998
-mas "Liya", id: 455484422
 mas "Logic Pro X", id: 634148309
-mas "Lost Photos", id: 516801330
 mas "MediaInfo", id: 510620098
 mas "MetaDoctor", id: 988250390
 mas "MultiMarkdown Composer", id: 593294811
@@ -261,7 +255,6 @@ mas "Oyster", id: 655527594
 mas "Pages", id: 409201541
 mas "Paste", id: 967805235
 mas "Radium", id: 597611879
-mas "Receigen", id: 452840086
 mas "RegexMatch", id: 582049745
 mas "Resizer", id: 411277085
 mas "Screenium 3", id: 921553264
@@ -270,7 +263,6 @@ mas "Slender", id: 493656257
 mas "Smarts", id: 438671026
 mas "Snapheal", id: 480623975
 mas "Soulver", id: 413965349
-mas "SQLPro for Postgres", id: 976140091
 mas "Termius", id: 1176074088
 mas "The Unarchiver", id: 425424353
 mas "Todoist", id: 585829637
@@ -278,7 +270,6 @@ mas "TrackSift 2", id: 908737079
 mas "Tweetbot", id: 1384080005
 mas "Tweetbot", id: 557168941
 mas "Twitter", id: 409789998
-mas "Twitterrific", id: 1289378661
 mas "Ulysses", id: 623795237
 mas "Unclutter", id: 577085396
 mas "unDock", id: 402359583
