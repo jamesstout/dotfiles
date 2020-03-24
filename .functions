@@ -160,6 +160,15 @@ function mkd() {
 	mkdir -p "$@" && cd "$@"
 }
 
+function quick-look() {
+  (( $# > 0 )) && qlmanage -p $* &>/dev/null &
+}
+
+function man-preview() {
+  man -t "$@" | open -f -a Preview
+}
+
+
 # Determine size of a file or total size of a directory
 function fs() {
 	if du -b /dev/null > /dev/null 2>&1; then
