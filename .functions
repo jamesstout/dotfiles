@@ -43,6 +43,10 @@ fi
     curl -sfL "$1"/"$2" -o "$3"/"$2"
 }
 
+cpv() {
+    rsync -pogbr -hhh --backup-dir=/tmp/rsync -e /dev/null --progress "$@"
+}
+
 # Show the top 10 processes.
 function top10 {
 	# Default columns displayed by "top" on Debian Linux and Mac OS X:
