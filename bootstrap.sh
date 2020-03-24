@@ -109,8 +109,6 @@ rustup update
 e_header "Updating gems..."
 for version in $(rbenv whence gem); do
 	rbenv shell "$version"
-	e_debug "Updating rubygems for $version"
-	gem update --system --no-document #--quiet
 	
     if [[ $version == "2.3.1" ]]; then
         e_debug "version == 2.3.1, skipping"
@@ -121,6 +119,9 @@ for version in $(rbenv whence gem); do
         continue
     fi
 	
+    e_debug "Updating rubygems for $version"
+	gem update --system --no-document #--quiet
+    
     yes | gem update
 	
 	gem cleanup -v
