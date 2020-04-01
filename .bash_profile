@@ -119,7 +119,7 @@ alias ls="ls ${colorflag}"
 # unalias gcc
 # unalias g++
 # unalias as
-# unalias docker
+unalias docker
 # unalias gas
 # unalias ld
 # unalias netstat
