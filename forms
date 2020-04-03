@@ -49,6 +49,7 @@ docbook
 docbook-xsl
 doctl
 doxygen
+drone
 dssim
 exif
 exiftool
@@ -69,6 +70,7 @@ frei0r
 fribidi
 gawk
 gdbm
+geo
 geoip
 geoipupdate
 gettext
@@ -111,6 +113,7 @@ jansson
 jemalloc
 jpeg
 jq
+krb5
 lame
 ldns
 leptonica
@@ -286,6 +289,7 @@ webkit2png
 webp
 wget
 wrk
+wxmac
 x264
 x265
 xctool
