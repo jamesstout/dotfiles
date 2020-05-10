@@ -20,10 +20,12 @@ bash-completion@2
 bashdb
 bat
 bats
+bazel
 bdw-gc
 bear_backup
 bench
 bfg
+bgrep
 binutils
 boost
 brotli
@@ -40,6 +42,7 @@ cloc
 cmake
 composer
 coreutils
+cunit
 curl-openssl
 dark-mode
 diff-so-fancy
@@ -56,6 +59,7 @@ exiftool
 fakeroot
 fcrackzip
 fdk-aac
+fdupes
 ffind
 ffmpeg
 figlet
@@ -74,6 +78,7 @@ geo
 geoip
 geoipupdate
 gettext
+ghostscript
 giflib
 gifsicle
 git
@@ -91,6 +96,7 @@ graphite2
 grc
 grep
 guile
+guile@2
 gzip
 harfbuzz
 hashcat
@@ -234,7 +240,6 @@ pv
 pwgen
 python
 python3
-python@2
 python@3.8
 qt
 qtkeychain
@@ -259,6 +264,7 @@ speedtest-cli
 speex
 sphinx-doc
 sqlite
+srt
 ssh-copy-id
 subversion
 svgo
