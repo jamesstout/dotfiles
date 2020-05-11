@@ -624,6 +624,17 @@ fi
     fi
 }
 
+function ta()
+{
+	type -a "$1"
+}
+
+function f()
+{
+	file "$1"
+}
+
+
 function de2()
 {
     containers=( $(docker ps --all | rev | cut -d " " -f1 | rev | grep -v NAMES) )
