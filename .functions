@@ -429,6 +429,115 @@ function hgu()
 	fi
 }
 
+
+# Group: Variable
+# ----------------------------------------------------#
+
+## @fn defined()
+## @ingroup variable
+## @brief Tests if a variable is defined.
+## @param variable Variable to test.
+## @retval 0 if the variable is defined.
+## @retval 1 in others cases.
+function defined() {
+    [[ "${!1-X}" == "${!1-Y}" ]]
+}
+
+## @fn has_value()
+## @ingroup variable
+## @brief Tests if a variable has a value.
+## @param variable Variable to operate on.
+## @retval 0 if the variable is defined and if value's length > 0.
+## @retval 1 in others cases.
+function has_value() {
+    if defined $1; then
+        if [[ -n ${!1} ]]; then
+            return 0
+        fi
+    fi
+    return 1
+}
+
+# Group: Time
+# ----------------------------------------------------#
+
+## @fn now()
+## @ingroup time
+## @brief Displays the current timestamp.
+## @return Current timestamp.
+function now() {
+    date +%s
+}
+
+## @fn elapsed()
+## @ingroup time
+## @brief Displays the time elapsed between the 'start' and 'stop'
+## parameters.
+## @param start Start timestamp.
+## @param stop Stop timestamp.
+## @return Time elapsed between the 'start' and 'stop' parameters.
+function  elapsed() {
+    START="$1"
+    STOP="$2"
+
+    ELAPSED=$(( STOP - START ))
+    echo $ELAPSED
+}
+
+## @fn start_watch()
+## @ingroup time
+## @brief Starts the watch.
+function  start_watch() {
+    __START_WATCH=$(now)
+}
+
+## @fn stop_watch()
+## @ingroup time
+## @brief Stops the watch and displays the time elapsed.
+## @retval 0 if succeed.
+## @retval 1 if the watch has not been started.
+## @return Time elapsed since the watch has been started.
+function  stop_watch() {
+    if has_value __START_WATCH; then
+        STOP_WATCH=$(now)
+        elapsed "$__START_WATCH" "$STOP_WATCH"
+        return 0
+    else
+        return 1
+    fi
+}
+
+# Group: String
+# ----------------------------------------------------#
+
+## @fn to_lower()
+## @ingroup string
+## @brief Converts uppercase characters in a string to lowercase.
+## @param string String to operate on.
+## @return Lowercase string.
+function to_lower() {
+    echo "$1" | tr '[:upper:]' '[:lower:]'
+}
+
+## @fn to_upper()
+## @ingroup string
+## @brief Converts lowercase characters in a string to uppercase.
+## @param string String to operate on.
+## @return Uppercase string.
+function to_upper() {
+    echo "$1" | tr '[:lower:]' '[:upper:]'
+}
+
+## @fn trim()
+## @ingroup string
+## @brief Removes whitespace from both ends of a string.
+## @param string String to operate on.
+## @return The string stripped of whitespace from both ends.
+function trim() {
+    echo "${1//'[[:space:]]'/}"
+}
+
+
 function console () {
   if [[ $# > 0 ]]; then
     query=$(echo "$*"|tr -s ' ' '|')
@@ -465,15 +574,8 @@ function imgsize() {
 
 # gets the current 1m avg CPU load, was part of my prompt,
 # but was too slow for prompt_command
-chkload () {
+function chkload () {
   local CURRLOAD=$(uptime|awk '{print $(NF-2)}')
-  if [ "$CURRLOAD" -gt "1" ]; then
-    local OUTP="HIGH"
-  elif [ "$CURRLOAD" -lt "1" ]; then
-    local OUTP="NORMAL"
-  else
-    local OUTP="UNKNOWN"
-  fi
   echo "$CURRLOAD"
 }
 
