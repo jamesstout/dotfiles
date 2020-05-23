@@ -404,6 +404,18 @@ function tzg()
 	tz | grep -i ${1}
 }
 
+
+function hge()
+{
+	file="${HOME}/.bash_eternal_history"
+	grep "$1" "$file" | uniq
+}
+function hgei()
+{
+	file="${HOME}/.bash_eternal_history"
+	grep -i "$1" "$file" | uniq
+}
+
 function hgu()
 {
 	file="${HOME}/.bash_eternal_history"
