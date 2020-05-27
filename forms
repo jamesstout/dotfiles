@@ -20,7 +20,6 @@ bash-completion@2
 bashdb
 bat
 bats
-bazel
 bdw-gc
 bear_backup
 bench
@@ -45,18 +44,20 @@ coreutils
 cunit
 curl-openssl
 dark-mode
+dav1d
 diff-so-fancy
 diffoscope
 diffutils
+dive
 docbook
 docbook-xsl
 doctl
 doxygen
-drone
 dssim
 exif
 exiftool
 fakeroot
+fastlane
 fcrackzip
 fdk-aac
 fdupes
@@ -73,6 +74,7 @@ freetype
 frei0r
 fribidi
 gawk
+gcc
 gdbm
 geo
 geoip
@@ -88,6 +90,7 @@ git-quick-stats
 glances
 glib
 gmp
+gnu-getopt
 gnu-sed
 gnu-tar
 gnutls
@@ -101,6 +104,7 @@ gzip
 harfbuzz
 hashcat
 hh
+highlight
 hstr
 htop
 httperf
@@ -115,9 +119,11 @@ imagemagick
 imlib2
 iperf
 iperf3
+isl
 jansson
 jemalloc
 jpeg
+jpegoptim
 jq
 krb5
 lame
@@ -147,6 +153,7 @@ libimobiledevice
 libmagic
 libmatroska
 libmetalink
+libmpc
 libogg
 libomp
 libplist
@@ -206,6 +213,7 @@ nghttp2
 ngrep
 ninja
 node
+nodeenv
 oniguruma
 opencore-amr
 openexr
@@ -252,7 +260,9 @@ rsync
 rtmpdump
 rubberband
 ruby-build
+ruby@2.5
 s-lang
+screenfetch
 screenresolution
 sdl2
 shared-mime-info
@@ -300,6 +310,7 @@ x264
 x265
 xctool
 xmlstarlet
+xmlto
 xvid
 xz
 yarn
