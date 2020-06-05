@@ -94,3 +94,5 @@ export PAGER='less'
 # 	# portable for people that have it in another directory in their $PATH.
 # 	eval $(lesspipe.sh);
 # fi;
+
+export BASH_SILENCE_DEPRECATION_WARNING=1
