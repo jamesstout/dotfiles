@@ -23,16 +23,19 @@ source ~/.iterm2_shell_integration.bash
 
 #~/bin/startup-gpg-agent.sh
 
+
+#  NO need for this with the new agent
+
 # GPG
-if [ -f "${HOME}/.gnupg/.gpg-agent-info" ]; then
-	# shellcheck source=/Users/james/.gnupg/.gpg-agent-info
-	. "${HOME}/.gnupg/.gpg-agent-info"
-	export GPG_AGENT_INFO
-	export SSH_AUTH_SOCK
-	launchctl setenv GPG_AGENT_INFO "$GPG_AGENT_INFO"
-fi
-GPG_TTY=$(tty)
-export GPG_TTY
+# if [ -f "${HOME}/.gnupg/.gpg-agent-info" ]; then
+# 	# shellcheck source=/Users/james/.gnupg/.gpg-agent-info
+# 	. "${HOME}/.gnupg/.gpg-agent-info"
+# 	export GPG_AGENT_INFO
+# 	export SSH_AUTH_SOCK
+# 	launchctl setenv GPG_AGENT_INFO "$GPG_AGENT_INFO"
+# fi
+# GPG_TTY=$(tty)
+# export GPG_TTY
 
 #. ~/bin/bashmarks.sh
 # shamelessly copied from https://github.com/janmoesen/tilde/blob/master/.bash/shell
