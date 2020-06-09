@@ -44,57 +44,11 @@ cp .{bash_profile,bash_prompt,iterm2_shell_integration.bash,path,emails,exports,
 source ./.brew
 
 # for testing without .brew
-#source ./.utils
+# source ./.utils
 
 # setup vars for dirs and symlinks
 BIN_DIR="$HOME"/bin
 STATS_DIR="$HOME"/stats
-SUBL_SYMLINK="$BIN_DIR"/subl
-SUBL2_APP="/Applications/Sublime Text 2.app/Contents/SharedSupport/bin/subl"
-SUBL3_APP="/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl"
-# default to v2
-SUBL_APP="$SUBL2_APP"
-Z_REPO="third-party/z"
-#RBENV_REPO="$HOME/.rbenv"
-ST3_DIR="$HOME/Library/Application Support/Sublime Text 3/Packages"
-ST3_BH_DIR="$ST3_DIR/BracketHighlighter"
-ST3_GS_DIR="$ST3_DIR/GoSublime"
-ST3_TS_DIR="$ST3_DIR/Theme - Soda"
-ST3_B16_DIR="$ST3_DIR/Base16"
-ST3_USER_DIR="$ST3_DIR/User"
-ST3_BH_FILE="$ST3_BH_DIR/bh_core.sublime-settings"
-ST3_BH_USER_FILE="$ST3_USER_DIR/bh_core.sublime-settings"
-ST3_BH_USER_FILE_BAK="$ST3_USER_DIR/bh_core.sublime-settings.bak"
-
-declare -a dirs_to_check=("$ST3_BH_DIR" "$ST3_TS_DIR")
-
-for ((i = 0; i < ${#dirs_to_check[@]}; ++i)); do
-	if ! dir_exists "${dirs_to_check[$i]}"; then
-		e_error "${dirs_to_check[$i]} does not exist. Exiting"
-		return 23
-	fi
-done
-
-#ST3 stuff
-e_header "Updating ST3 packages..."
-
-e_debug "Updating BracketHighlighter"
-# if not already up to date, there could be new settings to copy
-if ! [[ $(cd_and_git_pull "$ST3_BH_DIR" 2>/dev/null | tail -n1) =~ ^Already ]]; then
-	# back up current settings
-	e_debug "Copying BracketHighlighter settings"
-	mv "$ST3_BH_USER_FILE" "$ST3_BH_USER_FILE_BAK"
-	cp "$ST3_BH_FILE" "$ST3_BH_USER_FILE"
-fi
-
-e_debug "Updating Theme Soda"
-cd_and_git_pull "$ST3_TS_DIR"
-
-e_debug "Updating Base16 Theme"
-cd_and_git_pull "$ST3_B16_DIR"
-
-# e_debug "Updating GoSublime"
-# cd_and_git_pull "$ST3_GS_DIR"
 
 #### update npm
 e_header "Updating npm..."
@@ -103,36 +57,22 @@ npm update npm
 npm update -g
 
 #### update rust
-rustup update
+# rustup update
 
 #### update ruby gems
-# e_header "Updating gems..."
-# for version in $(rbenv whence gem); do
-# 	rbenv shell "$version"
-	
-#     if [[ $version == "2.3.1" ]]; then
-#         e_debug "version == 2.3.1, skipping"
-#         continue
-#     fi
-#     if [[ $version == "2.5.1" ]]; then
-#         e_debug "version == 2.5.1, skipping"
-#         continue
-#     fi
-	
-#     e_debug "Updating rubygems for $version"
-# 	gem update --system --no-document #--quiet
+e_header "Updating gems..."
+for version in $(rbenv whence gem); do
+	rbenv shell "$version"
+
+    e_debug "Updating rubygems for $version"
+	gem update --system --no-document #--quiet
     
-#     yes | gem update
+    yes | gem update
 	
-# 	gem cleanup -v
-#     rbenv rehash
-# 	echo ""
-# done
-
-
-if file_exists "$SUBL3_APP"; then
-	SUBL_APP="$SUBL3_APP"
-fi
+	gem cleanup -v
+    rbenv rehash
+	echo ""
+done
 
 # check stats dir
 if [ ! -d "$STATS_DIR" ]; then
@@ -150,8 +90,6 @@ fi
 if [ ! -d "$BIN_DIR" ]; then
 	e_warning "$BIN_DIR does not exist, creating..."
 	if mkdir "$BIN_DIR"; then
-		printf "Creating subl symlink"
-		ln -s "$SUBL_APP" "$SUBL_SYMLINK"
 
 		# update z repo and copy
 		cd "$Z_REPO" || return 1
@@ -162,15 +100,9 @@ if [ ! -d "$BIN_DIR" ]; then
 		cd - || return 1
 	else
 		e_error "Could not create $BIN_DIR"
-		e_warning "Sublime Text symlink and z will not be installed"
+		e_warning "z will not be installed"
 	fi
 else
-
-	# check subl symlink exists if not create it
-	if ! file_exists "$SUBL_SYMLINK"; then
-		printf "Creating subl symlink"
-		ln -s "$SUBL_APP" "$SUBL_SYMLINK"
-	fi
 
 	e_debug "Copying bins"
 	cp -f bin/{tdu,piper,merge-branch.sh,editor.sh,extract,ixio,httpcompression,bashmarks.sh,de-dupe-bash-eternal-history.sh,startup-gpg-agent.sh,itunes-apps-periodic-cleanup.py,blame-bird.py,tm-log} "$BIN_DIR"
