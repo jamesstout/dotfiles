@@ -103,7 +103,7 @@
         }
       },
       "postman": {
-        "version": "7.24.0",
+        "version": "7.25.0",
         "options": {
           "full_name": "postman"
         }
@@ -127,7 +127,7 @@
         }
       },
       "wireshark": {
-        "version": "3.0.7",
+        "version": "3.2.4",
         "options": {
           "full_name": "wireshark"
         }
@@ -139,9 +139,33 @@
         }
       },
       "whalebird": {
-        "version": "4.1.0",
+        "version": "4.1.2",
         "options": {
           "full_name": "whalebird"
+        }
+      },
+      "sequel-pro": {
+        "version": "1.1.2",
+        "options": {
+          "full_name": "sequel-pro"
+        }
+      },
+      "signal": {
+        "version": "1.34.1",
+        "options": {
+          "full_name": "signal"
+        }
+      },
+      "vlc": {
+        "version": "3.0.10",
+        "options": {
+          "full_name": "vlc"
+        }
+      },
+      "quicklook-json": {
+        "version": "latest",
+        "options": {
+          "full_name": "quicklook-json"
         }
       }
     },
@@ -4598,6 +4622,14 @@
         "CLT": "10.1.0.0.1.1539992718",
         "Xcode": "10.2.1",
         "macOS": "10.13.6"
+      },
+      "catalina": {
+        "HOMEBREW_VERSION": "2.3.0",
+        "HOMEBREW_PREFIX": "/usr/local",
+        "Homebrew/homebrew-core": "43b2465792db5e03205bea456c96055c5f96b576",
+        "CLT": "1103.0.32.62",
+        "Xcode": "11.5",
+        "macOS": "10.15.5"
       }
     }
   }
