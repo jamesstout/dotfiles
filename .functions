@@ -549,7 +549,6 @@ function trim() {
     echo "${1//'[[:space:]]'/}"
 }
 
-
 function console () {
   if [[ $# > 0 ]]; then
     query=$(echo "$*"|tr -s ' ' '|')
