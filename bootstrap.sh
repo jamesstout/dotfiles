@@ -49,12 +49,14 @@ source ./.brew
 # setup vars for dirs and symlinks
 BIN_DIR="$HOME"/bin
 STATS_DIR="$HOME"/stats
+Z_REPO="third-party/z"
 
 #### update npm
 e_header "Updating npm..."
 npm update npm -g
 npm update npm
 npm update -g
+npm install -g npm
 
 #### update rust
 # rustup update
