@@ -125,6 +125,8 @@ alias mem='top -o rsize' # memory
 #copy output of last command to clipboard
 alias cl="fc -e -|pbcopy"
 
+alias weather="curl -s wttr.in"
+
 # time machine log
 #alias tmlog="syslog -F '\$Time \$Message' -k Sender com.apple.backupd -k Time ge -30m | tail -n 1"
 alias tmlog="log show --style syslog  --predicate 'senderImagePath contains[cd] \"TimeMachine\"' --info"
