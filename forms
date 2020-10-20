@@ -5,6 +5,7 @@ apr
 apr-util
 archey
 argon2
+aria2
 asciinema
 aspell
 autobench
@@ -14,6 +15,7 @@ automake
 bandwhich
 bash
 bash-completion@2
+bat
 bdw-gc
 bench
 bfg
@@ -30,6 +32,7 @@ cloc
 cmake
 composer
 coreutils
+curl
 curl-openssl
 dark-mode
 dav1d
@@ -75,9 +78,12 @@ gnu-sed
 gnu-tar
 gnutls
 go
+gobject-introspection
 graphite2
 grc
 grep
+gts
+guile
 guile@2
 gzip
 handbrake
@@ -94,6 +100,7 @@ imagemagick
 iperf3
 isl
 jansson
+jasper
 jemalloc
 jpeg
 jq
@@ -144,6 +151,7 @@ libxml2
 libyaml
 libzip
 little-cms2
+lolcat
 lua
 lz4
 lzo
@@ -168,10 +176,12 @@ ncurses
 neofetch
 netcat
 nethogs
+netpbm
 netperf
 nettle
 nghttp2
 ngrep
+nmap
 node
 oniguruma
 opencore-amr
@@ -183,6 +193,7 @@ openssh
 openssl@1.1
 optipng
 opus
+osx-cpu-temp
 p11-kit
 p7zip
 pcre
@@ -199,6 +210,7 @@ protobuf
 pstree
 pwgen
 python@3.8
+python@3.9
 rav1e
 rbenv
 rclone
@@ -220,6 +232,8 @@ sqlite
 srt
 ssh-copy-id
 svgo
+swiftformat
+swiftlint
 telnet
 tesseract
 thefuck
