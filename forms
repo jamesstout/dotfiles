@@ -196,6 +196,7 @@ opus
 osx-cpu-temp
 p11-kit
 p7zip
+pandoc
 pcre
 pcre2
 php
@@ -220,6 +221,7 @@ rsync
 rtmpdump
 rubberband
 ruby-build
+scc
 screenresolution
 sdl2
 shared-mime-info
