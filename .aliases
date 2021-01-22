@@ -73,11 +73,17 @@ alias hg="history | grep"
 alias hgi="history | grep -i"
 alias he="cat ${HOME}/.bash_eternal_history"
 
+alias perms="stat -f %A "
+
 # commands
 alias spwr="/Applications/MAMP/bin/php/php5.4.10/bin/php retrieve.php"
 # alias py="python"
 alias python=/usr/local/bin/python3
 alias pip=/usr/local/bin/pip3
+
+# alias python=/usr/local/opt/python@3.9/libexec/bin/python
+# alias pip=/usr/local/opt/python@3.9/libexec/bin/pip
+
 
 alias gurl='curl --compressed'
 
