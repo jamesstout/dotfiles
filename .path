@@ -9,6 +9,12 @@ export NPM_PACKAGES="$HOME/.npm-packages"
 export NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
 export GOROOT="/usr/local/opt/go/libexec"
 
+PERL5LIB="/Users/james/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+PERL_LOCAL_LIB_ROOT="/Users/james/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+PERL_MB_OPT="--install_base \"/Users/james/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=/Users/james/perl5"; export PERL_MM_OPT;
+
+
 export gp=$(go env GOPATH)
 
 paths_to_add=(
@@ -23,6 +29,7 @@ paths_to_add=(
 	/usr/{,s}bin
 	# X binaries
 	/usr/X11/bin
+	"$HOME/perl5/bin"
 	"$HOME/Projects/Scripts"
 	"$HOME/Scripts"
 	"$NPM_PACKAGES/bin"
