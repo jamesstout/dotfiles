@@ -94,3 +94,5 @@ export PAGER='less'
 # fi;
 
 export BASH_SILENCE_DEPRECATION_WARNING=1
+export HOMEBREW_NO_AUTO_UPDATE=1
+export GITHUB_USERNAME=jamesstout
