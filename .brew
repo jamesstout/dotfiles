@@ -35,7 +35,7 @@ if type_exists 'brew'; then
 		brew upgrade
 		[[ $? ]] && e_success "Done"
 		e_header "Updating any outdated casks..."
-		brew cask upgrade
+		brew upgrade --cask
 		[[ $? ]] && e_success "Done"
     fi
 
