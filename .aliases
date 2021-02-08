@@ -18,7 +18,6 @@ alias su="su -"
 alias lr='echo $?'
 alias tf='tail -f '
 # apps
-alias m="mate ."
 alias s="subl "
 alias c="code "
 alias o="open"
