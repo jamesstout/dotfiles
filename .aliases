@@ -41,6 +41,8 @@ alias bki="brew info --cask "
 
 alias vtop="vtop --theme monokai"
 
+alias myasn='asn $(ip)'
+
 alias hh=hstr
 
 alias path='echo -e ${PATH//:/\\n}'
@@ -174,6 +176,8 @@ alias lsh="ls -lh ${colorflag}"
 # List all files colorized in long format, including dot files
 #alias la="ls -la ${colorflag}"
 
+alias ls1="ls -1"
+
 # List only directories
 alias lsd="ls -l ${colorflag} | grep \"^d\""
 
@@ -205,7 +209,6 @@ alias update='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup
 
 # IP addresses
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
-alias localip="ipconfig getifaddr en0"
 alias ips="ifconfig -a | grep -o 'inet6\? \(\([0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+\)\|[a-fA-F0-9:]\+\)' | sed -e 's/inet6* //'"
 
 # Enhanced WHOIS lookups
@@ -289,3 +292,7 @@ done
 #alias stfu="osascript -e 'set volume output muted true'"
 #alias pumpitup="osascript -e 'set volume 7'"
 #alias hax="growlnotify -a 'Activity Monitor' 'System error' -m 'WTF R U DOIN'"
+
+alias feh='feh -d --draw-tinted -V -F'
+# With EXIF information
+alias feh-exif='feh --draw-exif'
