@@ -75,8 +75,7 @@ unset {old,new}_path{,s} path{s,}_to_add;
 #export GEM_SPEC_CACHE=$HOME/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/specifications
 
 
-eval "$(thefuck --alias fk)"
-eval "$(rbenv init -)"
+
 #export PATH="$HOME/.fastlane/bin:$PATH"
 
 
