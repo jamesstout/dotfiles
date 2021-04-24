@@ -1521,7 +1521,7 @@ function asn() {
 # Fuzzy find file/dir
 
 ff() { find . -type f -iname "*$1*";}
-fd() { find . -type d -iname "*$1*";}
+fdir() { find . -type d -iname "*$1*";}
 
 
 # Show disk usage of current folder, or list with depth
