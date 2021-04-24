@@ -51,7 +51,6 @@ source ./.brew
 # setup vars for dirs and symlinks
 BIN_DIR="$HOME"/bin
 STATS_DIR="$HOME"/stats
-Z_REPO="third-party/z"
 
 #### update npm
 e_header "Updating npm..."
@@ -94,14 +93,7 @@ fi
 if [ ! -d "$BIN_DIR" ]; then
 	e_warning "$BIN_DIR does not exist, creating..."
 	if mkdir "$BIN_DIR"; then
-
-		# update z repo and copy
-		cd "$Z_REPO" || return 1
-		git_info=$(get_git_branch)
-		git pull -v origin "$git_info"
-		cp -f z.sh "$BIN_DIR"
-		chmod +x "$BIN_DIR"/z.sh
-		cd - || return 1
+		e_debug "Created bin dir"
 	else
 		e_error "Could not create $BIN_DIR"
 		e_warning "z will not be installed"
@@ -109,21 +101,8 @@ if [ ! -d "$BIN_DIR" ]; then
 else
 
 	e_debug "Copying bins"
-	cp -f bin/{tdu,piper,merge-branch.sh,editor.sh,extract,ixio,httpcompression,bashmarks.sh,de-dupe-bash-eternal-history.sh,startup-gpg-agent.sh,itunes-apps-periodic-cleanup.py,blame-bird.py,tm-log} "$BIN_DIR"
-	chmod +x "$BIN_DIR"/{tdu,piper,merge-branch.sh,editor.sh,extract,ixio,httpcompression,bashmarks.sh,de-dupe-bash-eternal-history.sh,startup-gpg-agent.sh,itunes-apps-periodic-cleanup.py,blame-bird.py,tm-log}
-
-	# update z repo and copy
-	cd "$Z_REPO" || return 1
-	git_info=$(get_git_branch)
-	e_debug "cd $Z_REPO. Branch is $git_info"
-
-	e_debug "cmd is git pull -v origin $git_info"
-
-	git pull -v origin "$git_info"
-	cp -f z.sh "$BIN_DIR"
-	chmod +x "$BIN_DIR"/z.sh
-	cd - || return 1
-
+	cp -f bin/{z.lua,tdu,piper,merge-branch.sh,editor.sh,extract,ixio,httpcompression,bashmarks.sh,de-dupe-bash-eternal-history.sh,startup-gpg-agent.sh,itunes-apps-periodic-cleanup.py,blame-bird.py,tm-log} "$BIN_DIR"
+	chmod +x "$BIN_DIR"/{z.lua,tdu,piper,merge-branch.sh,editor.sh,extract,ixio,httpcompression,bashmarks.sh,de-dupe-bash-eternal-history.sh,startup-gpg-agent.sh,itunes-apps-periodic-cleanup.py,blame-bird.py,tm-log}
 fi
 # shellcheck source=$HOME/.bash_profile
 source ~/.bash_profile

@@ -306,3 +306,6 @@ alias ram="top -l 1 -s 0 | grep PhysMem"
 alias ios="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app"
 
 alias cpwd="pwd|tr -d '\n'|pbcopy"
+
+alias zh='z -I -t .'
+alias zb='z -b'

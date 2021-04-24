@@ -15,11 +15,8 @@ unset file
 PATH=$(perl -e 'print join ":", grep {!$h{$_}++} split ":", $ENV{PATH}')
 export PATH
 
-# shellcheck source=/Users/james/bin/z.sh
-. ~/bin/z.sh
-
 # shellcheck source=~/.iterm2_shell_integration.bash
-source ~/.iterm2_shell_integration.bash
+
 
 #~/bin/startup-gpg-agent.sh
 
@@ -139,3 +136,6 @@ alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
 
 eval "$(thefuck --alias fk)"
 eval "$(rbenv init -)"
+eval "$(lua bin/z.lua --init bash enhanced once fzf)"
+source ~/bin/czmod/czmod.bash
+source ~/.iterm2_shell_integration.bash
