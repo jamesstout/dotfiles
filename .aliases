@@ -19,7 +19,7 @@ alias lr='echo $?'
 alias tf='tail -f '
 # apps
 alias s="subl "
-alias v="code "
+alias c="code "
 alias o="open"
 alias oo="open ."
 alias wh="which"
