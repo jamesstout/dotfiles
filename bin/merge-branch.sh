@@ -100,16 +100,16 @@ fi
  
 git_branch=$(get_git_branch)
 
-if [[ "$git_branch" == "master" ]]; then
-    e_error "on MASTER!"
+if [[ "$git_branch" == "main" ]]; then
+    e_error "on main!"
     exit 255
 else 
-	e_debug "switch to master"
-	git checkout master
-	e_debug "merging $git_branch into master"
+	e_debug "switch to main"
+	git checkout main
+	e_debug "merging $git_branch into main"
 	git merge "$git_branch" --no-ff --log
 	e_debug "tagging $git_branch"
-	git tag -a v"$git_branch" -m "tagging v$git_branch"
+	git tag -s "$git_branch" -m "tagging $git_branch"
 fi
    
 
