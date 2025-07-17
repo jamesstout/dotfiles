@@ -136,6 +136,6 @@ alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
 
 eval "$(thefuck --alias fk)"
 eval "$(rbenv init -)"
-eval "$(lua bin/z.lua --init bash enhanced once fzf)"
-source ~/bin/czmod/czmod.bash
+eval "$(lua ~/bin/z.lua --init bash enhanced once fzf)"
+# source ~/bin/czmod/czmod.bash
 source ~/.iterm2_shell_integration.bash
