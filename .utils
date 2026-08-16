@@ -143,39 +143,52 @@ function addLoginwindowText() {
 	fi
 }
 
-function doiTermIntegrationCheck() {
+doiTermIntegrationCheck() {
+	local current_file
+	local current_version
+	local new_file
+	local new_version
+	local shell_name
+	local temp_dir
 
-	e_header "Checking for iterm2_shell_integration update."
+	e_header "Checking for iTerm shell integration update..."
+	command -v curl >/dev/null 2>&1 || return 1
 
-	TEMP_DIR="${TMPDIR}iterm2_shell_integration"
-
-	if dir_exists "$TEMP_DIR"; then
-		e_debug "$TEMP_DIR exists, removing"
-		rm -rf "$TEMP_DIR" || return 1
+	shell_name="$(basename "${SHELL:-bash}")"
+	current_file="$SCRIPT_DIR/.iterm2_shell_integration.$shell_name"
+	if [[ ! -f "$current_file" ]]; then
+		e_error "Missing iTerm shell integration file: $current_file"
+		return 1
 	fi
 
-	e_debug "[Re]creating $TEMP_DIR"
-	mkdir -p "$TEMP_DIR" || return 1
-	chmod 777 "$TEMP_DIR"
+	temp_dir="$(mktemp -d "${TMPDIR:-/tmp}/iterm2_shell_integration.XXXXXX")" || return 1
+	new_file="$temp_dir/.iterm2_shell_integration.$shell_name"
 
-	OUR_SHELL=$(basename $SHELL)
-	NEW_FILE="${TEMP_DIR}"/.iterm2_shell_integration."${OUR_SHELL}"
+	if ! curl --fail --show-error --location --proto '=https' --tlsv1.2 \
+		"https://iterm2.com/shell_integration/$shell_name" --output "$new_file"; then
+		rm -rf "$temp_dir"
+		return 1
+	fi
 
-	curl -s -L https://iterm2.com/shell_integration/"${OUR_SHELL}" -o "$NEW_FILE"
+	new_version="$(awk -F '[;=]' '/ShellIntegrationVersion/ { print $3; exit }' "$new_file")"
+	current_version="$(awk -F '[;=]' '/ShellIntegrationVersion/ { print $3; exit }' "$current_file")"
+	if [[ ! "$new_version" =~ ^[0-9]+$ || ! "$current_version" =~ ^[0-9]+$ ]]; then
+		e_error "Invalid iTerm shell integration version"
+		rm -rf "$temp_dir"
+		return 1
+	fi
 
-	NEW_VER=$(grep ShellIntegrationVersion "$NEW_FILE" | cut -d ';' -f 2 | cut -d '=' -f 2)
-	CUR_VER=$(grep ShellIntegrationVersion "$SCRIPT_DIR"/.iterm2_shell_integration."${OUR_SHELL}" | cut -d ';' -f 2 | cut -d '=' -f 2)
-
-	# e_debug "new - $NEW_VER"
-	# e_debug "cur - $CUR_VER"
-
-	if [ "$NEW_VER" -gt "$CUR_VER" ]; then
-		e_debug "We have a new version [$NEW_VER] vs [$CUR_VER]. Copying new version to $SCRIPT_DIR"
-		cp -f "$NEW_FILE" "$SCRIPT_DIR" || return 1
+	if ((new_version > current_version)); then
+		e_debug "Updating iTerm shell integration from $current_version to $new_version"
+		cp -f "$new_file" "$current_file" || {
+			rm -rf "$temp_dir"
+			return 1
+		}
 	else
-		e_debug "No new version, still at [$CUR_VER]"
+		e_debug "iTerm shell integration is current at version $current_version"
 	fi
-	return 0
+
+	rm -rf "$temp_dir"
 }
 
 # Test whether we're in a git repo

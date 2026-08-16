@@ -1,127 +1,140 @@
 #!/usr/bin/env bash
-#cd "$(dirname "${BASH_SOURCE}")"
-# shellcheck disable=SC1091,SC1117
+# shellcheck shell=bash
+# shellcheck disable=SC1091
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)" || return 1
 
-cd "$SCRIPT_DIR" || return 1
+source "$SCRIPT_DIR/.utils" || return 1
 
-# shellcheck source=.emails
-source ./.emails
-# shellcheck source=.utils
-source ./.utils
+managed_files=(
+	.bash_profile .bash_prompt .iterm2_shell_integration.bash .path .exports
+	.aliases .functions .gitattributes .gitconfig .gitignore .gitignore_global
+	.inputrc .hgignore .wgetrc .vimrc .utils .bashrc .gemrc .tmux.conf .npmrc .ackrc
+)
+managed_directories=(.vim .hammerspoon .git_template)
+bin_files=(
+	z.lua tdu piper merge-branch.sh editor.sh extract ixio httpcompression
+	bashmarks.sh de-dupe-bash-eternal-history.sh startup-gpg-agent.sh
+	itunes-apps-periodic-cleanup.py blame-bird.py tm-log
+)
 
-e_header "Setting LoginwindowText if required"
-#logn "Configuring security settings:"
-#addLoginwindowText
+copy_to_backup() {
+	local source_path="$1"
+	local backup_dir="$2"
 
-BACKUPS_DIR="$HOME"/.backups
-
-if [ ! -d "$BACKUPS_DIR" ]; then
-	printf "$(tput setaf 136)! %s$(tput sgr0)\n" "$BACKUPS_DIR does not exist, creating..."
-	mkdir "$BACKUPS_DIR" || return 1
-fi
-
-# backup
-# backup .z - it contains all the z directory info, just in case
-cp ~/.{bash_profile,iterm2_shell_integration.bash,bash_prompt,path,emails,exports,aliases,functions,extra,gitattributes,gitconfig,gitignore,gitignore_global,inputrc,hgignore,wgetrc,vimrc,utils,bashrc,z,gemrc,tmux.conf,npmrc,ackrc} "$BACKUPS_DIR"
-cp -R ~/.vim "$BACKUPS_DIR"
-cp -R ~/.git_template "$BACKUPS_DIR"
-
-# do we have an updated .iterm2_shell_integration.bash?
-if ! doiTermIntegrationCheck; then
-	e_error "Something went wrong"
-	return 1
-fi
-
-# update dotfiles
-cp -Rf .vim ~
-cp -Rf .git_template ~
-cp .{bash_profile,bash_prompt,iterm2_shell_integration.bash,path,emails,exports,aliases,functions,extra,gitattributes,gitconfig,gitignore,gitignore_global,inputrc,hgignore,wgetrc,vimrc,utils,bashrc,gemrc,tmux.conf,npmrc,ackrc} ~
-
-# move down here, depends on .utils
-# shellcheck source=.brew
-source ./.brew
-
-# for testing without .brew
-# source ./.utils
-
-# setup vars for dirs and symlinks
-BIN_DIR="$HOME"/bin
-STATS_DIR="$HOME"/stats
-Z_REPO="third-party/z"
-
-#### update npm
-e_header "Updating npm..."
-npm update npm -g
-npm update npm
-npm update -g
-npm install -g npm
-
-#### update rust
-# rustup update
-
-#### update ruby gems
-e_header "Updating gems..."
-for version in $(rbenv whence gem); do
-	rbenv shell "$version"
-
-    e_debug "Updating rubygems for $version"
-	gem update --system --no-document #--quiet
-    
-    yes | gem update
-	
-	gem cleanup -v
-    rbenv rehash
-	echo ""
-done
-
-# check stats dir
-if [ ! -d "$STATS_DIR" ]; then
-	e_warning "$STATS_DIR does not exist, creating..."
-	if mkdir "$STATS_DIR"; then
-		e_debug "Done"
+	if [[ -d "$source_path" ]]; then
+		cp -R "$source_path" "$backup_dir/"
 	else
-		e_error "Could not create $STATS_DIR"
-		e_warning "git post-commit hook will not record commits"
+		cp -p "$source_path" "$backup_dir/"
 	fi
-fi
+}
 
-# check on bin and links
-# should exist but if not...
-if [ ! -d "$BIN_DIR" ]; then
-	e_warning "$BIN_DIR does not exist, creating..."
-	if mkdir "$BIN_DIR"; then
+confirm_overwrite() {
+	local path
+	local existing_paths=()
 
-		# update z repo and copy
-		cd "$Z_REPO" || return 1
-		git_info=$(get_git_branch)
-		git pull -v origin "$git_info"
-		cp -f z.sh "$BIN_DIR"
-		chmod +x "$BIN_DIR"/z.sh
-		cd - || return 1
-	else
-		e_error "Could not create $BIN_DIR"
-		e_warning "z will not be installed"
+	for path in "${managed_directories[@]}" "${managed_files[@]}"; do
+		[[ -e "$HOME/$path" ]] && existing_paths+=("$path")
+	done
+
+	if [[ ${#existing_paths[@]} -eq 0 || "${1:-}" == "-f" ]]; then
+		return 0
 	fi
-else
 
-	e_debug "Copying bins"
-	cp -f bin/{tdu,piper,merge-branch.sh,editor.sh,extract,ixio,httpcompression,bashmarks.sh,de-dupe-bash-eternal-history.sh,startup-gpg-agent.sh,itunes-apps-periodic-cleanup.py,blame-bird.py,tm-log} "$BIN_DIR"
-	chmod +x "$BIN_DIR"/{tdu,piper,merge-branch.sh,editor.sh,extract,ixio,httpcompression,bashmarks.sh,de-dupe-bash-eternal-history.sh,startup-gpg-agent.sh,itunes-apps-periodic-cleanup.py,blame-bird.py,tm-log}
+	seek_confirmation "A timestamped backup will be created before replacing: ${existing_paths[*]}"
+	is_confirmed
+}
 
-	# update z repo and copy
-	cd "$Z_REPO" || return 1
-	git_info=$(get_git_branch)
-	e_debug "cd $Z_REPO. Branch is $git_info"
+backup_existing_files() {
+	local backup_dir
+	local path
 
-	e_debug "cmd is git pull -v origin $git_info"
+	backup_dir="$HOME/.backups/$(date +%Y%m%d-%H%M%S)"
+	mkdir -p "$backup_dir" || return 1
 
-	git pull -v origin "$git_info"
-	cp -f z.sh "$BIN_DIR"
-	chmod +x "$BIN_DIR"/z.sh
-	cd - || return 1
+	for path in "${managed_directories[@]}" "${managed_files[@]}"; do
+		[[ -e "$HOME/$path" ]] || continue
+		copy_to_backup "$HOME/$path" "$backup_dir" || return 1
+	done
 
-fi
-# shellcheck source=$HOME/.bash_profile
-source ~/.bash_profile
+	e_success "Backed up existing files to $backup_dir"
+}
+
+install_dotfiles() {
+	local path
+
+	for path in "${managed_directories[@]}"; do
+		cp -Rf "$SCRIPT_DIR/$path" "$HOME/" || return 1
+	done
+
+	for path in "${managed_files[@]}"; do
+		cp -f "$SCRIPT_DIR/$path" "$HOME/" || return 1
+	done
+}
+
+install_binaries() {
+	local bin_dir="$HOME/bin"
+
+	mkdir -p "$bin_dir" || return 1
+	cp -f "${bin_files[@]/#/$SCRIPT_DIR/bin/}" "$bin_dir/" || return 1
+	chmod +x "${bin_files[@]/#/$bin_dir/}" || return 1
+}
+
+update_npm() {
+	if [[ "${UPDATE_NPM:-0}" != "1" ]]; then
+		e_debug "Skipping npm updates; run UPDATE_NPM=1 source bootstrap.sh to include them"
+		return 0
+	fi
+
+	command -v npm >/dev/null 2>&1 || return 1
+	e_header "Updating npm packages..."
+	npm update -g
+}
+
+update_ruby_gems() {
+	local version
+
+	if [[ "${UPDATE_RUBY_GEMS:-0}" != "1" ]]; then
+		e_debug "Skipping RubyGems updates; run UPDATE_RUBY_GEMS=1 source bootstrap.sh to include them"
+		return 0
+	fi
+
+	command -v rbenv >/dev/null 2>&1 || return 1
+	command -v gem >/dev/null 2>&1 || return 1
+	e_header "Updating RubyGems..."
+	while IFS= read -r version; do
+		rbenv shell "$version" || return 1
+		gem update --system --no-document || return 1
+		gem update || return 1
+		gem cleanup -v || return 1
+	done < <(rbenv whence gem)
+	rbenv rehash
+}
+
+main() {
+	local stats_dir="$HOME/stats"
+
+	# if ! confirm_overwrite "${1:-}"; then
+	# 	e_warning "Aborting without changing dotfiles"
+	# 	return 1
+	# fi
+
+	backup_existing_files || return 1
+	install_dotfiles || return 1
+
+	if ! doiTermIntegrationCheck; then
+		e_error "Could not update iTerm shell integration"
+		return 1
+	fi
+
+	# shellcheck source=.brew
+	source "$SCRIPT_DIR/.brew" || return 1
+	update_npm || return 1
+	update_ruby_gems || return 1
+
+	mkdir -p "$stats_dir" || return 1
+	install_binaries || return 1
+	e_success "Bootstrap complete"
+}
+
+main "$@"

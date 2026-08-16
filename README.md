@@ -4,7 +4,7 @@
 
 ### Using Git and the bootstrap script
 
-You can clone the repository wherever you want. (I like to keep it in `~/Projects/dotfiles`, with `~/dotfiles` as a symlink.) The bootstrapper script will pull in the latest version and copy the files to your home folder.
+You can clone the repository wherever you want. (I like to keep it in `~/Projects/dotfiles`, with `~/dotfiles` as a symlink.) The bootstrap script backs up existing managed files to a timestamped directory under `~/.backups`, then copies the repository configuration to your home folder.
 
 ```bash
 git clone https://github.com/mathiasbynens/dotfiles.git && cd dotfiles && source bootstrap.sh
@@ -19,7 +19,13 @@ source bootstrap.sh
 Alternatively, to update while avoiding the confirmation prompt:
 
 ```bash
-set -- -f; source bootstrap.sh
+source bootstrap.sh -f
+```
+
+`~/.emails` and `~/.extra` are local-only configuration files and are not overwritten by bootstrap. Bootstrap installs Homebrew formulae, but leaves global npm and RubyGems updates disabled by default. To include them, run:
+
+```bash
+UPDATE_NPM=1 UPDATE_RUBY_GEMS=1 source bootstrap.sh
 ```
 
 ### Git-free install
@@ -74,11 +80,25 @@ When setting up a new Mac, you may want to set some sensible OS X defaults:
 
 ### Install Homebrew formulae
 
-When setting up a new Mac, you may want to install some common Homebrew formulae (after installing Homebrew, of course):
+When setting up a new Mac, install and update the declared Homebrew formulae (after installing Homebrew, of course):
 
 ```bash
 ./.brew
 ```
+
+This command updates Homebrew, installs or updates formulae in `Brewfile`, and removes stale Homebrew downloads and old formula versions. Casks are kept in `Brewfile.casks` and are skipped by default so cask maintenance cannot block formula updates.
+
+To intentionally install and update the declared casks:
+
+```bash
+UPDATE_CASKS=1 ./.brew
+```
+
+The Brewfiles are the source of truth. Add new command-line tools as `brew "formula-name"` entries in `Brewfile`, then run `./.brew`. Add apps as `cask "cask-name"` entries in `Brewfile.casks`, then run `UPDATE_CASKS=1 ./.brew`.
+
+Manual `brew install` commands do not update either Brewfile. To record a manually installed top-level formula, add its `brew` entry yourself; `brew leaves` lists those formulae.
+
+Before first use on an existing Homebrew installation, run `brew update`, then remove any taps reported as deprecated or unnecessary by `brew doctor`. The standard `homebrew/bundle`, `homebrew/services`, `homebrew/cask`, and `homebrew/core` taps are not needed by these manifests.
 
 ## Feedback
 
@@ -97,4 +117,4 @@ Suggestions/improvements
 * @ptb and [his _OS X Lion Setup_ repository](https://github.com/ptb/Mac-OS-X-Lion-Setup)
 * [Lauri ‘Lri’ Ranta](http://lri.me/) for sharing [loads of hidden preferences](http://lri.me/osx.html#hidden-preferences)
 * [Tim Esselens](http://devel.datif.be/)
-* anyone who [contributed a patch](https://github.com/mathiasbynens/dotfiles/contributors) or [made a helpful suggestion](https://github.com/mathiasbynens/dotfiles/issues)
+* anyone who [contributed a patch](https://github.com/mathiasbynens/dotfiles/contributors) or [made a helpful suggestion](https://github.com/mathiasbynens/dotfiles/issues).

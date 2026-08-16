@@ -1,12 +1,8 @@
 # shellcheck shell=bash
 # Make vim the default editor
-export EDITOR="$HOME/dotfiles/bin/editor.sh"
+#export EDITOR="$HOME/dotfiles/bin/editor.sh"
 
 #export NODE_PATH=/usr/local/lib/node_modules
-
-export HOMEBREW_CASK_OPTS="--appdir=/Applications"
-
-export JAVA_HOME=$(/usr/libexec/java_home)
 
 #export ANDROID_SDK_ROOT="/usr/local/share/android-sdk"
 
@@ -41,10 +37,7 @@ export HISTIGNORE="ls:cd:cd -:pwd:exit:hg:s:o:oo:h:"
 export LANG="en_US.UTF-8"
 export LC_COLLATE=C
 export LC_CTYPE="en_US.UTF-8"
-export LC_ALL="en_US.UTF-8"
-
-export CFLAGS="-arch x86_64"
-export ARCHFLAGS="-arch x86_64"
+unset LC_ALL
 
 # Highlight section titles in manual pages
 #export LESS_TERMCAP_md="$ORANGE"
@@ -94,3 +87,4 @@ export PAGER='less'
 # fi;
 
 export BASH_SILENCE_DEPRECATION_WARNING=1
+export GITHUB_USERNAME=jamesstout
