@@ -26,11 +26,7 @@ e_warning() {
 }
 
 is_git_repo() {
-    git rev-parse --is-inside-work-tree >/dev/null 2>&1
-}
-
-is_git_dir() {
-    git rev-parse --is-inside-git-dir >/dev/null 2>&1
+    [[ "$(git rev-parse --is-inside-work-tree 2>/dev/null)" == "true" ]]
 }
 
 get_git_branch() {
@@ -49,7 +45,7 @@ get_git_branch() {
 git_status_ok() {
     local status_output
 
-    if ! is_git_repo || is_git_dir; then
+    if ! is_git_repo; then
         e_error "Not a git working tree"
         return 1
     fi
