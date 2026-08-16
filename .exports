@@ -1,12 +1,11 @@
 # shellcheck shell=bash
 # Make vim the default editor
-export EDITOR="$HOME/dotfiles/bin/editor.sh"
+#export EDITOR="$HOME/dotfiles/bin/editor.sh"
 
 #export NODE_PATH=/usr/local/lib/node_modules
 
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
-export JAVA_HOME=$(/usr/libexec/java_home)
 
 #export ANDROID_SDK_ROOT="/usr/local/share/android-sdk"
 

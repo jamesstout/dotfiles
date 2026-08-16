@@ -24,7 +24,7 @@ fi
 
 # backup
 # backup .z - it contains all the z directory info, just in case
-cp ~/.{bash_profile,iterm2_shell_integration.bash,bash_prompt,path,emails,exports,aliases,functions,extra,gitattributes,gitconfig,gitignore,gitignore_global,inputrc,hgignore,wgetrc,vimrc,utils,bashrc,z,gemrc,tmux.conf,npmrc,ackrc} "$BACKUPS_DIR"
+cp ~/.{bash_profile,iterm2_shell_integration.bash,bash_prompt,path,emails,exports,aliases,functions,extra,gitattributes,gitconfig,gitignore,gitignore_global,inputrc,hgignore,wgetrc,vimrc,utils,bashrc,gemrc,tmux.conf,npmrc,ackrc} "$BACKUPS_DIR"
 cp -R ~/.vim "$BACKUPS_DIR"
 cp -R ~/.hammerspoon "$BACKUPS_DIR"
 cp -R ~/.git_template "$BACKUPS_DIR"
