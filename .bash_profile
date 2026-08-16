@@ -2,20 +2,22 @@
 # Add `~/bin` to the `$PATH`
 export PATH="$HOME/bin:$PATH"
 
-# Load the shell dotfiles, and then some:
-# * ~/.path can be used to extend `$PATH`.
-# * ~/.extra can be used for other settings you don’t want to commit.
-for file in ~/.{path,bash_prompt,exports,emails,aliases,utils,functions,extra}; do
+# Load environment and local override files.
+for file in ~/.{path,exports,emails,utils,functions,extra}; do
 	# shellcheck source=/dev/null
 	[ -r "$file" ] && source "$file"
 done
 unset file
 
-# remove dupes
-PATH=$(perl -e 'print join ":", grep {!$h{$_}++} split ":", $ENV{PATH}')
-export PATH
+# Prompt, aliases, completion, and shell options are interactive-only.
+[[ $- == *i* ]] || return 0
 
-# shellcheck source=~/.iterm2_shell_integration.bash
+# Load interactive shell configuration.
+for file in ~/.{bash_prompt,aliases}; do
+	# shellcheck source=/dev/null
+	[ -r "$file" ] && source "$file"
+done
+unset file
 
 
 #~/bin/startup-gpg-agent.sh
@@ -77,7 +79,11 @@ for option in autocd globstar; do
 done
 
 # Add tab completion for SSH hostnames based on ~/.ssh/config, ignoring wildcards
-[ -e "$HOME/.ssh/config" ] && complete -o "default" -o "nospace" -W "$(grep "^Host" ~/.ssh/config | grep -v "[?*]" | cut -d " " -f2)" scp sftp ssh
+if [[ -r "$HOME/.ssh/config" ]]; then
+	ssh_hosts=$(awk '$1 == "Host" { for (host_index = 2; host_index <= NF; host_index++) if ($host_index !~ /[?*]/) print $host_index }' "$HOME/.ssh/config")
+	complete -o "default" -o "nospace" -W "$ssh_hosts" scp sftp ssh
+	unset ssh_hosts
+fi
 
 # Add tab completion for `defaults read|write NSGlobalDomain`
 # You could just use `-g` instead, but I like being explicit
@@ -86,25 +92,23 @@ complete -W "NSGlobalDomain" defaults
 # Add `killall` tab completion for common apps
 complete -o "nospace" -W "Calendar Dock Dashboard Finder Mail Safari iTunes SystemUIServer, Fabric, Cloud, Dropbox, Fantastical, HazelHelper, ChronoSyncBackgrounder, GeekTool\ Helper" killall
 
-#defaults write NSGlobalDomain com.apple.sound.uiaudio.enabled -int 0
-defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
-
 ## Tab Completions
 set completion-ignore-case On
 
-[[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
+if command -v brew >/dev/null 2>&1; then
+	brew_prefix=$(brew --prefix)
+	for comp in \
+		"$brew_prefix/etc/grc.bashrc" \
+		"$brew_prefix/etc/bash_completion.d/git-completion.bash" \
+		"$brew_prefix/etc/bash_completion.d/brew" \
+		"$brew_prefix/etc/bash_completion.d/mas"; do
+		# shellcheck source=/dev/null
+		[[ -r "$comp" ]] && source "$comp"
+	done
+	unset brew_prefix comp
+fi
 
-prefix=$(brew --prefix)
-for comp in \
-	$prefix/etc/grc.bashrc \
-	$prefix/etc/bash_completion.d/git-completion.bash \
-	$prefix/etc/bash_completion.d/brew \
-	$prefix/etc/bash_completion.d/mas; do
-	# shellcheck source=/dev/null
-	[[ -e $comp ]] && source $comp
-done
-
-unalias ls
+unalias ls 2>/dev/null || true
 # Detect which `ls` flavor is in use
 if ls --color >/dev/null 2>&1; then # GNU `ls`
 	colorflag="--color"
@@ -112,7 +116,9 @@ else # OS X `ls`
 	colorflag="-G"
 fi
 
+# shellcheck disable=SC2139
 alias ls="ls ${colorflag}"
+unset colorflag
 # these are set in /usr/local/etc/grc.bashrc
 # I don't want them
 # unalias make
@@ -134,8 +140,15 @@ alias ls="ls ${colorflag}"
 
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
 
-eval "$(thefuck --alias fk)"
-eval "$(rbenv init -)"
-eval "$(lua ~/bin/z.lua --init bash enhanced once fzf)"
+if command -v thefuck >/dev/null 2>&1; then
+	eval "$(thefuck --alias fk)"
+fi
+if command -v rbenv >/dev/null 2>&1; then
+	eval "$(rbenv init -)"
+fi
+if command -v lua >/dev/null 2>&1 && [[ -r "$HOME/bin/z.lua" ]]; then
+	eval "$(lua "$HOME/bin/z.lua" --init bash enhanced once fzf)"
+fi
 # source ~/bin/czmod/czmod.bash
-source ~/.iterm2_shell_integration.bash
+# shellcheck disable=SC1091
+[[ -r "$HOME/.iterm2_shell_integration.bash" ]] && source "$HOME/.iterm2_shell_integration.bash"

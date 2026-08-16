@@ -18,12 +18,10 @@ alias su="su -"
 alias lr='echo $?'
 alias tf='tail -f '
 # apps
-alias s="subl "
 alias c="code "
 alias o="open"
 alias oo="open ."
 alias wh="which"
-alias n="nova "
 # brew
 alias bi="brew info "
 alias b="brew "
@@ -35,13 +33,9 @@ alias bl="brew list --formula"
 alias bd="brew doctor"
 
 alias bkl="brew list --cask"
-alias bkin="brew install "
+alias bkin="brew install --cask "
 alias bks="brew search "
 alias bki="brew info --cask "
-
-alias vtop="vtop --theme monokai"
-
-alias myasn='asn $(ip)'
 
 alias hh=hstr
 
@@ -56,11 +50,9 @@ alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
-alias ifactive="ifconfig | pcregrep -M -o '^[^\t:]+:([^\n]|\n\t)*status: active'"
-
-#nzbs
-alias sab="open -a /Applications/SABnzbd.app"
-alias sick="python /Applications/sickbeard/Sick-Beard/SickBeard.py > /dev/null 2>&1 &"
+ifactive() {
+	ifconfig | awk '/^[^[:space:]].*:/ { interface = $1 } /status: active/ { print interface }'
+}
 
 alias pigs="du | sort -nr | cut -f2- | xargs du -hs"
 alias pigs1="du -d1 | sort -nr | cut -f2- | xargs du -hs"
@@ -76,15 +68,6 @@ alias he="cat ${HOME}/.bash_eternal_history"
 alias perms="stat -f %A "
 
 # commands
-alias spwr="/Applications/MAMP/bin/php/php5.4.10/bin/php retrieve.php"
-# alias py="python"
-alias python=/usr/local/bin/python3
-alias pip=/usr/local/bin/pip3
-
-# alias python=/usr/local/opt/python@3.9/libexec/bin/python
-# alias pip=/usr/local/opt/python@3.9/libexec/bin/pip
-
-
 alias gurl='curl --compressed'
 
 alias ded='rm -rf /Users/james/Library/Developer/Xcode/DerivedData'
@@ -106,8 +89,13 @@ alias llc="ls -l | wc -l"
 alias findc="find . -type f -print | perl -lne 'print quotemeta' | xargs ls -l | wc -l"
 
 # pyc count and remove
-alias lpyc="find . -type f | egrep -i '.pyc' | perl -lne 'print quotemeta' | xargs ls -l"
-alias rmpyc="find . -type f | egrep -i '.pyc' | perl -lne 'print quotemeta' | xargs rm -f"
+lpyc() {
+	find . -type f -name '*.pyc' -exec command ls -l {} +
+}
+
+rmpyc() {
+	find . -type f -name '*.pyc' -delete
+}
 
 # process grep
 alias pse="ps -aef"
@@ -152,7 +140,7 @@ alias gc='git commit'
 alias gd='git diff'
 alias gg='git checkout '
 alias gks='git ksreview '
-alias gom='git checkout master'
+alias gom='git checkout main'
 alias gss='git status --short --branch'
 alias got='git '
 alias get='git '
@@ -202,10 +190,19 @@ export LS_COLORS='no=00:fi=00:di=01;34:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40
 alias sudo='sudo '
 
 # Gzip-enabled `curl`
-alias gurl="curl --compressed"
+update() {
+	local dotfiles_dir="${DOTFILES_DIR:-$HOME/dotfiles}"
 
-# Get OS X Software Updates, and update installed Ruby gems, Homebrew, npm, and their installed packages
-alias update='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup ' #; npm update npm -g; npm update -g; sudo gem update'
+	sudo softwareupdate -i -a || return 1
+	[[ -d "$dotfiles_dir" ]] || {
+		printf 'Dotfiles directory not found: %s\n' "$dotfiles_dir" >&2
+		return 1
+	}
+	(
+		cd "$dotfiles_dir" || exit 1
+		source ./.brew
+	)
+}
 
 # IP addresses
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
@@ -255,12 +252,22 @@ alias hideh="defaults write com.apple.finder AppleShowAllFiles -bool false && ki
 #alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
 
 # URL-encode strings
-alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
-alias urlencode2='python -c "import sys, urllib as ul; print ul.urlencode(sys.argv[1]);"'
-alias urlencode3='python -c "import sys, xml.sax.saxutils as sa; print sa.escape(sys.argv[1]);"'
+urlencode() {
+	python3 -c 'import sys, urllib.parse; print(urllib.parse.quote_plus(sys.argv[1]))' "$1"
+}
+
+urlencode2() {
+	python3 -c 'import sys, urllib.parse; print(urllib.parse.urlencode(urllib.parse.parse_qsl(sys.argv[1], keep_blank_values=True)))' "$1"
+}
+
+urlencode3() {
+	python3 -c 'import sys, xml.sax.saxutils; print(xml.sax.saxutils.escape(sys.argv[1]))' "$1"
+}
 
 # URL-decode strings
-alias urldecode='python -c "import sys, urllib as ul; print ul.unquote(sys.argv[1]);"'
+urldecode() {
+	python3 -c 'import sys, urllib.parse; print(urllib.parse.unquote(sys.argv[1]))' "$1"
+}
 
 # Merge PDF files
 # Usage: `mergepdf -o output.pdf input{1,2,3}.pdf`
@@ -293,19 +300,12 @@ done
 #alias pumpitup="osascript -e 'set volume 7'"
 #alias hax="growlnotify -a 'Activity Monitor' 'System error' -m 'WTF R U DOIN'"
 
-alias feh='feh -d --draw-tinted -V -F'
-# With EXIF information
-alias feh-exif='feh --draw-exif'
-
 alias logoff="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend"
 
 alias displays="system_profiler SPDisplaysDataType"
-alias cpu="sysctl -n machdep.cpu.brand_string"
 alias ram="top -l 1 -s 0 | grep PhysMem"
 
 alias ios="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app"
-
-alias cpwd="pwd|tr -d '\n'|pbcopy"
 
 alias zh='z -I -t .'
 alias zb='z -b'

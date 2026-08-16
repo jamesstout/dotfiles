@@ -235,8 +235,9 @@ function dump(o)
 	if type(o) == 'table' then
 		local s = '{ '
 		for k,v in pairs(o) do
-			if type(k) ~= 'number' then k = '"'..k..'"' end
-			s = s .. '['..k..'] = ' .. dump(v) .. ','
+			local display_key = k
+			if type(display_key) ~= 'number' then display_key = '"'..display_key..'"' end
+			s = s .. '['..display_key..'] = ' .. dump(v) .. ','
 		end
 		return s .. '} '
 	else

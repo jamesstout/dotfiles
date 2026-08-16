@@ -5,11 +5,6 @@
 # Shamelessly copied from https://github.com/gf3/dotfiles and 
 # https://github.com/necolas/dotfiles/blob/master/bash/bash_prompt
 # Screenshot: http://i.imgur.com/s0Blh.png
-if [[ $COLORTERM = gnome-* && $TERM = xterm ]] && infocmp gnome-256color >/dev/null 2>&1; then
-    export TERM=gnome-256color
-elif infocmp xterm-256color >/dev/null 2>&1; then
-    export TERM=xterm-256color
-fi
 
 tput sgr 0 0
 
@@ -35,7 +30,7 @@ style_user="\[${RESET}${SOLAR_ORANGE}\]"
 style_host="\[${RESET}${SOLAR_YELLOW}\]"
 style_path="\[${RESET}${SOLAR_GREEN}\]"
 style_chars="\[${RESET}${SOLAR_WHITE}\]"
-style_branch="${SOLAR_CYAN}"
+style_branch="\[${SOLAR_CYAN}\]"
 
 if [[ "$SSH_TTY" ]]; then
     # connected via ssh
@@ -45,104 +40,78 @@ elif [[ "$USER" == "root" ]]; then
     style_user="\[${BOLD}${SOLAR_RED}\]"
 fi
 
-is_git_repo() {
-    $(git rev-parse --is-inside-work-tree &> /dev/null)
-}
-
-is_git_dir() {
-    $(git rev-parse --is-inside-git-dir 2> /dev/null)
-}
-
-is_cocoapods_repo() {
-    local repo_name
-    repo_name=$(git rev-parse --show-toplevel 2> /dev/null)
-    if [[ "$repo_name" =~ cocoapods ]]; then
-        return 0
-    else
-        return 1
-    fi
-}
-
-get_git_branch() {
-    local branch_name
-
-    # Get the short symbolic ref
-    branch_name=$(git symbolic-ref --quiet --short HEAD 2> /dev/null) ||
-    # If HEAD isn't a symbolic ref, get the short SHA
-    branch_name=$(git rev-parse --short HEAD 2> /dev/null) ||
-    # Otherwise, just give up
-    branch_name="(unknown)"
-
-    printf "%s" "$branch_name"
-}
-
 # Git status information
 prompt_git() {
-    local git_info git_state uc us ut st cr
+    local branch_name
+    local status_line
+    local status_output
+    local xy
+    local has_staged=0
+    local has_stash=0
+    local has_unmerged=0
+    local has_unstaged=0
+    local has_untracked=0
+    local git_state=""
 
-    cr=1
-    if ! is_git_repo || is_git_dir; then
-        return 1
+    status_output=$(git status --porcelain=v2 --branch --show-stash 2>/dev/null) || return 0
+    branch_name=$(awk '/^# branch.head / { print $3; exit }' <<<"$status_output")
+    if [[ -z "$branch_name" ]]; then
+        return 0
+    elif [[ "$branch_name" == "(detached)" ]]; then
+        branch_name=$(awk '/^# branch.oid / { print substr($3, 1, 7); exit }' <<<"$status_output")
     fi
 
-    if ! is_cocoapods_repo; then
-        # ensure index is up to date
-        git update-index --really-refresh  -q &>/dev/null
-        cr=0
-    fi
+    while IFS= read -r status_line; do
+        case "$status_line" in
+            '1 '*|'2 '*)
+                xy="${status_line#? }"
+                xy="${xy%% *}"
+                [[ "${xy:0:1}" != "." ]] && has_staged=1
+                [[ "${xy:1:1}" != "." ]] && has_unstaged=1
+                ;;
+            'u '*) has_unmerged=1 ;;
+            '? '*) has_untracked=1 ;;
+            '# stash '*) has_stash=1 ;;
+        esac
+    done <<<"$status_output"
 
-    git_info=$(get_git_branch)
-
-    # remember git will ignore empty dirs
-    # unless they contain a .gitignore file
-    # so the prompt should be correct
-    # with the caveat that it ignores any new empty folders
-    # if ! is_cocoapods_repo; then
-    if [ "$cr" -eq 0 ]; then
-        # Check for uncommitted changes in the index
-        if ! $(git diff --quiet --ignore-submodules --cached); then
-            uc="+"
-        fi
-
-        # Check for unstaged changes
-        if ! $(git diff-files --quiet --ignore-submodules --); then
-            us="!"
-        fi
-
-        # Check for untracked files
-        if [ -n "$(git ls-files --others --exclude-standard)" ]; then
-            ut="?"
-        fi
-
-        # Check for stashed files
-        if $(git rev-parse --verify refs/stash &>/dev/null); then
-            st="$"
-        fi
-    fi
-
-    git_state=$uc$us$ut$st
-
-    # Combine the branch name and state information
-    if [[ $git_state ]]; then
-        git_info="$git_info[$git_state]"
-    fi
-
-    printf "${SOLAR_WHITE} on ${style_branch}${git_info}"
+    ((has_staged)) && git_state+='+'
+    ((has_unstaged || has_unmerged)) && git_state+='!'
+    ((has_untracked)) && git_state+='?'
+    ((has_stash)) && git_state+='$'
+    [[ -n "$git_state" ]] && branch_name+="[$git_state]"
+    printf ' on %s' "$branch_name"
 }
 
-#export PROMPT_COMMAND="history -a; history -n; ${PROMPT_COMMAND}"   # mem/file sync
 # if this is interactive shell, then bind hstr to Ctrl-r (for Vi mode check doc)
 if [[ $- =~ .*i.* ]]; then bind '"\C-r": "\C-a hstr -- \C-j"'; fi
 
 # Make new shells get the history lines from all previous
 # shells instead of the default "last window closed" history
-PROMPT_COMMAND='history 1 >> ${HOME}/.bash_eternal_history'
+HISTORY_ARCHIVE="${HISTORY_ARCHIVE:-$HOME/.bash_eternal_history}"
+LAST_ARCHIVED_HISTORY_NUMBER=""
 
-#my old version
-#PROMPT_COMMAND="history -a;history -c; history -r; $PROMPT_COMMAND;"
+append_eternal_history() {
+    local history_entry
+    local history_number
+    local lock_file="${HISTORY_ARCHIVE}.lock"
 
-#hstr version 
-export PROMPT_COMMAND="history -a; history -n; ${PROMPT_COMMAND};"
+    history_entry="$(HISTTIMEFORMAT='' builtin history 1)" || return 0
+    [[ -n "$history_entry" ]] || return 0
+    history_number="${history_entry#"${history_entry%%[![:space:]]*}"}"
+    history_number="${history_number%%[[:space:]]*}"
+    [[ "$history_number" == "$LAST_ARCHIVED_HISTORY_NUMBER" ]] && return 0
+
+    /usr/bin/shlock -f "$lock_file" -p "$$" >/dev/null 2>&1 || return 0
+    printf '%s\n' "$history_entry" >> "$HISTORY_ARCHIVE" || {
+        rm -f "$lock_file"
+        return 1
+    }
+    LAST_ARCHIVED_HISTORY_NUMBER="$history_number"
+    rm -f "$lock_file"
+}
+
+export PROMPT_COMMAND="history -a; history -n; append_eternal_history"
 
 # Set the terminal title to the current working directory
 PS1="\[\033]0;\h: \w\007\]"
@@ -154,6 +123,6 @@ PS1+="${style_chars}@" # @
 PS1+="${style_host}\h" # Host
 PS1+="${style_chars}: " # :
 PS1+="${style_path}\w" # Working directory
-PS1+="\$(prompt_git)" # Git details
+PS1+="${style_branch}\$(prompt_git)" # Git details
 PS1+="\n" # Newline
 PS1+="${style_chars}\$ \[${RESET}\]" # $ (and reset color)

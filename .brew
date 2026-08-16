@@ -1,186 +1,53 @@
 #!/usr/bin/env bash
 # shellcheck shell=bash
-# shellcheck source=.utils
-source ./.utils
 
-bundle_needs_update=0
+run_step() {
+	local header="$1"
+	shift
 
-# Check for Homebrew
-if type_exists 'brew'; then
-	e_header "Updating Homebrew..."
-	# Use the latest version of Homebrew
-	brew update
-	[[ $? ]] && e_success "Done"
+	e_header "$header"
+	if "$@"; then
+		e_success "Done"
+	else
+		e_error "Failed: $*"
+		return 1
+	fi
+}
 
-	e_header "Updating any existing Homebrew formulae..."
-	
-	do_old_way=0
+main() {
+	local script_dir
+	script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)" || return 1
 
-	if brew bundle -h >/dev/null 2>&1; then
-		if file_exists "$SCRIPT_DIR/Brewfile"; then
-			e_header "Updating via Brewfile..."
-			brew bundle --verbose --file="$SCRIPT_DIR/Brewfile"
-			[[ $? ]] && e_success "Done"
-		else
-			do_old_way=1
-		fi	
-	else 
-		do_old_way=1
+	# shellcheck disable=SC1091
+	source "$script_dir/.utils" || return 1
+
+	if ! command -v brew >/dev/null 2>&1; then
+		e_error "Error: Homebrew not found."
+		return 1
 	fi
 
-	if [ $do_old_way -eq 1 ]
-	then
-        # use normal upgrade
-		e_debug "No brew bundle - use normal upgrade"
-		brew upgrade
-		[[ $? ]] && e_success "Done"
-		e_header "Updating any outdated casks..."
-		brew upgrade --cask
-		[[ $? ]] && e_success "Done"
-    fi
+	if [[ ! -f "$script_dir/Brewfile" ]]; then
+		e_error "Error: Brewfile not found."
+		return 1
+	fi
 
-	e_header "Checking status of desired Homebrew formulae..."
+	run_step "Updating Homebrew..." brew update || return 1
+	run_step "Installing and updating declared formulae..." \
+		brew bundle install --verbose --file="$script_dir/Brewfile" || return 1
+	run_step "Removing old Homebrew downloads and formula versions..." \
+		brew cleanup --prune=all || return 1
 
-	create_formula_list_file
-
-	declare list_formulae
-	declare -a missing_formulae=()
-
-	# just declare new formulae that you wish to install
-	declare -a desired_formulae=(
-		# e.g. 
-		# 'ack'
-		# 'aircrack-ng'
-		# 'ansiweather'
-		# 'trash'
-		# 'tree'
-		# 'wget'
-	
-	)
-
-	if [ ${#desired_formulae[@]} -ne 0 ]; then
-		for index in ${!desired_formulae[*]}; do
-			if ! formula_exists2 "${desired_formulae[$index]}"; then
-				# Store the name (and options) of every missing formula
-				missing_formulae=("${missing_formulae[@]}" "${desired_formulae[$index]}")
-			fi
-		done
-
-		if [[ "${missing_formulae[@]}" ]]; then
-			# Convert the array of missing formula into a list of space-separate strings
-			list_formulae=$(printf "%s " "${missing_formulae[@]}")
-			e_header "Installing missing Homebrew formulae..."
-			# Install all missing formulae
-			brew install $list_formulae
-			[[ $? ]] && e_success "Done"
-			bundle_needs_update=1
+	if [[ "${UPDATE_CASKS:-0}" == "1" ]]; then
+		if [[ ! -f "$script_dir/Brewfile.casks" ]]; then
+			e_error "Error: Brewfile.casks not found."
+			return 1
 		fi
+
+		run_step "Installing and updating declared casks..." \
+			brew bundle install --verbose --file="$script_dir/Brewfile.casks" || return 1
 	else
-		e_debug "No new formulae to install"
+		e_debug "Skipping cask maintenance; run UPDATE_CASKS=1 ./.brew to include it"
 	fi
+}
 
-	# Remove outdated versions from the Cellar
-	e_header "Remove outdated versions from the Cellar..."
-	brew cleanup -s
-else
-	printf "\n"
-	e_error "Error: Homebrew not found."
-	printf "Aborting...\n"
-	return 1
-fi
-
-if type_exists 'mas'; then
-	e_header "Checking for MAS updates..."
-	mas outdated
-else
-	printf "\n"
-	e_error "Error: mas not found."
-	printf "Aborting...\n"
-	return 1
-fi
-
-if brew bundle -h >/dev/null 2>&1; then
-
-	if [ $bundle_needs_update -eq 1 ]
-	then
-		e_header "Updating Brewfile..."
-		brew bundle dump --force
-		[[ $? ]] && e_success "Done"
-	else
-		e_debug "Brewfile does not need updating"
-	fi	
-else 
-	printf "\n"
-	e_error "Error: brew bundle not found."
-	printf "Aborting...\n"
-	return 1
-fi
-
-if [ $bundle_needs_update -eq 1 ]
-then
-	e_header "Updating forms file..."
-	create_formula_list_file
-	[[ $? ]] && e_success "Done"
-else
-	e_debug "forms file does not need updating"
-fi
-
-
-#
-## Install GNU core utilities (those that come with OS X are outdated)
-#brew install coreutils
-#echo "Don’t forget to add $(brew --prefix coreutils)/libexec/gnubin to \$PATH."
-## Install GNU `find`, `locate`, `updatedb`, and `xargs`, g-prefixed
-#brew install findutils
-## Install Bash 4
-#brew install bash
-#
-## Install wget with IRI support
-#brew install wget --enable-iri
-#
-## Install RingoJS and Narwhal
-## Note that the order in which these are installed is important; see http://git.io/brew-narwhal-ringo.
-#brew install ringojs
-#brew install narwhal
-#
-## Install more recent versions of some OS X tools
-#brew tap homebrew/dupes
-#brew install homebrew/dupes/grep
-#brew tap josegonzalez/homebrew-php
-#brew install php54
-#
-## These two formulae didn’t work well last time I tried them:
-##brew install homebrew/dupes/vim
-##brew install homebrew/dupes/screen
-#
-## Install everything else
-#brew install ack
-##brew install exiv2
-#brew install git
-##brew install imagemagick
-#brew install lynx
-#brew install node
-#brew install rename
-#brew install rhino
-#brew install tree
-#brew install webkit2png
-
-#
-## Remove outdated versions from the cellar
-#brew cleanup
-
-# brew tap caskroom/cask
-# brew install brew-cask
-# brew tap caskroom/versions
-
-# # Install packages
-
-# apps=(
-#   google-chrome
-#   kaleidoscope
-#   textmate
-#   imageoptim
-#   imagealpha
-# )
-
-# # brew cask install "${apps[@]}"
+main "$@"

@@ -6,44 +6,23 @@
 
 # this is the root folder where all globally installed node packages will  go
 export NPM_PACKAGES="$HOME/.npm-packages"
-export NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
-
-PERL5LIB="/Users/james/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
-PERL_LOCAL_LIB_ROOT="/Users/james/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
-PERL_MB_OPT="--install_base \"/Users/james/perl5\""; export PERL_MB_OPT;
-PERL_MM_OPT="INSTALL_BASE=/Users/james/perl5"; export PERL_MM_OPT;
+export NODE_PATH="$NPM_PACKAGES/lib/node_modules${NODE_PATH:+:$NODE_PATH}"
 
 paths_to_add=(
 	# Private "bin"
 	"$HOME/bin"
-    "/usr/local/opt/openssl@1.1/bin"
-	"/usr/local/opt/python@3.9/libexec/bin"
-	# Homebrew, Rudix (and various other distributions and local installations)
-	/usr/local/{,s}bin
 	/opt/homebrew/{,s}bin
+	/usr/local/{,s}bin
 	# System
 	/{,s}bin
 	/usr/{,s}bin
-	# X binaries
-	/usr/X11/bin
-	"$HOME/perl5/bin"
 	"$HOME/Projects/Scripts"
 	"$HOME/Scripts"
 	"$NPM_PACKAGES/bin"
-	"$GOROOT/bin"
-    "$gp/bin"
-    "$HOME/.cargo/bin"
-    "/Applications/iPhone Backup Extractor.app/Contents/MacOS"
-    
 );
 
 # Create an array of directories currently in the PATH variable.
-oldIFS="$IFS";
-IFS=:;
-set -- $PATH;
-IFS="$oldIFS";
-unset oldIFS;
-old_paths=("$@");
+IFS=: read -r -a old_paths <<< "$PATH"
 
 # Construct an array of the directories in the new PATH, preferring our paths
 # to the predefined ones.

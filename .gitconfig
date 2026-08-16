@@ -62,12 +62,12 @@
 	# I am so used to "git pom" that "git pum" feels like a natural
 	# counterpart. I always try to rebase to prevent unnecessary merge
 	# commits.
-	pum = pull --rebase origin master
+	pum = pull --rebase origin main
 
 	# Show the staged changes.
 	dc = diff --cached
 
-	ksreview = "!f() { local SHA=${1:-HEAD}; local BRANCH=${2:-master}; if [ $SHA == $BRANCH ]; then SHA=HEAD; fi; git difftool -y -t Kaleidoscope $BRANCH...$SHA; }; f"
+	ksreview = "!f() { local SHA=${1:-HEAD}; local BRANCH=${2:-main}; if [ $SHA == $BRANCH ]; then SHA=HEAD; fi; git difftool -y -t Kaleidoscope $BRANCH...$SHA; }; f"
 
 	alias = ! git config --get-regexp ^alias\\. | sed -e s/^alias\\.// -e s/\\ /\\ =\\ / | grep -v ^'alias '
 

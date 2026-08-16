@@ -26,11 +26,11 @@ e_warning() {
 }
 
 is_git_repo() {
-    $(git rev-parse --is-inside-work-tree &> /dev/null)
+    git rev-parse --is-inside-work-tree >/dev/null 2>&1
 }
 
 is_git_dir() {
-    $(git rev-parse --is-inside-git-dir 2> /dev/null)
+    git rev-parse --is-inside-git-dir >/dev/null 2>&1
 }
 
 get_git_branch() {
@@ -47,46 +47,23 @@ get_git_branch() {
 }
 
 git_status_ok() {
+    local status_output
 
     if ! is_git_repo || is_git_dir; then
-    	e_error "Not a git repo or dir"
+        e_error "Not a git working tree"
         return 1
     fi
 
-    # ensure index is up to date
-    git update-index --really-refresh  -q &>/dev/null
-
-    # remember git will ignore empty dirs
-    # unless they contain a .gitignore file
-    # so the prompt should be correct
-    # with the caveat that it ignores any new empty folders
-
-    # Check for uncommitted changes in the index
-    if ! $(git diff --quiet --ignore-submodules --cached); then
-        e_error "uncommitted changes"
+    status_output=$(git status --porcelain=v2 --untracked-files=all 2>/dev/null) || {
+        e_error "Could not read Git status"
+        return 1
+    }
+    if [[ -n "$status_output" ]]; then
+        e_error "working tree is not clean"
         return 1
     fi
 
-    # Check for unstaged changes
-    if ! $(git diff-files --quiet --ignore-submodules --); then
-        e_error "unstaged changes"
-        return 1
-
-    fi
-
-    # Check for untracked files
-    if [ -n "$(git ls-files --others --exclude-standard)" ]; then
-        e_error "untracked files"
-        return 1
-    fi
-
-    # # Check for stashed files
-    # if $(git rev-parse --verify refs/stash &>/dev/null); then
-    #     e_error "stashed files"
-    #     return 1
-    # fi
-
- 	return 0
+    return 0
 }
 
 
@@ -104,12 +81,12 @@ if [[ "$git_branch" == "main" ]]; then
     e_error "on main!"
     exit 255
 else 
-	e_debug "switch to main"
-	git checkout main
-	e_debug "merging $git_branch into main"
-	git merge "$git_branch" --no-ff --log
-	e_debug "tagging $git_branch"
-	git tag -s "$git_branch" -m "tagging $git_branch"
+    e_debug "switch to main"
+    git checkout main || exit 1
+    e_debug "merging $git_branch into main"
+    git merge "$git_branch" --no-ff --log || exit 1
+    e_debug "tagging $git_branch"
+    git tag -s "$git_branch" -m "tagging $git_branch" || exit 1
 fi
    
 

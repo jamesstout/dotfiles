@@ -4,9 +4,6 @@
 
 #export NODE_PATH=/usr/local/lib/node_modules
 
-export HOMEBREW_CASK_OPTS="--appdir=/Applications"
-
-
 #export ANDROID_SDK_ROOT="/usr/local/share/android-sdk"
 
 # shamelessly copied from https://github.com/janmoesen/tilde
@@ -40,10 +37,7 @@ export HISTIGNORE="ls:cd:cd -:pwd:exit:hg:s:o:oo:h:"
 export LANG="en_US.UTF-8"
 export LC_COLLATE=C
 export LC_CTYPE="en_US.UTF-8"
-export LC_ALL="en_US.UTF-8"
-
-export CFLAGS="-arch x86_64"
-export ARCHFLAGS="-arch x86_64"
+unset LC_ALL
 
 # Highlight section titles in manual pages
 #export LESS_TERMCAP_md="$ORANGE"
@@ -93,5 +87,4 @@ export PAGER='less'
 # fi;
 
 export BASH_SILENCE_DEPRECATION_WARNING=1
-export HOMEBREW_NO_AUTO_UPDATE=1
 export GITHUB_USERNAME=jamesstout
