@@ -15,7 +15,7 @@ managed_directories=(.vim .hammerspoon .git_template)
 bin_files=(
 	z.lua tdu piper merge-branch.sh editor.sh extract ixio httpcompression
 	bashmarks.sh de-dupe-bash-eternal-history.sh startup-gpg-agent.sh
-	itunes-apps-periodic-cleanup.py blame-bird.py tm-log
+	itunes-apps-periodic-cleanup.py blame-bird.py tm-log check-unpushed-commits.sh
 )
 
 copy_to_backup() {
