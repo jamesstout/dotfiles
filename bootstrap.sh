@@ -114,10 +114,10 @@ update_ruby_gems() {
 main() {
 	local stats_dir="$HOME/stats"
 
-	if ! confirm_overwrite "${1:-}"; then
-		e_warning "Aborting without changing dotfiles"
-		return 1
-	fi
+	# if ! confirm_overwrite "${1:-}"; then
+	# 	e_warning "Aborting without changing dotfiles"
+	# 	return 1
+	# fi
 
 	backup_existing_files || return 1
 	install_dotfiles || return 1
