@@ -38,6 +38,12 @@ bh_unicode_properties.cache
 
 .vagrant/
 
+# Xcode per-user state
+xcuserdata/
+
+# Logs
+*.log
+
 # OS generated files #
 ######################
 *.DS_Store

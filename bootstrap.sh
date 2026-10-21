@@ -8,7 +8,7 @@ source "$SCRIPT_DIR/.utils" || return 1
 
 managed_files=(
 	.bash_profile .bash_prompt .iterm2_shell_integration.bash .path .exports
-	.aliases .functions .gitattributes .gitconfig .gitignore .gitignore_global
+	.aliases .functions .gitattributes .gitconfig .gitignore_global
 	.inputrc .wgetrc .vimrc .utils .bashrc .gemrc .tmux.conf .npmrc .ackrc
 )
 managed_directories=(.vim .hammerspoon .git_template)
