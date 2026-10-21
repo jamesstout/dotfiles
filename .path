@@ -11,6 +11,8 @@ export NODE_PATH="$NPM_PACKAGES/lib/node_modules${NODE_PATH:+:$NODE_PATH}"
 paths_to_add=(
 	# Private "bin"
 	"$HOME/bin"
+	# Claude Code
+	"$HOME/.local/bin"
 	/opt/homebrew/{,s}bin
 	/usr/local/{,s}bin
 	# System
