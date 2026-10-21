@@ -129,9 +129,10 @@ fi
 if command -v rbenv >/dev/null 2>&1; then
 	eval "$(rbenv init - --no-rehash bash)"
 fi
-if command -v lua >/dev/null 2>&1 && [[ -r "$HOME/bin/z.lua" ]]; then
-	eval "$(lua "$HOME/bin/z.lua" --init bash enhanced once fzf)"
+zlua_script="${HOMEBREW_PREFIX:-/opt/homebrew}/share/z.lua/z.lua"
+if command -v lua >/dev/null 2>&1 && [[ -r "$zlua_script" ]]; then
+	eval "$(lua "$zlua_script" --init bash enhanced once fzf)"
 fi
-# source ~/bin/czmod/czmod.bash
+unset zlua_script
 # shellcheck disable=SC1091
 [[ -r "$HOME/.iterm2_shell_integration.bash" ]] && source "$HOME/.iterm2_shell_integration.bash"
