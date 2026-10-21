@@ -1,6 +1,7 @@
 # shellcheck shell=bash
-# Make vim the default editor
-#export EDITOR="$HOME/dotfiles/bin/editor.sh"
+# Make VS Code the default editor (-w waits for the file to close)
+export EDITOR="code -w"
+export VISUAL="$EDITOR"
 
 #export NODE_PATH=/usr/local/lib/node_modules
 
