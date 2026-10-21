@@ -1,7 +1,4 @@
 # shellcheck shell=bash
-# Add `~/bin` to the `$PATH`
-export PATH="$HOME/bin:$PATH"
-
 # Load environment and local override files.
 for file in ~/.{path,exports,emails,utils,functions,extra}; do
 	# shellcheck source=/dev/null
@@ -57,9 +54,6 @@ shopt -s histappend
 # save multi-line commands as one command
 shopt -s cmdhist
 
-# include .files when globbing.
-shopt -s dotglob 2>/dev/null
-
 # use extra globing features. See man bash, search extglob.
 shopt -s extglob 2>/dev/null
 
@@ -90,13 +84,10 @@ fi
 complete -W "NSGlobalDomain" defaults
 
 # Add `killall` tab completion for common apps
-complete -o "nospace" -W "Calendar Dock Dashboard Finder Mail Safari iTunes SystemUIServer, Fabric, Cloud, Dropbox, Fantastical, HazelHelper, ChronoSyncBackgrounder, GeekTool\ Helper" killall
+complete -o "nospace" -W "Calendar Dock Finder Mail Music Safari SystemUIServer Dropbox Fantastical" killall
 
-## Tab Completions
-set completion-ignore-case On
-
-if command -v brew >/dev/null 2>&1; then
-	brew_prefix=$(brew --prefix)
+brew_prefix="${HOMEBREW_PREFIX:-/opt/homebrew}"
+if [[ -d "$brew_prefix" ]]; then
 	for comp in \
 		"$brew_prefix/etc/grc.bashrc" \
 		"$brew_prefix/etc/bash_completion.d/git-completion.bash" \
@@ -108,17 +99,6 @@ if command -v brew >/dev/null 2>&1; then
 	unset brew_prefix comp
 fi
 
-unalias ls 2>/dev/null || true
-# Detect which `ls` flavor is in use
-if ls --color >/dev/null 2>&1; then # GNU `ls`
-	colorflag="--color"
-else # OS X `ls`
-	colorflag="-G"
-fi
-
-# shellcheck disable=SC2139
-alias ls="ls ${colorflag}"
-unset colorflag
 # these are set in /usr/local/etc/grc.bashrc
 # I don't want them
 # unalias make
@@ -138,13 +118,16 @@ unset colorflag
 # unalias diff
 #unalias du
 
-alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
-
+# Load thefuck lazily, only when `fk` is called
 if command -v thefuck >/dev/null 2>&1; then
-	eval "$(thefuck --alias fk)"
+	fk() {
+		unset -f fk
+		eval "$(thefuck --alias fk)"
+		fk "$@"
+	}
 fi
 if command -v rbenv >/dev/null 2>&1; then
-	eval "$(rbenv init -)"
+	eval "$(rbenv init - --no-rehash bash)"
 fi
 if command -v lua >/dev/null 2>&1 && [[ -r "$HOME/bin/z.lua" ]]; then
 	eval "$(lua "$HOME/bin/z.lua" --init bash enhanced once fzf)"
