@@ -219,33 +219,11 @@ file_exists() {
 	return 1
 }
 
-create_formula_list_file() {
-	brew list --formula > "$SCRIPT_DIR"/forms
-	return 0
-}
-
 # Test whether a Homebrew formula is already installed
 # $1 - formula name (may include options)
 formula_exists() {
 	if $(brew list $1 >/dev/null 2>&1); then
 		printf "%s already installed.\n" "$1"
-		return 0
-	fi
-
-	e_warning "Missing formula: $1"
-	return 1
-}
-
-formula_exists2() {
-
-	# echo ".. $1"
-	# strip off any params from --
-	b=${1% --*}
-
-	# echo ".. $b"
-
-	if $(grep "^$b" "$SCRIPT_DIR"/forms >/dev/null 2>&1); then
-		printf "%s already installed.\n" "$b"
 		return 0
 	fi
 
